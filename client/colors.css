@@ -1,4 +1,11 @@
-@import "tailwindcss";
+Text Primary -> #111827
+Text Secondary -> #373f49
+Background White -> #F9FAFB
+Background White Secondary -> #F3F4F6
+Border light -> #E5E7EB
+Hover Color-> #339BFD
+Hover BG Tint -> #EFF6FF
+
 :root {
   --text-primary: #111827;
   --text-secondary: #373f49;
