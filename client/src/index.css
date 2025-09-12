@@ -8,3 +8,34 @@
   --Hover-Color: #339BFD;
   --Hover-BG-Tint: #EFF6FF;
 }
+
+
+/* Hide scrollbar by default */
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Show on hover */
+.scrollbar-hover::-webkit-scrollbar {
+  width: 8px; /* adjust size */
+  height: 8px;
+}
+
+.scrollbar-hover::-webkit-scrollbar-track {
+  background: transparent; /* no background */
+}
+
+.scrollbar-hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* transparent thumb */
+  border-radius: 9999px; /* rounded */
+}
+
+/* Firefox */
+.scrollbar-hover {
+  scrollbar-width: none; /* hide by default */
+}
+.scrollbar-hover:hover {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
