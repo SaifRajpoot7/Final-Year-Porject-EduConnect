@@ -3,7 +3,8 @@ import { Outlet } from 'react-router'
 import Header from '../components/header/Header'
 import Sidebar from '../components/sidebar/Sidebar'
 import Footer from '../components/footer/Footer'
-import CreateCoursePage from '../pages/courses/CreateCoursePage'
+import AllCoursesPage from '../pages/courses/AllCoursesPage'
+import CompletedLecturesPage from '../pages/lectures/CompletedLecturesPage'
 
 const DashboardLayout = () => {
     return (
@@ -18,7 +19,7 @@ const DashboardLayout = () => {
                     {/* Main content area */}
                     <div className="flex-grow overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
                         {/* <Outlet /> */}
-                        <CreateCoursePage />
+                        <CompletedLecturesPage />
                         <Footer />
                     </div>
                 </div>

@@ -1,0 +1,273 @@
+[
+  {
+    "id": 1,
+    "lecture_number": 1,
+    "course_name": "React Mastery",
+    "lecture_title": "Lecture 1 - React Mastery Deep Dive",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=React+Lecture+1",
+    "start_time": "2025-09-10 09:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 2,
+    "lecture_number": 2,
+    "course_name": "Node.js Crash Course",
+    "lecture_title": "Lecture 2 - Node.js Crash Course Basics",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Node+Lecture+2",
+    "start_time": "2025-09-10 11:00:00",
+    "teacher_name": "John Doe"
+  },
+  {
+    "id": 3,
+    "lecture_number": 3,
+    "course_name": "JavaScript Essentials",
+    "lecture_title": "Lecture 3 - JavaScript ES6 Features",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=JS+Lecture+3",
+    "start_time": "2025-09-11 14:00:00",
+    "teacher_name": "Alice Smith"
+  },
+  {
+    "id": 4,
+    "lecture_number": 4,
+    "course_name": "MongoDB Complete Guide",
+    "lecture_title": "Lecture 4 - MongoDB Schema Design",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Mongo+Lecture+4",
+    "start_time": "2025-09-11 16:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 5,
+    "lecture_number": 5,
+    "course_name": "Express.js Training",
+    "lecture_title": "Lecture 5 - Express.js Middleware",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Express+Lecture+5",
+    "start_time": "2025-09-11 18:00:00",
+    "teacher_name": "David Wilson"
+  },
+  {
+    "id": 6,
+    "lecture_number": 6,
+    "course_name": "Next.js Zero to Hero",
+    "lecture_title": "Lecture 6 - Next.js Routing",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Next+Lecture+6",
+    "start_time": "2025-09-12 09:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 7,
+    "lecture_number": 7,
+    "course_name": "TypeScript Basics",
+    "lecture_title": "Lecture 7 - TypeScript for Beginners",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=TS+Lecture+7",
+    "start_time": "2025-09-12 11:00:00",
+    "teacher_name": "Emma Johnson"
+  },
+  {
+    "id": 8,
+    "lecture_number": 8,
+    "course_name": "Python Programming",
+    "lecture_title": "Lecture 8 - Python Functions",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Python+Lecture+8",
+    "start_time": "2025-09-12 14:00:00",
+    "teacher_name": "Robert King"
+  },
+  {
+    "id": 9,
+    "lecture_number": 9,
+    "course_name": "Django Development",
+    "lecture_title": "Lecture 9 - Django Models",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Django+Lecture+9",
+    "start_time": "2025-09-12 16:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 10,
+    "lecture_number": 10,
+    "course_name": "Flask Fundamentals",
+    "lecture_title": "Lecture 10 - Flask Blueprints",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Flask+Lecture+10",
+    "start_time": "2025-09-12 18:00:00",
+    "teacher_name": "James Miller"
+  },
+  {
+    "id": 11,
+    "lecture_number": 11,
+    "course_name": "Angular Deep Dive",
+    "lecture_title": "Lecture 11 - Angular Components",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Angular+Lecture+11",
+    "start_time": "2025-09-13 07:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 12,
+    "lecture_number": 12,
+    "course_name": "Vue.js Crash Course",
+    "lecture_title": "Lecture 12 - Vue Directives",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Vue+Lecture+12",
+    "start_time": "2025-09-13 08:00:00",
+    "teacher_name": "Daniel Garcia"
+  },
+  {
+    "id": 13,
+    "lecture_number": 13,
+    "course_name": "HTML & CSS Masterclass",
+    "lecture_title": "Lecture 13 - Modern CSS Layouts",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=HTML+Lecture+13",
+    "start_time": "2025-09-13 08:30:00",
+    "teacher_name": "Emily Davis"
+  },
+  {
+    "id": 14,
+    "lecture_number": 14,
+    "course_name": "Tailwind CSS",
+    "lecture_title": "Lecture 14 - Tailwind Utilities",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Tailwind+Lecture+14",
+    "start_time": "2025-09-13 08:45:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 15,
+    "lecture_number": 15,
+    "course_name": "Bootstrap Responsive",
+    "lecture_title": "Lecture 15 - Bootstrap Grid",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Bootstrap+Lecture+15",
+    "start_time": "2025-09-13 08:50:00",
+    "teacher_name": "Isabella Hall"
+  },
+
+  {
+    "id": 16,
+    "lecture_number": 16,
+    "course_name": "SQL Basics",
+    "lecture_title": "Lecture 16 - SQL Joins",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=SQL+Lecture+16",
+    "start_time": "2025-09-13 10:00:00",
+    "teacher_name": "Anthony Walker"
+  },
+  {
+    "id": 17,
+    "lecture_number": 17,
+    "course_name": "PostgreSQL Advanced",
+    "lecture_title": "Lecture 17 - PostgreSQL Indexing",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Postgres+Lecture+17",
+    "start_time": "2025-09-13 11:00:00",
+    "teacher_name": "Grace Allen"
+  },
+  {
+    "id": 18,
+    "lecture_number": 18,
+    "course_name": "PHP & MySQL",
+    "lecture_title": "Lecture 18 - PHP with Databases",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=PHP+Lecture+18",
+    "start_time": "2025-09-13 12:00:00",
+    "teacher_name": "Christopher Young"
+  },
+  {
+    "id": 19,
+    "lecture_number": 19,
+    "course_name": "Laravel for Web Dev",
+    "lecture_title": "Lecture 19 - Laravel Routing",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Laravel+Lecture+19",
+    "start_time": "2025-09-13 13:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 20,
+    "lecture_number": 20,
+    "course_name": "Ruby Programming",
+    "lecture_title": "Lecture 20 - Ruby OOP",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Ruby+Lecture+20",
+    "start_time": "2025-09-13 14:00:00",
+    "teacher_name": "Ethan Scott"
+  },
+  {
+    "id": 21,
+    "lecture_number": 21,
+    "course_name": "Rails Crash Course",
+    "lecture_title": "Lecture 21 - Rails Controllers",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Rails+Lecture+21",
+    "start_time": "2025-09-13 15:00:00",
+    "teacher_name": "Amelia Adams"
+  },
+  {
+    "id": 22,
+    "lecture_number": 22,
+    "course_name": "Java Programming",
+    "lecture_title": "Lecture 22 - Java Streams",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Java+Lecture+22",
+    "start_time": "2025-09-13 16:00:00",
+    "teacher_name": "Benjamin Baker"
+  },
+  {
+    "id": 23,
+    "lecture_number": 23,
+    "course_name": "Spring Boot Microservices",
+    "lecture_title": "Lecture 23 - Spring Security",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Spring+Lecture+23",
+    "start_time": "2025-09-13 17:00:00",
+    "teacher_name": "Charlotte Perez"
+  },
+  {
+    "id": 24,
+    "lecture_number": 24,
+    "course_name": "Kotlin Android",
+    "lecture_title": "Lecture 24 - Kotlin Coroutines",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Kotlin+Lecture+24",
+    "start_time": "2025-09-13 18:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 25,
+    "lecture_number": 25,
+    "course_name": "Swift for iOS",
+    "lecture_title": "Lecture 25 - SwiftUI Basics",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Swift+Lecture+25",
+    "start_time": "2025-09-13 19:00:00",
+    "teacher_name": "Victoria Campbell"
+  },
+  {
+    "id": 26,
+    "lecture_number": 26,
+    "course_name": "Android Development",
+    "lecture_title": "Lecture 26 - Android Jetpack",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=Android+Lecture+26",
+    "start_time": "2025-09-13 20:00:00",
+    "teacher_name": "Lucas Mitchell"
+  },
+  {
+    "id": 27,
+    "lecture_number": 27,
+    "course_name": "C# Programming",
+    "lecture_title": "Lecture 27 - C# LINQ",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=CSharp+Lecture+27",
+    "start_time": "2025-09-13 21:00:00",
+    "teacher_name": "Harper Roberts"
+  },
+  {
+    "id": 28,
+    "lecture_number": 28,
+    "course_name": ".NET Core",
+    "lecture_title": "Lecture 28 - .NET Core APIs",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=DotNet+Lecture+28",
+    "start_time": "2025-09-13 22:00:00",
+    "teacher_name": "Jack Turner"
+  },
+  {
+    "id": 29,
+    "lecture_number": 29,
+    "course_name": "DevOps with Docker",
+    "lecture_title": "Lecture 29 - Kubernetes Intro",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=DevOps+Lecture+29",
+    "start_time": "2025-09-13 23:00:00",
+    "teacher_name": "Saif ur Rehman"
+  },
+  {
+    "id": 30,
+    "lecture_number": 30,
+    "course_name": "Cyber Security Fundamentals",
+    "lecture_title": "Lecture 30 - Threat Modeling",
+    "lecture_thumbnail": "https://placehold.co/600x400?text=CyberSec+Lecture+30",
+    "start_time": "2025-09-14 00:00:00",
+    "teacher_name": "William Evans"
+  }
+]

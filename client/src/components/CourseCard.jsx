@@ -25,11 +25,10 @@ const CourseCard = (courseData) => {
 
         {/* Instructor */}
         <p className="text-gray-500 text-xs sm:text-sm mb-2">{courseData.instructor}</p>
-
-        {/* Duration + Students */}
-        <div className={`flex items-center justify-between text-sm font-medium ${ courseData.role === "teacher" ? "text-[var(--Hover-Color)]": "text-green-600" } mt-auto`} >
+        {/* Course type */}
+        <div className={`flex items-center justify-between text-sm font-medium ${courseData.role === "teacher" ? "text-[var(--Hover-Color)]" : "text-green-600"} mt-auto`} >
           <span>
-            { courseData.role === "teacher" ? "My Course": "Enrolled Course"}
+            {courseData.role === "teacher" ? "My Course" : "Enrolled Course"}
           </span>
         </div>
       </div>
