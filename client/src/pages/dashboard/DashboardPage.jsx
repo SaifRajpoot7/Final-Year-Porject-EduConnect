@@ -11,7 +11,7 @@ import Title from "../../components/other/Title";
 const DashboardPage = () => {
 
   return (
-    <div className="p-2 bg-gray-0 min-h-screen ">
+    <div className="p-2 min-h-screen">
       <PageTitle title="Dashboard Overview" subtitle="Track your progress, courses, assignments, and performance insight" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 my-6">
         <OverviewCard icon={BookOpen} title="Total Courses" value={8} />

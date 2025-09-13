@@ -2,9 +2,8 @@ import React from 'react'
 import { Outlet } from 'react-router'
 import Header from '../components/header/Header'
 import Sidebar from '../components/sidebar/Sidebar'
-import DashboardPage from '../pages/dashboard/DashboardPage'
 import Footer from '../components/footer/Footer'
-import AllCourses from '../pages/courses/AllCourses'
+import CreateCoursePage from '../pages/courses/CreateCoursePage'
 
 const DashboardLayout = () => {
     return (
@@ -19,7 +18,7 @@ const DashboardLayout = () => {
                     {/* Main content area */}
                     <div className="flex-grow overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
                         {/* <Outlet /> */}
-                        <AllCourses />
+                        <CreateCoursePage />
                         <Footer />
                     </div>
                 </div>

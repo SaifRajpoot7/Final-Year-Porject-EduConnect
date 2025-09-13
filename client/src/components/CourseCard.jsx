@@ -1,26 +1,17 @@
 import React from "react";
-import { Star } from "lucide-react"; // optional: for rating icon
+import { Link } from "react-router";
 
-const CourseCard = ({
-  thumbnail,
-  title,
-  instructor,
-  rating,
-  reviews,
-  duration,
-  students,
-  link,
-}) => {
+const CourseCard = (courseData) => {
   return (
-    <a
-      href={link}
+    <Link
+      to={`courses/${courseData.id}`}
       className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-transform duration-200 hover:-translate-y-1 border border-gray-200 flex flex-col overflow-hidden"
     >
       {/* Thumbnail */}
       <div className="h-40 w-full overflow-hidden">
         <img
-          src={thumbnail}
-          alt={title}
+          src={courseData.thumbnail}
+          alt={courseData.title}
           className="h-full w-full object-cover"
         />
       </div>
@@ -29,26 +20,20 @@ const CourseCard = ({
       <div className="flex flex-col flex-1 p-4">
         {/* Title */}
         <h3 className="font-semibold text-gray-800 text-sm sm:text-base line-clamp-2 mb-1">
-          {title}
+          {courseData.title}
         </h3>
 
         {/* Instructor */}
-        <p className="text-gray-500 text-xs sm:text-sm mb-2">{instructor}</p>
-
-        {/* Rating & Meta */}
-        <div className="flex items-center text-xs text-gray-600 gap-1 mb-2">
-          <Star size={14} className="text-yellow-400 fill-yellow-400" />
-          <span className="font-medium">{rating.toFixed(1)}</span>
-          <span className="text-gray-400">({reviews})</span>
-        </div>
+        <p className="text-gray-500 text-xs sm:text-sm mb-2">{courseData.instructor}</p>
 
         {/* Duration + Students */}
-        <div className="flex items-center justify-between text-xs text-gray-500 mt-auto">
-          <span>⏱ {duration}</span>
-          <span>👥 {students}</span>
+        <div className={`flex items-center justify-between text-sm font-medium ${ courseData.role === "teacher" ? "text-[var(--Hover-Color)]": "text-green-600" } mt-auto`} >
+          <span>
+            { courseData.role === "teacher" ? "My Course": "Enrolled Course"}
+          </span>
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
