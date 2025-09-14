@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "course_name": "React Mastery",
+    "assignment_name": "Assignment 1 - React Basics",
+    "due_date": "2025-09-15",
+    "status": "Pending"
+  },
+  {
+    "id": 2,
+    "course_name": "React Mastery",
+    "assignment_name": "Assignment 2 - State & Props",
+    "due_date": "2025-09-18",
+    "status": "Submitted"
+  },
+  {
+    "id": 3,
+    "course_name": "React Mastery",
+    "assignment_name": "Assignment 3 - React Hooks",
+    "due_date": "2025-09-20",
+    "status": "Graded"
+  },
+  {
+    "id": 4,
+    "course_name": "Node.js Advanced",
+    "assignment_name": "Assignment 1 - REST API",
+    "due_date": "2025-09-16",
+    "status": "Missed"
+  },
+  {
+    "id": 5,
+    "course_name": "Node.js Advanced",
+    "assignment_name": "Assignment 2 - Authentication",
+    "due_date": "2025-09-19",
+    "status": "Pending"
+  },
+  {
+    "id": 6,
+    "course_name": "Node.js Advanced",
+    "assignment_name": "Assignment 3 - WebSockets",
+    "due_date": "2025-09-22",
+    "status": "Submitted"
+  },
+  {
+    "id": 7,
+    "course_name": "Database Systems",
+    "assignment_name": "Assignment 1 - SQL Basics",
+    "due_date": "2025-09-14",
+    "status": "Graded"
+  },
+  {
+    "id": 8,
+    "course_name": "Database Systems",
+    "assignment_name": "Assignment 2 - Joins & Queries",
+    "due_date": "2025-09-17",
+    "status": "Missed"
+  },
+  {
+    "id": 9,
+    "course_name": "Database Systems",
+    "assignment_name": "Assignment 3 - Stored Procedures",
+    "due_date": "2025-09-21",
+    "status": "Pending"
+  },
+  {
+    "id": 10,
+    "course_name": "Cyber Security",
+    "assignment_name": "Assignment 1 - Threat Models",
+    "due_date": "2025-09-13",
+    "status": "Submitted"
+  },
+  {
+    "id": 11,
+    "course_name": "Cyber Security",
+    "assignment_name": "Assignment 2 - Encryption",
+    "due_date": "2025-09-19",
+    "status": "Pending"
+  },
+  {
+    "id": 12,
+    "course_name": "Cyber Security",
+    "assignment_name": "Assignment 3 - Vulnerability Scan",
+    "due_date": "2025-09-23",
+    "status": "Graded"
+  },
+  {
+    "id": 13,
+    "course_name": "MERN Project",
+    "assignment_name": "Assignment 1 - CRUD App",
+    "due_date": "2025-09-15",
+    "status": "Missed"
+  },
+  {
+    "id": 14,
+    "course_name": "MERN Project",
+    "assignment_name": "Assignment 2 - JWT Auth",
+    "due_date": "2025-09-20",
+    "status": "Submitted"
+  },
+  {
+    "id": 15,
+    "course_name": "MERN Project",
+    "assignment_name": "Assignment 3 - Real-time Chat",
+    "due_date": "2025-09-25",
+    "status": "Pending"
+  },
+  {
+    "id": 16,
+    "course_name": "AI Fundamentals",
+    "assignment_name": "Assignment 1 - Python Basics",
+    "due_date": "2025-09-18",
+    "status": "Graded"
+  },
+  {
+    "id": 17,
+    "course_name": "AI Fundamentals",
+    "assignment_name": "Assignment 2 - Linear Regression",
+    "due_date": "2025-09-22",
+    "status": "Pending"
+  },
+  {
+    "id": 18,
+    "course_name": "AI Fundamentals",
+    "assignment_name": "Assignment 3 - Classification Models",
+    "due_date": "2025-09-27",
+    "status": "Missed"
+  },
+  {
+    "id": 19,
+    "course_name": "Cloud Computing",
+    "assignment_name": "Assignment 1 - AWS Basics",
+    "due_date": "2025-09-15",
+    "status": "Submitted"
+  },
+  {
+    "id": 20,
+    "course_name": "Cloud Computing",
+    "assignment_name": "Assignment 2 - Docker",
+    "due_date": "2025-09-19",
+    "status": "Graded"
+  },
+  {
+    "id": 21,
+    "course_name": "Cloud Computing",
+    "assignment_name": "Assignment 3 - Kubernetes",
+    "due_date": "2025-09-24",
+    "status": "Pending"
+  },
+  {
+    "id": 22,
+    "course_name": "Data Science",
+    "assignment_name": "Assignment 1 - Pandas",
+    "due_date": "2025-09-16",
+    "status": "Missed"
+  },
+  {
+    "id": 23,
+    "course_name": "Data Science",
+    "assignment_name": "Assignment 2 - Numpy",
+    "due_date": "2025-09-20",
+    "status": "Pending"
+  },
+  {
+    "id": 24,
+    "course_name": "Data Science",
+    "assignment_name": "Assignment 3 - Data Visualization",
+    "due_date": "2025-09-26",
+    "status": "Submitted"
+  },
+  {
+    "id": 25,
+    "course_name": "Software Engineering",
+    "assignment_name": "Assignment 1 - SDLC Models",
+    "due_date": "2025-09-14",
+    "status": "Graded"
+  },
+  {
+    "id": 26,
+    "course_name": "Software Engineering",
+    "assignment_name": "Assignment 2 - Agile & Scrum",
+    "due_date": "2025-09-18",
+    "status": "Pending"
+  },
+  {
+    "id": 27,
+    "course_name": "Software Engineering",
+    "assignment_name": "Assignment 3 - UML Diagrams",
+    "due_date": "2025-09-22",
+    "status": "Submitted"
+  },
+  {
+    "id": 28,
+    "course_name": "Operating Systems",
+    "assignment_name": "Assignment 1 - Processes",
+    "due_date": "2025-09-17",
+    "status": "Pending"
+  },
+  {
+    "id": 29,
+    "course_name": "Operating Systems",
+    "assignment_name": "Assignment 2 - Memory Management",
+    "due_date": "2025-09-23",
+    "status": "Graded"
+  },
+  {
+    "id": 30,
+    "course_name": "Operating Systems",
+    "assignment_name": "Assignment 3 - File Systems",
+    "due_date": "2025-09-28",
+    "status": "Missed"
+  }
+]

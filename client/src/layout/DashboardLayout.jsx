@@ -5,6 +5,8 @@ import Sidebar from '../components/sidebar/Sidebar'
 import Footer from '../components/footer/Footer'
 import AllCoursesPage from '../pages/courses/AllCoursesPage'
 import CompletedLecturesPage from '../pages/lectures/CompletedLecturesPage'
+import AssignmentsPage from '../pages/assignment/AssignmentsPage'
+import QuizzesPage from '../pages/quiz/QuizzesPage'
 
 const DashboardLayout = () => {
     return (
@@ -19,7 +21,8 @@ const DashboardLayout = () => {
                     {/* Main content area */}
                     <div className="flex-grow overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
                         {/* <Outlet /> */}
-                        <CompletedLecturesPage />
+                        {/* <CompletedLecturesPage /> */}
+                        <QuizzesPage />
                         <Footer />
                     </div>
                 </div>

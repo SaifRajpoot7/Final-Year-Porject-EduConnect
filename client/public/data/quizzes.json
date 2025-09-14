@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "course_name": "React Mastery",
+    "quiz_name": "Quiz 1 - Components",
+    "due_date": "2025-09-20",
+    "status": "Pending"
+  },
+  {
+    "id": 2,
+    "course_name": "React Mastery",
+    "quiz_name": "Quiz 2 - State & Props",
+    "due_date": "2025-09-25",
+    "status": "Attempted"
+  },
+  {
+    "id": 3,
+    "course_name": "Node.js Fundamentals",
+    "quiz_name": "Quiz 1 - Intro to Node",
+    "due_date": "2025-09-18",
+    "status": "Graded"
+  },
+  {
+    "id": 4,
+    "course_name": "Node.js Fundamentals",
+    "quiz_name": "Quiz 2 - Express Basics",
+    "due_date": "2025-09-22",
+    "status": "Missed"
+  },
+  {
+    "id": 5,
+    "course_name": "Database Systems",
+    "quiz_name": "Quiz 1 - SQL Queries",
+    "due_date": "2025-09-19",
+    "status": "Attempted"
+  },
+  {
+    "id": 6,
+    "course_name": "Database Systems",
+    "quiz_name": "Quiz 2 - Joins",
+    "due_date": "2025-09-24",
+    "status": "Pending"
+  },
+  {
+    "id": 7,
+    "course_name": "Cybersecurity Basics",
+    "quiz_name": "Quiz 1 - Threats",
+    "due_date": "2025-09-21",
+    "status": "Attempted"
+  },
+  {
+    "id": 8,
+    "course_name": "Cybersecurity Basics",
+    "quiz_name": "Quiz 2 - Encryption",
+    "due_date": "2025-09-27",
+    "status": "Graded"
+  },
+  {
+    "id": 9,
+    "course_name": "Operating Systems",
+    "quiz_name": "Quiz 1 - Processes",
+    "due_date": "2025-09-23",
+    "status": "Missed"
+  },
+  {
+    "id": 10,
+    "course_name": "Operating Systems",
+    "quiz_name": "Quiz 2 - Memory Mgmt",
+    "due_date": "2025-09-28",
+    "status": "Pending"
+  },
+  {
+    "id": 11,
+    "course_name": "Software Engineering",
+    "quiz_name": "Quiz 1 - SDLC",
+    "due_date": "2025-09-17",
+    "status": "Attempted"
+  },
+  {
+    "id": 12,
+    "course_name": "Software Engineering",
+    "quiz_name": "Quiz 2 - Agile",
+    "due_date": "2025-09-26",
+    "status": "Graded"
+  },
+  {
+    "id": 13,
+    "course_name": "Data Structures",
+    "quiz_name": "Quiz 1 - Arrays",
+    "due_date": "2025-09-15",
+    "status": "Graded"
+  },
+  {
+    "id": 14,
+    "course_name": "Data Structures",
+    "quiz_name": "Quiz 2 - Linked Lists",
+    "due_date": "2025-09-20",
+    "status": "Pending"
+  },
+  {
+    "id": 15,
+    "course_name": "Algorithms",
+    "quiz_name": "Quiz 1 - Sorting",
+    "due_date": "2025-09-16",
+    "status": "Missed"
+  },
+  {
+    "id": 16,
+    "course_name": "Algorithms",
+    "quiz_name": "Quiz 2 - Searching",
+    "due_date": "2025-09-29",
+    "status": "Pending"
+  },
+  {
+    "id": 17,
+    "course_name": "Web Development",
+    "quiz_name": "Quiz 1 - HTML & CSS",
+    "due_date": "2025-09-19",
+    "status": "Attempted"
+  },
+  {
+    "id": 18,
+    "course_name": "Web Development",
+    "quiz_name": "Quiz 2 - JavaScript",
+    "due_date": "2025-09-23",
+    "status": "Graded"
+  },
+  {
+    "id": 19,
+    "course_name": "AI Basics",
+    "quiz_name": "Quiz 1 - Intro to AI",
+    "due_date": "2025-09-21",
+    "status": "Missed"
+  },
+  {
+    "id": 20,
+    "course_name": "AI Basics",
+    "quiz_name": "Quiz 2 - Machine Learning",
+    "due_date": "2025-09-30",
+    "status": "Pending"
+  },
+  {
+    "id": 21,
+    "course_name": "Cloud Computing",
+    "quiz_name": "Quiz 1 - Basics",
+    "due_date": "2025-09-18",
+    "status": "Graded"
+  },
+  {
+    "id": 22,
+    "course_name": "Cloud Computing",
+    "quiz_name": "Quiz 2 - AWS",
+    "due_date": "2025-09-25",
+    "status": "Pending"
+  },
+  {
+    "id": 23,
+    "course_name": "Mobile App Dev",
+    "quiz_name": "Quiz 1 - Android Basics",
+    "due_date": "2025-09-22",
+    "status": "Attempted"
+  },
+  {
+    "id": 24,
+    "course_name": "Mobile App Dev",
+    "quiz_name": "Quiz 2 - iOS Basics",
+    "due_date": "2025-09-27",
+    "status": "Graded"
+  },
+  {
+    "id": 25,
+    "course_name": "Networking",
+    "quiz_name": "Quiz 1 - TCP/IP",
+    "due_date": "2025-09-20",
+    "status": "Pending"
+  },
+  {
+    "id": 26,
+    "course_name": "Networking",
+    "quiz_name": "Quiz 2 - Routing",
+    "due_date": "2025-09-26",
+    "status": "Attempted"
+  },
+  {
+    "id": 27,
+    "course_name": "Human-Computer Interaction",
+    "quiz_name": "Quiz 1 - UX Basics",
+    "due_date": "2025-09-17",
+    "status": "Missed"
+  },
+  {
+    "id": 28,
+    "course_name": "Human-Computer Interaction",
+    "quiz_name": "Quiz 2 - UI Principles",
+    "due_date": "2025-09-28",
+    "status": "Pending"
+  },
+  {
+    "id": 29,
+    "course_name": "Compiler Design",
+    "quiz_name": "Quiz 1 - Lexical Analysis",
+    "due_date": "2025-09-19",
+    "status": "Graded"
+  },
+  {
+    "id": 30,
+    "course_name": "Compiler Design",
+    "quiz_name": "Quiz 2 - Parsing",
+    "due_date": "2025-09-24",
+    "status": "Pending"
+  }
+]
