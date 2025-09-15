@@ -7,7 +7,7 @@ import formatCustomDateTime from "../utils/formatCustomDateTime";
 const LectureCard = (LecutreData) => {
     return (
         <Link
-            to={`lecture/${LecutreData.id}`}
+            to="/lecture/live"
             className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-transform duration-200 hover:-translate-y-1 border border-gray-200 flex flex-col overflow-hidden"
         >
             {/* Thumbnail */}

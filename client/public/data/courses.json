@@ -5,7 +5,8 @@
     "title": "Mastering React for Beginners to Advanced",
     "instructor": "Saif ur Rehman",
     "role": "student",
-    "link": "/courses/1"
+    "link": "/courses/1",
+    "teacher_id": 872
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "title": "Node.js Backend Development Crash Course",
     "instructor": "John Doe",
     "role": "teacher",
-    "link": "/courses/2"
+    "link": "/courses/2",
+    "teacher_id": 453
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "title": "JavaScript Essentials and ES6+ Features",
     "instructor": "Alice Smith",
     "role": "student",
-    "link": "/courses/3"
+    "link": "/courses/3",
+    "teacher_id": 691
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "title": "MongoDB Complete Guide",
     "instructor": "Michael Brown",
     "role": "teacher",
-    "link": "/courses/4"
+    "link": "/courses/4",
+    "teacher_id": 453
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "title": "Express.js Hands-on Training",
     "instructor": "David Wilson",
     "role": "student",
-    "link": "/courses/5"
+    "link": "/courses/5",
+    "teacher_id": 927
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "title": "Next.js Zero to Hero",
     "instructor": "Sarah Lee",
     "role": "teacher",
-    "link": "/courses/6"
+    "link": "/courses/6",
+    "teacher_id": 314
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "title": "TypeScript for React Developers",
     "instructor": "Emma Johnson",
     "role": "student",
-    "link": "/courses/7"
+    "link": "/courses/7",
+    "teacher_id": 453
   },
   {
     "id": 8,
@@ -61,7 +68,8 @@
     "title": "Python Programming Bootcamp",
     "instructor": "Robert King",
     "role": "teacher",
-    "link": "/courses/8"
+    "link": "/courses/8",
+    "teacher_id": 781
   },
   {
     "id": 9,
@@ -69,7 +77,8 @@
     "title": "Django Web Development with Python",
     "instructor": "Sophia White",
     "role": "student",
-    "link": "/courses/9"
+    "link": "/courses/9",
+    "teacher_id": 990
   },
   {
     "id": 10,
@@ -77,7 +86,8 @@
     "title": "Flask Backend Fundamentals",
     "instructor": "James Miller",
     "role": "teacher",
-    "link": "/courses/10"
+    "link": "/courses/10",
+    "teacher_id": 453
   },
   {
     "id": 11,
@@ -85,7 +95,8 @@
     "title": "Angular Complete Guide",
     "instructor": "Linda Martinez",
     "role": "student",
-    "link": "/courses/11"
+    "link": "/courses/11",
+    "teacher_id": 642
   },
   {
     "id": 12,
@@ -93,7 +104,8 @@
     "title": "Vue.js Crash Course",
     "instructor": "Daniel Garcia",
     "role": "teacher",
-    "link": "/courses/12"
+    "link": "/courses/12",
+    "teacher_id": 537
   },
   {
     "id": 13,
@@ -101,7 +113,8 @@
     "title": "Modern HTML5 & CSS3",
     "instructor": "Emily Davis",
     "role": "student",
-    "link": "/courses/13"
+    "link": "/courses/13",
+    "teacher_id": 889
   },
   {
     "id": 14,
@@ -109,7 +122,8 @@
     "title": "Tailwind CSS Design Masterclass",
     "instructor": "Matthew Clark",
     "role": "teacher",
-    "link": "/courses/14"
+    "link": "/courses/14",
+    "teacher_id": 453
   },
   {
     "id": 15,
@@ -117,7 +131,8 @@
     "title": "Bootstrap Responsive Design",
     "instructor": "Isabella Hall",
     "role": "student",
-    "link": "/courses/15"
+    "link": "/courses/15",
+    "teacher_id": 276
   },
   {
     "id": 16,
@@ -125,7 +140,8 @@
     "title": "SQL & Database Management",
     "instructor": "Anthony Walker",
     "role": "teacher",
-    "link": "/courses/16"
+    "link": "/courses/16",
+    "teacher_id": 695
   },
   {
     "id": 17,
@@ -133,7 +149,8 @@
     "title": "PostgreSQL Advanced Features",
     "instructor": "Grace Allen",
     "role": "student",
-    "link": "/courses/17"
+    "link": "/courses/17",
+    "teacher_id": 120
   },
   {
     "id": 18,
@@ -141,7 +158,8 @@
     "title": "PHP and MySQL Web Apps",
     "instructor": "Christopher Young",
     "role": "teacher",
-    "link": "/courses/18"
+    "link": "/courses/18",
+    "teacher_id": 468
   },
   {
     "id": 19,
@@ -149,7 +167,8 @@
     "title": "Laravel for Modern Web Development",
     "instructor": "Olivia Hernandez",
     "role": "student",
-    "link": "/courses/19"
+    "link": "/courses/19",
+    "teacher_id": 711
   },
   {
     "id": 20,
@@ -157,7 +176,8 @@
     "title": "Ruby Programming Basics",
     "instructor": "Ethan Scott",
     "role": "teacher",
-    "link": "/courses/20"
+    "link": "/courses/20",
+    "teacher_id": 980
   },
   {
     "id": 21,
@@ -165,7 +185,8 @@
     "title": "Ruby on Rails Crash Course",
     "instructor": "Amelia Adams",
     "role": "student",
-    "link": "/courses/21"
+    "link": "/courses/21",
+    "teacher_id": 439
   },
   {
     "id": 22,
@@ -173,7 +194,8 @@
     "title": "Java Programming Masterclass",
     "instructor": "Benjamin Baker",
     "role": "teacher",
-    "link": "/courses/22"
+    "link": "/courses/22",
+    "teacher_id": 853
   },
   {
     "id": 23,
@@ -181,7 +203,8 @@
     "title": "Spring Boot Microservices",
     "instructor": "Charlotte Perez",
     "role": "student",
-    "link": "/courses/23"
+    "link": "/courses/23",
+    "teacher_id": 667
   },
   {
     "id": 24,
@@ -189,7 +212,8 @@
     "title": "Kotlin for Android Developers",
     "instructor": "Henry Rivera",
     "role": "teacher",
-    "link": "/courses/24"
+    "link": "/courses/24",
+    "teacher_id": 129
   },
   {
     "id": 25,
@@ -197,7 +221,8 @@
     "title": "iOS App Development with Swift",
     "instructor": "Victoria Campbell",
     "role": "student",
-    "link": "/courses/25"
+    "link": "/courses/25",
+    "teacher_id": 593
   },
   {
     "id": 26,
@@ -205,7 +230,8 @@
     "title": "Android Development Fundamentals",
     "instructor": "Lucas Mitchell",
     "role": "teacher",
-    "link": "/courses/26"
+    "link": "/courses/26",
+    "teacher_id": 309
   },
   {
     "id": 27,
@@ -213,7 +239,8 @@
     "title": "C# Programming for Beginners",
     "instructor": "Harper Roberts",
     "role": "student",
-    "link": "/courses/27"
+    "link": "/courses/27",
+    "teacher_id": 734
   },
   {
     "id": 28,
@@ -221,7 +248,8 @@
     "title": ".NET Core with C#",
     "instructor": "Jack Turner",
     "role": "teacher",
-    "link": "/courses/28"
+    "link": "/courses/28",
+    "teacher_id": 954
   },
   {
     "id": 29,
@@ -229,7 +257,8 @@
     "title": "DevOps with Docker & Kubernetes",
     "instructor": "Lily Phillips",
     "role": "student",
-    "link": "/courses/29"
+    "link": "/courses/29",
+    "teacher_id": 214
   },
   {
     "id": 30,
@@ -237,6 +266,7 @@
     "title": "Cyber Security Fundamentals",
     "instructor": "William Evans",
     "role": "teacher",
-    "link": "/courses/30"
+    "link": "/courses/30",
+    "teacher_id": 870
   }
 ]

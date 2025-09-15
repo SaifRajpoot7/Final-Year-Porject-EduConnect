@@ -1,10 +1,10 @@
 import React from 'react'
-import DashboardLayout from './layout/DashboardLayout'
+import AppRouter from './routers/AppRouter'
 
 const App = () => {
   return (
     <>
-      <DashboardLayout />
+      <AppRouter />
     </>
   )
 }

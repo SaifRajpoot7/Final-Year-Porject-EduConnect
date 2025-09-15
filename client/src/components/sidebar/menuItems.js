@@ -8,7 +8,7 @@ import {
   Settings,
 } from "lucide-react";
 
-export const menuItems = [
+export const generalMenu = [
   {
     icon: LayoutDashboard,
     text: "Dashboard",
@@ -30,29 +30,51 @@ export const menuItems = [
     text: "Lectures",
     link: "#",
     sub: [
-      { text: "Live Lectures", link: "/lectures/live" },
-      { text: "Recorded Lectures", link: "/lectures/recorded" },
+      { text: "Completed Lectures", link: "/lectures/completed" },
+      { text: "Upcoming Lectures", link: "/lectures/upcoming" },
     ],
   },
   {
     icon: HelpCircle,
     text: "Quizzes",
-    link: "#",
-    sub: [
-      { text: "All Quizzes", link: "/quizzes" },
-      { text: "Upcoming", link: "/quizzes/upcoming" },
-      { text: "Completed", link: "/quizzes/completed" },
-    ],
+    link: "/quizzes",
   },
   {
     icon: ClipboardList,
     text: "Assignments",
+    link: "/Assignments",
+  },
+  {
+    icon: Settings,
+    text: "Settings",
+    link: "/settings",
+  },
+];
+
+export const courseMenu = [
+  {
+    icon: LayoutDashboard,
+    text: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    icon: Video,
+    text: "Lectures",
     link: "#",
     sub: [
-      { text: "All Assignments", link: "/assignments" },
-      { text: "Pending", link: "/assignments/pending" },
-      { text: "Submitted", link: "/assignments/submitted" },
+      { text: "All Lectures", link: "/lectures" },
+      { text: "Add Lecture", link: "/lecture/add" },
     ],
+  },
+  {
+    icon: HelpCircle,
+    text: "Quizzes",
+    link: "/quizzes",
+  },
+  {
+    icon: ClipboardList,
+    text: "Assignments",
+    link: "/assignments",
   },
   {
     icon: Settings,

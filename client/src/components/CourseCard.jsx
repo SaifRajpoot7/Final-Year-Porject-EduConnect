@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const CourseCard = (courseData) => {
   return (
     <Link
-      to={`courses/${courseData.id}`}
+      to={`/course/${courseData.id}`}
       className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-transform duration-200 hover:-translate-y-1 border border-gray-200 flex flex-col overflow-hidden"
     >
       {/* Thumbnail */}

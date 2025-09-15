@@ -48,7 +48,7 @@ const QuizzesPage = () => {
       />
 
       {/* Tabs */}
-      <div className="flex gap-4 mb-6 border-b">
+      <div className="flex gap-4 mb-6 border-b flex-wrap">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -69,7 +69,7 @@ const QuizzesPage = () => {
 
       {/* Table */}
       <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
-        <table className="min-w-full text-sm text-left">
+        <table className="min-w-full text-sm text-left overflow-scroll">
           <thead className="bg-gray-100 text-gray-700 text-xs uppercase">
             <tr>
               <th className="px-4 py-3">Sr</th>
