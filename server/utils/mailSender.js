@@ -1,4 +1,4 @@
-// src/utils/mailSender.js
+// utils/mailSender.js
 import transporter from "../config/nodeMailerConfig.js";
 
 const buildMailOptions = (mailDetails) => ({

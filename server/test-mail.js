@@ -31,7 +31,7 @@ try {
 
 
 
-import mailSender from "./src/utils/mailSender"
+import mailSender from "./utils/mailSender"
 
 function sendd() {
     const testSend = async () => {
