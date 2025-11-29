@@ -18,7 +18,7 @@ const CourseAllLecturesPage = () => {
     setLoading(true);
 
     const response = await fetch("/data/lectures.json");
-    const data = await response.json();
+    let data = await response.json();
 
     const now = new Date();
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router'
-import Header from '../components/header/Header'
+import DashboardHeader from '../components/header/DashboardHeader'
 import Sidebar from '../components/sidebar/Sidebar'
 import Footer from '../components/footer/Footer'
 
@@ -13,7 +13,7 @@ const DashboardLayout = () => {
                     {/* <Sidebar1 /> */}
                 <div className="flex flex-col flex-grow bg-white max-w-screen">
                     {/* Header content goes here */}
-                    <Header />
+                    <DashboardHeader />
                     {/* Main content area */}
                     <div className="flex-grow overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
                         <Outlet />

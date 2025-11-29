@@ -18,17 +18,34 @@ import CourseAllQuizzesPage from "../pages/quiz/CourseAllQuizzesPage"
 import ProfilePage from "../pages/profile/ProfilePage"
 import ProfileEditPage from "../pages/profile/ProfileEditPage"
 import LiveLecturePage from "../pages/lectures/LiveLecturePage";
+import PrivateRouteProtector from "../routeProtector/PrivateRouteProtector";
+import SignInPage from "../pages/auth/SignInPage";
+import PublicRouteProtector from "../routeProtector/PublicRouteProtector";
+import FullPageLayout from "../layout/FullPageLayout";
+import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 
 
 
 
 function AppRouter() {
   return (
-    
-      <Routes>
-        {/* Dashboard layout with nested routes */}
+
+    <Routes>
+      {/* Dashboard layout with nested routes */}
+      < Route path="/" element={<FullPageLayout />} >
+        < Route element={<PublicRouteProtector />}>
+          <Route path="signin" element={<SignInPage />} />
+          <Route path="email-verification" element={<EmailVerificationPage />} />
+        </Route>
+        < Route element={<PrivateRouteProtector />}>
+        </Route>
+      </Route>
+
+      < Route element={<PrivateRouteProtector />}>
         <Route path="/" element={<DashboardLayout />}>
           <Route index element={<DashboardPage />} />
+
+
           <Route path="dashboard" element={<DashboardPage />} />
 
           {/* Courses */}
@@ -61,7 +78,8 @@ function AppRouter() {
           <Route path="profile/edit" element={<ProfileEditPage />} />
         </Route>
         <Route path="lecture/live" element={<LiveLecturePage />} />
-      </Routes>
+      </Route>
+    </Routes>
   );
 }
 
