@@ -10,8 +10,6 @@ const PublicRouteProtector = ({ children }) => {
   if (isLoading) return <div>Loading...</div>;
 
   if (isLoggedIn) return <Navigate to="/dashboard" replace />;
-  if (isVerified) return <Navigate to="/dashboard" replace />;
-
 
   return <Outlet />;;
 }

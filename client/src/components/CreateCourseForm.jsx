@@ -1,131 +1,15 @@
-// import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { useDropzone } from "react-dropzone";
-
-// const CreateCourseForm = () => {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm();
-
-//   const [thumbnail, setThumbnail] = useState(null);
-
-//   // Dropzone for drag & drop
-//   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-//     accept: { "image/*": [] },
-//     multiple: false,
-//     onDrop: (acceptedFiles) => {
-//       setThumbnail(
-//         Object.assign(acceptedFiles[0], {
-//           preview: URL.createObjectURL(acceptedFiles[0]),
-//         })
-//       );
-//     },
-//   });
-
-//   const onSubmit = (data) => {
-//     console.log({ ...data, thumbnail });
-//   };
-
-//   return (
-//     <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
-//       <h2 className="text-2xl font-bold mb-6 text-gray-800">Create Course</h2>
-//       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-//         {/* Course Title */}
-//         <div className="flex flex-col">
-//           <label className="font-medium text-gray-700 mb-1">Course Title</label>
-//           <input
-//             {...register("title", { required: "Course title is required" })}
-//             type="text"
-//             placeholder="Enter course title"
-//             className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
-//         </div>
-
-//         {/* Course Code */}
-//         <div className="flex flex-col">
-//           <label className="font-medium text-gray-700 mb-1">Course Code</label>
-//           <input
-//             {...register("code", { required: "Course code is required" })}
-//             type="text"
-//             placeholder="e.g. CS101"
-//             className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.code && <p className="text-red-500 text-sm">{errors.code.message}</p>}
-//         </div>
-
-//         {/* Short Description */}
-//         <div className="flex flex-col md:col-span-2">
-//           <label className="font-medium text-gray-700 mb-1">Short Description</label>
-//           <textarea
-//             {...register("description", { required: "Description is required" })}
-//             placeholder="Write a short description..."
-//             rows={3}
-//             className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
-//           />
-//           {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
-//         </div>
-
-//         {/* Thumbnail Upload */}
-//         <div className="md:col-span-2">
-//           <label className="font-medium text-gray-700 mb-2 block">Course Thumbnail</label>
-//           <div
-//             {...getRootProps()}
-//             className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer ${
-//               isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
-//             }`}
-//           >
-//             <input {...getInputProps()} />
-//             {thumbnail ? (
-//               <div className="flex flex-col items-center">
-//                 <img
-//                   src={thumbnail.preview}
-//                   alt="Preview"
-//                   className="h-32 object-cover rounded-md mb-2"
-//                 />
-//                 <p className="text-sm text-gray-600">{thumbnail.name}</p>
-//               </div>
-//             ) : (
-//               <p className="text-gray-500">Drag & drop an image here, or click to upload</p>
-//             )}
-//           </div>
-
-//           {/* OR URL */}
-//           <div className="mt-3">
-//             <input
-//               {...register("thumbnailUrl")}
-//               type="url"
-//               placeholder="Or enter image URL"
-//               className="border rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-blue-500"
-//             />
-//           </div>
-//         </div>
-
-//         {/* Submit */}
-//         <div className="md:col-span-2 flex justify-end">
-//           <button
-//             type="submit"
-//             className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-md"
-//           >
-//             Create Course
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default CreateCourseForm;
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { Trash2 } from "lucide-react";
+import axios from "axios";
+import { useAppContext } from "../contexts/AppContext";
+import { toast } from "react-toastify";
 
 const CreateCourseForm = () => {
+  const { backendUrl } = useAppContext();
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -133,7 +17,7 @@ const CreateCourseForm = () => {
   } = useForm();
 
   const [thumbnail, setThumbnail] = useState(null);
-  const [inputType, setInputType] = useState("upload"); // "upload" | "placeholder"
+  const [thumbnailType, setThumbnailType] = useState("courseImage"); // "courseImage" | "placeholder"
 
   // Dropzone for drag & drop
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -148,16 +32,71 @@ const CreateCourseForm = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    console.log({
-      ...data,
-      thumbnail: inputType === "upload" ? thumbnail : data.placeholderTitle,
-    });
+  const onSubmit = async (data) => {
+    try {
+
+      // // Add basic fields
+      // const formData = {
+      //   title: data.title,
+      //   description: data.description,
+      //   thumbnailType: thumbnailType, // "courseImage" | "placeholder"
+      // }
+
+
+      // // Add thumbnail depending on selected type
+      // if (thumbnailType === "courseImage") {
+      //   if (!thumbnail) {
+      //     alert("Please upload a course thumbnail image.");
+      //     return;
+      //   }
+      //   formData.courseImage = thumbnail
+      // } else {
+      //   formData.placeholderTitle = data.placeholderTitle
+      // }
+
+      setIsSubmitting(true)
+      const formData = new FormData();
+
+      // Add basic fields
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("thumbnailType", thumbnailType);
+
+      // Add thumbnail or placeholder
+      if (thumbnailType === "courseImage") {
+        if (!thumbnail) {
+          alert("Please upload a course thumbnail image.");
+          return;
+        }
+        formData.append("courseImage", thumbnail); // thumbnail should be a File object
+      } else {
+        formData.append("placeholderTitle", data.placeholderTitle);
+      }
+      // API Request
+      const response = await axios.post(`${backendUrl}/api/course/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+
+
+      if (!response.data.success) {
+        toast.error(response.data.message || "Failed to create course.");
+      }
+      setIsSubmitting(false)
+      toast.success("Course created successfully!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error creating course.");
+    }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Create Course</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -177,7 +116,7 @@ const CreateCourseForm = () => {
         </div>
 
         {/* Course Code */}
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label className="font-medium text-gray-700 mb-1">Course Code</label>
           <input
             {...register("code", { required: "Course code is required" })}
@@ -188,7 +127,7 @@ const CreateCourseForm = () => {
           {errors.code && (
             <p className="text-red-500 text-sm">{errors.code.message}</p>
           )}
-        </div>
+        </div> */}
 
         {/* Short Description */}
         <div className="flex flex-col md:col-span-2">
@@ -216,9 +155,9 @@ const CreateCourseForm = () => {
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="radio"
-                value="upload"
-                checked={inputType === "upload"}
-                onChange={() => setInputType("upload")}
+                value="courseImageUpload"
+                checked={thumbnailType === "courseImage"}
+                onChange={() => setThumbnailType("courseImage")}
               />
               Upload Image
             </label>
@@ -226,22 +165,21 @@ const CreateCourseForm = () => {
               <input
                 type="radio"
                 value="placeholder"
-                checked={inputType === "placeholder"}
-                onChange={() => setInputType("placeholder")}
+                checked={thumbnailType === "placeholder"}
+                onChange={() => setThumbnailType("placeholder")}
               />
               Placeholder Title
             </label>
           </div>
 
           {/* Conditional Rendering */}
-          {inputType === "upload" ? (
+          {thumbnailType === "courseImage" ? (
             <div
               {...getRootProps()}
-              className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition ${
-                isDragActive
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-300 bg-gray-50"
-              }`}
+              className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition ${isDragActive
+                ? "border-blue-500 bg-blue-50"
+                : "border-gray-300 bg-gray-50"
+                }`}
             >
               <input {...getInputProps()} />
               {thumbnail ? (
@@ -273,7 +211,7 @@ const CreateCourseForm = () => {
           ) : (
             <input
               {...register("placeholderTitle", {
-                required: "Placeholder title is required",
+                required: "Thumbanil placeholder is required",
               })}
               type="text"
               placeholder="Enter Placeholder Title"
@@ -286,9 +224,10 @@ const CreateCourseForm = () => {
         <div className="md:col-span-2 flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-md transition"
+            className={`bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-md transition`}
+            disabled={isSubmitting}
           >
-            Create Course
+            {isSubmitting ? "Creating Course" :"Create Course" }
           </button>
         </div>
       </form>

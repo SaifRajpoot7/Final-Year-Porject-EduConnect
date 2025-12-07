@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import { useAppContext } from "../../contexts/AppContext";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 
 const EmailVerificationPage = () => {
@@ -12,8 +12,10 @@ const EmailVerificationPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [resendSuccess, setResendSuccess] = useState(false)
-  const { backendUrl, checkIsLoggedIn } = useAppContext();
+  const { backendUrl, checkIsLoggedIn, isVerified } = useAppContext();
   const navigate = useNavigate();
+  if (isVerified) return <Navigate to="/dashboard" replace />;
+
 
   const onSubmit = async (otpData) => {
     setIsSubmitting(true);
@@ -74,17 +76,97 @@ const EmailVerificationPage = () => {
     visible: { opacity: 1, y: 0 }
   };
 
+  // return (
+  //   <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 p-4">
+  //     <motion.div
+  //       variants={containerVariants}
+  //       initial="hidden"
+  //       animate="visible"
+  //       className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8"
+  //     >
+  //       <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center text-gray-800 mb-6">
+  //         Email Verification
+  //       </motion.h2>
+  //       <motion.p variants={itemVariants} className="text-center text-gray-500 mb-6">
+  //         Enter the verification code sent to your email
+  //       </motion.p>
+
+  //       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+  //         <motion.div variants={itemVariants}>
+  //           <label className="block text-gray-700 mb-2">Verification Code</label>
+  //           <input
+  //             type="text"
+  //             placeholder="Enter code"
+  //             className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+  //             {...register("otp", { required: "Verification code is required" })}
+  //           />
+  //           {errors.otp && <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>}
+  //         </motion.div>
+
+  //         <motion.button
+  //           variants={itemVariants}
+  //           whileHover={{ scale: 1.05 }}
+  //           whileTap={{ scale: 0.95 }}
+  //           type="submit"
+  //           disabled={isSubmitting}
+  //           className={`w-full bg-green-500 text-white p-3 rounded-lg font-semibold shadow-md hover:bg-green-600 transition disabled:opacity-50 disabled:cursor-not-allowed`}
+  //         >
+  //           {isSubmitting ? "Verifying..." : "Verify Email"}
+  //         </motion.button>
+  //       </form>
+
+  //       <motion.div variants={itemVariants} className="text-center mt-4">
+  //         <button
+  //           onClick={handleResend}
+  //           disabled={resendCooldown > 0}
+  //           className={`text-blue-500 hover:underline font-semibold disabled:text-gray-400 disabled:cursor-not-allowed`}
+  //         >
+  //           {resendCooldown > 0 ? `Resend Code in ${resendCooldown}s` : "Resend Code"}
+  //         </button>
+  //       </motion.div>
+  //     </motion.div>
+  //   </div>
+  // );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500 p-4">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500 p-4">
+
+    {/* ✅ If verified, show success screen */}
+    {isVerified ? (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8 text-center"
+      >
+        <h2 className="text-3xl font-bold text-green-600 mb-4">
+          🎉 Account Verified!
+        </h2>
+        <p className="text-gray-600 mb-6">
+          Your email has been successfully verified.
+        </p>
+
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="w-full bg-green-500 text-white p-3 rounded-lg font-semibold shadow-md hover:bg-green-600 transition"
+        >
+          Go to Dashboard
+        </button>
+      </motion.div>
+    ) : (
+      /* ❌ Not verified → Show OTP form */
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
         className="bg-white rounded-2xl shadow-xl max-w-md w-full p-8"
       >
-        <motion.h2 variants={itemVariants} className="text-3xl font-bold text-center text-gray-800 mb-6">
+        <motion.h2
+          variants={itemVariants}
+          className="text-3xl font-bold text-center text-gray-800 mb-6"
+        >
           Email Verification
         </motion.h2>
+
         <motion.p variants={itemVariants} className="text-center text-gray-500 mb-6">
           Enter the verification code sent to your email
         </motion.p>
@@ -98,7 +180,9 @@ const EmailVerificationPage = () => {
               className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
               {...register("otp", { required: "Verification code is required" })}
             />
-            {errors.otp && <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>}
+            {errors.otp && (
+              <p className="text-red-500 text-sm mt-1">{errors.otp.message}</p>
+            )}
           </motion.div>
 
           <motion.button
@@ -107,7 +191,7 @@ const EmailVerificationPage = () => {
             whileTap={{ scale: 0.95 }}
             type="submit"
             disabled={isSubmitting}
-            className={`w-full bg-green-500 text-white p-3 rounded-lg font-semibold shadow-md hover:bg-green-600 transition disabled:opacity-50 disabled:cursor-not-allowed`}
+            className="w-full bg-green-500 text-white p-3 rounded-lg font-semibold shadow-md hover:bg-green-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Verifying..." : "Verify Email"}
           </motion.button>
@@ -117,14 +201,19 @@ const EmailVerificationPage = () => {
           <button
             onClick={handleResend}
             disabled={resendCooldown > 0}
-            className={`text-blue-500 hover:underline font-semibold disabled:text-gray-400 disabled:cursor-not-allowed`}
+            className="text-blue-500 hover:underline font-semibold disabled:text-gray-400 disabled:cursor-not-allowed"
           >
-            {resendCooldown > 0 ? `Resend Code in ${resendCooldown}s` : "Resend Code"}
+            {resendCooldown > 0
+              ? `Resend Code in ${resendCooldown}s`
+              : "Resend Code"}
           </button>
         </motion.div>
       </motion.div>
-    </div>
-  );
+    )}
+  </div>
+);
+
+
 };
 
 export default EmailVerificationPage;

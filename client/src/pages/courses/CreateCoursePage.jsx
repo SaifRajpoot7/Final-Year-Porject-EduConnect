@@ -6,7 +6,7 @@ const CreateCoursePage = () => {
   return (
     <div className="p-2 min-h-screen">
         <PageTitle
-        title="Create New Courses"
+        title="Create Course"
         subtitle=""
       />
       <CreateCourseForm />

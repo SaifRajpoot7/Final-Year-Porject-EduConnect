@@ -5,7 +5,7 @@ import mailSender from '../utils/mailSender.js';
 import { accountConfirmationWelcomeEmailTemplate, accountVerificationEmailTemplate, } from '../utils/emailTemplates.js';
 
 const registerUser = async (req, res) => {
-    const { email, fullName, role, password } = req.body;
+    const { email, fullName, password } = req.body;
     if (!email || !fullName || !password) {
         return res.json({ success: false, message: 'All Fields Require' });
     }
@@ -24,7 +24,6 @@ const registerUser = async (req, res) => {
         const user = new User({
             email,
             fullName,
-            role: role || 'user', // Default to 'user' if no role is provided
             password: hashedPassword,
             verificationOtp: otp,
             verificationOtpTimeOut: otpTimeOut,
@@ -157,7 +156,17 @@ const generateVerificationOtp = async (req, res) => {
         user.verificationOtp = otp;
         user.verificationOtpTimeOut = Date.now() + 30 * 60 * 1000;
         await user.save();
-        console.log(otp);
+        const mailDetails = {
+            email: user.email,
+            subject: "Verify Your EduConnect Account",
+            body: accountVerificationEmailTemplate({
+                name: user.fullName,
+                otp: otp,
+                url: `${process.env.CLIENT_URL}/verify-account`,
+            }),
+        };
+
+        mailSender(mailDetails)
         res.status(200).json({ success: true, message: 'OTP Sent Successfully' });
     } catch (error) {
         console.error('Error generating Verification OTP:', error);

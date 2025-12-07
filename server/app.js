@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectToDb from './config/database.js';
 import userRouter from './routes/user.routes.js';
+import courseRouter from './routes/course.routes.js';
 import mailSender from './utils/mailSender.js';
 
 
@@ -35,7 +36,7 @@ app.get("/test-email", async (req, res) => {
 
 
 app.use('/api/user', userRouter);
-// app.use('/api/booking', bookingRouter);
+app.use('/api/course', courseRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

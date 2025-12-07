@@ -5,14 +5,15 @@ import { useAppContext } from "../../contexts/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { Eye, EyeClosed, EyeOff } from "lucide-react";
 
 const SignInPage = () => {
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { backendUrl, getUserData, checkIsLoggedIn } = useAppContext();
+  const { backendUrl, getUserData, checkIsLoggedIn, isVerified } = useAppContext();
   const [loading, setLoading] = useState(false);
-
+  const [passwordState, setPasswordState] = useState(true)
   const onSubmit = async (data) => {
     setLoading(true);
     const signInData = {
@@ -26,7 +27,8 @@ const SignInPage = () => {
       if (response.data.success) {
         toast.success("Signed in successfully!");
         await checkIsLoggedIn();
-        navigate('/')
+        if (!isVerified) { navigate('/account-verification') }
+        navigate('/dashboard')
       } else {
         toast.error(response.data.message || "Failed to sign in.");
       }
@@ -77,12 +79,23 @@ const SignInPage = () => {
             transition={{ delay: 0.4 }}
           >
             <label className="block text-gray-700 mb-2">Password</label>
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              {...register("password", { required: "Password is required" })}
-            />
+            <div className="w-full p-3 rounded-lg border border-gray-300 flex focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <input
+                type={passwordState ? "password" : "text"}
+                placeholder="Enter your password"
+                className="w-full focus:outline-none"
+                {...register("password", { required: "Password is required" })}
+              />
+              {passwordState ?
+                (
+                  <Eye onClick={() => setPasswordState(!passwordState)} className="text-gray-500 cursor-pointer" />
+                ) :
+                (
+                  <EyeClosed onClick={() => setPasswordState(!passwordState)} className="text-gray-500 cursor-pointer" />
+                )
+              }
+
+            </div>
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
             )}
@@ -105,7 +118,11 @@ const SignInPage = () => {
           transition={{ delay: 0.6 }}
           className="text-center text-gray-500 mt-4"
         >
-          Don't have an account? <span className="text-blue-500 cursor-pointer">Sign Up</span>
+          Don't have an account? <span
+            className="text-blue-500 cursor-pointer"
+            onClick={() => navigate("/signup")}>
+            Sign Up
+          </span>
         </motion.p>
       </motion.div>
     </div>

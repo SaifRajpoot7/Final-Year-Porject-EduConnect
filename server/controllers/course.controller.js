@@ -1,26 +1,47 @@
 import Course from "../models/course.model.js";
 import User from "../models/user.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import mailSender from "../utils/mailSender.js"; // custom utility for sending emails
-import {
-    enrollmentEmailTemplate,
-    inviteToJoinPlatformTemplate,
-} from "../utils/emailTemplates.js";
+// import {
+//     enrollmentEmailTemplate,
+//     inviteToJoinPlatformTemplate,
+// } from "../utils/emailTemplates.js";
 
 const createCourse = async (req, res) => {
     try {
-        const { name, shortDescription, thumbnail, } = req.body;
+        const { title, description, thumbnailType, placeholderTitle, courseImage } = req.body;
         const teacherId = req.user?._id;
 
         if (!teacherId) return res.status(401).json({ success: false, message: "User not authenticated" });
-        if (!name || !shortDescription )
+        if (!title || !description || !thumbnailType )
             return res.status(400).json({ success: false, message: "All required fields must be provided" });
 
-        const course = await Course.create({
-            name: name.trim(),
-            shortDescription: shortDescription.trim(),
-            thumbnail: thumbnail ? thumbnail.trim() : undefined,
+        let courseData = {
+            title: title.trim(),
+            description: description.trim(),
+            thumbnailType,
             teacher: teacherId,
-        });
+        };
+        // Handle thumbnailType specific logic
+        if (thumbnailType === "courseImage") {
+            if (!req.file) {
+                return res.status(400).json({ success: false, message: "Course image must be uploaded" });
+            }
+
+            // Upload to Cloudinary
+            const result = await uploadOnCloudinary(req.file.path);
+
+            courseData.courseImage = result.secure_url; // save the Cloudinary URL
+        } else if (thumbnailType === "placeholder") {
+            if (!placeholderTitle) {
+                return res.status(400).json({ success: false, message: "Placeholder title must be provided" });
+            }
+            courseData.placeholderTitle = placeholderTitle.trim();
+        } else {
+            return res.status(400).json({ success: false, message: "Invalid thumbnail type" });
+        }
+
+        const course = await Course.create(courseData);
         res.status(201).json({
             success: true,
             message: "Course created successfully",
@@ -157,7 +178,7 @@ const getCoursesByTeacher = async (req, res) => {
     try {
         const { teacherId } = req.params;
         const courses = await Course.find({ teacher: teacherId, isDeleted: false })
-            .select("name thumbnail category enrollmentCount createdAt");
+            .select("name thumbnailType category enrollmentCount createdAt");
 
         res.status(200).json({ success: true, courses });
     } catch (error) {
@@ -169,7 +190,7 @@ const getCoursesByStudent = async (req, res) => {
     try {
         const { studentId } = req.params;
         const courses = await Course.find({ students: studentId, isDeleted: false })
-            .select("name thumbnail teacher category")
+            .select("name thumbnailType teacher category")
             .populate("teacher", "fullName email");
 
         res.status(200).json({ success: true, courses });

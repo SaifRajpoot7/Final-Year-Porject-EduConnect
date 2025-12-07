@@ -39,10 +39,10 @@ export const AppProvider = ({ children }) => {
       } else {
         setIsLoggedIn(false);
         setUserData(null);
-        toast.error(data.message || "Session expired");
+        navigate('/signin')
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || error.message || "Auth check failed");
+      // toast.error(error.response?.data?.message || error.message || "Auth check failed");
     } finally {
       setIsLoading(false);
     }
@@ -73,8 +73,8 @@ export const AppProvider = ({ children }) => {
         setIsLoggedIn(false);
         setUserData(null);
         toast.success(res.data.message || "Logged out");
-        if (window.location.pathname !== "/auth/signin") {
-          navigate("/auth/signin");
+        if (window.location.pathname !== "/signin") {
+          navigate("/signin");
         }
       } else {
         toast.error(res.data.message || "Logout failed");
@@ -103,6 +103,7 @@ export const AppProvider = ({ children }) => {
     isVerified,
     isLoading,
     getUserData,
+    logout,
   };
 
   return (

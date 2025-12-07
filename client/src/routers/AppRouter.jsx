@@ -23,6 +23,8 @@ import SignInPage from "../pages/auth/SignInPage";
 import PublicRouteProtector from "../routeProtector/PublicRouteProtector";
 import FullPageLayout from "../layout/FullPageLayout";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
+import IndexPage from "../pages/public/IndexPage";
+import SignUpPage from "../pages/auth/SignUpPage";
 
 
 
@@ -33,9 +35,13 @@ function AppRouter() {
     <Routes>
       {/* Dashboard layout with nested routes */}
       < Route path="/" element={<FullPageLayout />} >
+        <Route index element={<IndexPage />} />
+
+        <Route path="account-verification" element={<EmailVerificationPage />} />
+
         < Route element={<PublicRouteProtector />}>
           <Route path="signin" element={<SignInPage />} />
-          <Route path="email-verification" element={<EmailVerificationPage />} />
+          <Route path="signup" element={<SignUpPage />} />
         </Route>
         < Route element={<PrivateRouteProtector />}>
         </Route>
@@ -43,8 +49,6 @@ function AppRouter() {
 
       < Route element={<PrivateRouteProtector />}>
         <Route path="/" element={<DashboardLayout />}>
-          <Route index element={<DashboardPage />} />
-
 
           <Route path="dashboard" element={<DashboardPage />} />
 

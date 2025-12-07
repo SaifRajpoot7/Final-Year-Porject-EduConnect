@@ -2,19 +2,24 @@ import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
       trim: true,
     },
-    shortDescription: {
+    description: {
       type: String,
       required: true,
       trim: true,
     },
-    thumbnail: {
+    thumbnailType: {
       type: String,
-      default: "https://via.placeholder.com/300x200?text=EduConnect+Course",
+    },
+    courseImage: {
+      type: String
+    },
+    placeholderTitle: {
+      type: String
     },
     category: {
       type: String,

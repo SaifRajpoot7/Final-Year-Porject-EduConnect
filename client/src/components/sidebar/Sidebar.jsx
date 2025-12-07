@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { useAppContext } from "../../contexts/AppContext";
 import { generalMenu, courseMenu } from "./menuItems";
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
-  const { isSidebarOpen, menuType, toggleMenuType } = useAppContext();
+  const navigate = useNavigate();
+
+  const { isSidebarOpen, menuType, toggleMenuType, logout } = useAppContext();
   const [openMenus, setOpenMenus] = useState(null); // Track open submenus
+
 
   const toggleSubMenu = (index) => {
     // setOpenMenus((prev) => ({ ...prev, [text]: !prev[text] }));
@@ -15,6 +20,10 @@ const Sidebar = () => {
   const course_id = 14;
 
   const menuItems = menuType == "general" ? generalMenu : courseMenu;
+
+  const handleLogout = async () => {
+    logout();
+  }
 
   return (
     <aside
@@ -150,21 +159,17 @@ const Sidebar = () => {
           ))}
         </nav>
       </div >
-      <NavLink
-        to="/logout"
-        className={({ isActive }) =>
-          `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 ${isSidebarOpen ? "justify-start gap-3" : "justify-center"
-          } group ${isActive
-            ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)]  font-medium"
-            : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)] hover:text-[var(--Hover-Color)]  font-medium"
-          }`
+      <button
+        onClick={()=>handleLogout()}
+        className={
+          `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-start gap-3" : "justify-center"} group text-[var(--text-primary)] hover:bg-red-100 hover:text-red-600  font-medium`
         }
       >
         <LogOut className="w-5 h-5 transition-colors" />
         {isSidebarOpen && (
           <span className="text-sm">Logout</span>
         )}
-      </NavLink>
+      </button>
 
     </aside >
   );
