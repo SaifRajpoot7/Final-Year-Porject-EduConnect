@@ -14,6 +14,7 @@ const CreateCourseForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const [thumbnail, setThumbnail] = useState(null);
@@ -34,25 +35,6 @@ const CreateCourseForm = () => {
 
   const onSubmit = async (data) => {
     try {
-
-      // // Add basic fields
-      // const formData = {
-      //   title: data.title,
-      //   description: data.description,
-      //   thumbnailType: thumbnailType, // "courseImage" | "placeholder"
-      // }
-
-
-      // // Add thumbnail depending on selected type
-      // if (thumbnailType === "courseImage") {
-      //   if (!thumbnail) {
-      //     alert("Please upload a course thumbnail image.");
-      //     return;
-      //   }
-      //   formData.courseImage = thumbnail
-      // } else {
-      //   formData.placeholderTitle = data.placeholderTitle
-      // }
 
       setIsSubmitting(true)
       const formData = new FormData();
@@ -87,7 +69,9 @@ const CreateCourseForm = () => {
       if (!response.data.success) {
         toast.error(response.data.message || "Failed to create course.");
       }
-      setIsSubmitting(false)
+      setIsSubmitting(false);
+      reset();
+      setThumbnail(null);
       toast.success("Course created successfully!");
     } catch (error) {
       toast.error(error.response?.data?.message || "Error creating course.");

@@ -25,9 +25,10 @@ import FullPageLayout from "../layout/FullPageLayout";
 import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
 import IndexPage from "../pages/public/IndexPage";
 import SignUpPage from "../pages/auth/SignUpPage";
-
-
-
+import CreateAssignmentPage from "../pages/assignment/CreateAssignmentPage";
+import StudentsPage from "../pages/students/StudentsPage";
+import AddStudentsPage from "../pages/students/AddStudentsPage";
+import CourseLayout from "../layout/CourseLayout";
 
 function AppRouter() {
   return (
@@ -53,7 +54,7 @@ function AppRouter() {
           <Route path="dashboard" element={<DashboardPage />} />
 
           {/* Courses */}
-          <Route path="courses" element={<AllCoursesPage />} />
+          <Route path="courses/all" element={<AllCoursesPage />} />
           <Route path="courses/created" element={<CreatedCoursesPage />} />
           <Route path="courses/enrolled" element={<EnrolledCoursesPage />} />
           <Route path="courses/create" element={<CreateCoursePage />} />
@@ -70,13 +71,22 @@ function AppRouter() {
           <Route path="settings" element={<SettingPage />} />
 
           {/* Course Details */}
+          < Route path="course/:id" element={<CourseLayout />}>
 
-          <Route path="course/:id/dashboard" element={<CourseDashboardPage />} />
-          <Route path="course/:id" element={<CourseDashboardPage />} />
-          <Route path="course/:id/lectures" element={<CourseAllLecturesPage />} />
-          <Route path="course/:id/lecture/add" element={<CreateLecturePage />} />
-          <Route path="course/:id/assignments" element={<CourseAssignmentPage />} />
-          <Route path="course/:id/quizzes" element={<CourseAllQuizzesPage />} />
+            <Route index element={<CourseDashboardPage />} />
+            <Route path="dashboard" element={<CourseDashboardPage />} />
+            <Route path="lectures" element={<CourseAllLecturesPage />} />
+            <Route path="lecture/add" element={<CreateLecturePage />} />
+            <Route path="assignments" element={<CourseAssignmentPage />} />
+            <Route path="assignment/create" element={<CreateAssignmentPage />} />
+            <Route path="quizzes" element={<CourseAllQuizzesPage />} />
+
+            {/* Student */}
+            <Route path="course-students" element={<StudentsPage />} />
+            <Route path="students/add" element={<AddStudentsPage />} />
+
+          </Route>
+
           {/* Profile */}
           <Route path="profile" element={<ProfilePage />} />
           <Route path="profile/edit" element={<ProfileEditPage />} />

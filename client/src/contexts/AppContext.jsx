@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 axios.defaults.withCredentials = true;
 
@@ -13,16 +13,18 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const userId = 453;
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  const [courseId, setCourseId] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [courseData, setCourseData] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("user")
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [menuType, setMenuType] = useState("general");
+  const [isCourseAdmin, setIsCourseAdmin] = useState(false)
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
   const toggleMenuType = () =>
@@ -84,9 +86,33 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const getCourseData = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/course/${courseId}`);
+      const data = response.data;
+
+      if (data.success) {
+        setCourseData(data.courseData);
+      } else {
+        toast.error(data.message || "Failed to fetch course data");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to fetch course data");
+    }
+  };
+
+
+
   useEffect(() => {
     checkIsLoggedIn();
   }, []);
+  useEffect(() => {
+    if (userData && courseData) {
+      const isAdmin = userData._id === courseData.teacher._id;
+      setIsCourseAdmin(isAdmin);
+    }
+  }, [userData, courseData]);
+
 
   const value = {
     isSidebarOpen,
@@ -95,7 +121,6 @@ export const AppProvider = ({ children }) => {
     menuType,
     setMenuType,
     toggleMenuType,
-    userId,
     backendUrl,
     checkIsLoggedIn,
     isLoggedIn,
@@ -104,6 +129,13 @@ export const AppProvider = ({ children }) => {
     isLoading,
     getUserData,
     logout,
+    courseId,
+    setCourseId,
+    courseData,
+    setCourseData,
+    getCourseData,
+    isCourseAdmin,
+    setIsCourseAdmin
   };
 
   return (

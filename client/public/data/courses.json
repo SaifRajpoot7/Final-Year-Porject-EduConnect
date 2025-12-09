@@ -1,12 +1,13 @@
 [
   {
-    "id": 1,
+    "id": "6936e20bb3b681dcb13d550f",
     "thumbnail": "https://placehold.co/600x400?text=React+Course",
     "title": "Mastering React for Beginners to Advanced",
     "instructor": "Saif ur Rehman",
-    "role": "student",
-    "link": "/courses/1",
-    "teacher_id": 872
+    "role": "teacher",
+    "link": "/courses/6936e20bb3b681dcb13d550f", 
+    "teacher_id": "69347c04812078db705a51f0"
+
   },
   {
     "id": 2,

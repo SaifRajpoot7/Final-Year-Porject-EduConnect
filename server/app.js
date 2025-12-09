@@ -5,6 +5,7 @@ import connectToDb from './config/database.js';
 import userRouter from './routes/user.routes.js';
 import courseRouter from './routes/course.routes.js';
 import mailSender from './utils/mailSender.js';
+import assignmentRouter from './routes/assignment/assignment.route.js';
 
 
 const app = express();
@@ -37,6 +38,7 @@ app.get("/test-email", async (req, res) => {
 
 app.use('/api/user', userRouter);
 app.use('/api/course', courseRouter);
+app.use('/api/assignment',assignmentRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

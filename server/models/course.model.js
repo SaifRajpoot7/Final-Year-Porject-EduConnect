@@ -35,8 +35,7 @@ const courseSchema = new mongoose.Schema(
     },
     students: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: String,
       },
     ],
     // Counters for quick stats

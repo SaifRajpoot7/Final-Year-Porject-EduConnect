@@ -2,18 +2,18 @@ import Course from "../models/course.model.js";
 import User from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import mailSender from "../utils/mailSender.js"; // custom utility for sending emails
-// import {
-//     enrollmentEmailTemplate,
-//     inviteToJoinPlatformTemplate,
-// } from "../utils/emailTemplates.js";
+import {
+    enrollmentEmailTemplate,
+    inviteToJoinPlatformTemplate,
+} from "../utils/emailTemplates.js";
 
 const createCourse = async (req, res) => {
     try {
-        const { title, description, thumbnailType, placeholderTitle, courseImage } = req.body;
+        const { title, description, thumbnailType, placeholderTitle, } = req.body;
         const teacherId = req.user?._id;
 
         if (!teacherId) return res.status(401).json({ success: false, message: "User not authenticated" });
-        if (!title || !description || !thumbnailType )
+        if (!title || !description || !thumbnailType)
             return res.status(400).json({ success: false, message: "All required fields must be provided" });
 
         let courseData = {
@@ -53,18 +53,118 @@ const createCourse = async (req, res) => {
     }
 };
 
+// const getAllCourses = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+
+//         const { page = 1, limit = 10, search = "", sort = "newest", type = "all" } = req.query;
+
+//         let filter = {
+//             title: { $regex: search, $options: "i" } // search by title
+//         };
+
+//         if (type === "all") {
+//             filter.$or = [
+//                 { teacher: userId },
+//                 { students: userId }
+//             ];
+//         } else if (type === "mine") {
+//             filter.teacher = userId;
+//         } else if (type === "joined") {
+//             filter.students = userId;
+//         }
+
+//         // const query = {
+//         //     $or: [
+//         //         { teacher: userId },
+//         //         { students: userId }
+//         //     ],
+//         //     title: { $regex: search, $options: "i" }, // search by title
+//         // };
+
+//         let sortOption = {};
+//         if (sort === "newest") sortOption = { createdAt: -1 };
+//         if (sort === "oldest") sortOption = { createdAt: 1 };
+//         if (sort === "title-asc") sortOption = { title: 1 };
+//         if (sort === "title-desc") sortOption = { title: -1 };
+
+//         const total = await Course.countDocuments(filter);
+
+//         const courses = await Course.find(filter)
+//             .sort(sortOption)
+//             .skip((page - 1) * limit)
+//             .limit(Number(limit));
+
+//         res.status(200).json({
+//             success: true,
+//             total,
+//             totalPages: Math.ceil(total / limit),
+//             page: Number(page),
+//             limit: Number(limit),
+//             courses,
+//         });
+
+//     } catch (error) {
+//         res.status(500).json({ success: false, message: error.message });
+//     }
+// };
+
 const getAllCourses = async (req, res) => {
     try {
-        const userId = req.user._id; // or any user ID
+        const userId = req.user._id;
 
-        const courses = await Course.find({
-            $or: [
-                { teacher: userId },           // user is the teacher
-                { students: userId },          // user is enrolled as a student
-            ]                // optional: ignore deleted courses
-        })
+        // 1. Get logged-in user's email
+        const user = await User.findById(userId).select("email");
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
 
-        res.status(200).json({ success: true, courses });
+        const userEmail = user.email;
+
+        const { page = 1, limit = 10, search = "", sort = "newest", type = "all" } = req.query;
+
+        let filter = {
+            title: { $regex: search, $options: "i" }, // search by title
+        };
+
+        // 2. Fix filtering based on email stored in students[]
+        if (type === "all") {
+            filter.$or = [
+                { teacher: userId },        // teacher is still saved as ObjectId
+                { students: userEmail }     // students saved as emails
+            ];
+        } 
+        else if (type === "mine") {
+            filter.teacher = userId;
+        } 
+        else if (type === "joined") {
+            filter.students = userEmail;
+        }
+
+        // Sorting options
+        let sortOption = {};
+        if (sort === "newest") sortOption = { createdAt: -1 };
+        if (sort === "oldest") sortOption = { createdAt: 1 };
+        if (sort === "title-asc") sortOption = { title: 1 };
+        if (sort === "title-desc") sortOption = { title: -1 };
+
+        // Pagination & fetch
+        const total = await Course.countDocuments(filter);
+
+        const courses = await Course.find(filter)
+            .sort(sortOption)
+            .skip((page - 1) * limit)
+            .limit(Number(limit));
+
+        res.status(200).json({
+            success: true,
+            total,
+            totalPages: Math.ceil(total / limit),
+            page: Number(page),
+            limit: Number(limit),
+            courses,
+        });
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -73,21 +173,106 @@ const getAllCourses = async (req, res) => {
 const getCourseDetails = async (req, res) => {
     try {
         const { id } = req.params;
+        console.log("fff")
 
         const course = await Course.findById(id)
             .populate("teacher", "fullName")
-            .populate("students", "fullName");
 
         if (!course) {
             return res.status(404).json({ success: false, message: "Course not found" });
         }
 
-        res.status(200).json({ success: true, course });
+        res.status(200).json({ success: true, courseData: course });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
 };
 
+// const getCourseStudents = async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const courseId = id
+//         console.log(courseId)
+//         if (!courseId) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Course ID is required",
+//             });
+//         }
+
+//         // Find course and populate students
+//         const course = await Course.findById(courseId)
+//             .populate("students", "_id name email");
+
+//         if (!course) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "Course not found",
+//             });
+//         }
+
+//         return res.status(200).json({
+//             success: true,
+//             students: course.students,
+//         });
+
+//     } catch (error) {
+//         console.error("Error fetching course students:", error);
+//         return res.status(500).json({
+//             success: false,
+//             message: "Internal server error",
+//         });
+//     }
+// }
+const getCourseStudents = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const courseId = id;
+
+        if (!courseId) {
+            return res.status(400).json({
+                success: false,
+                message: "Course ID is required",
+            });
+        }
+
+        // Find course and populate students (assuming it's an array of emails or user IDs)
+        const course = await Course.findById(courseId);
+
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+
+
+        // Custom array logic
+        const customStudents = await Promise.all(
+            course.students.map(async (student) => {
+                // Check if this student exists in User collection
+                const user = await User.findOne({ email: student });
+                if (user) {
+                    return { name: user.fullName, email: user.email };
+                } else {
+                    return { email: student };
+                }
+            })
+        );
+
+        return res.status(200).json({
+            success: true,
+            students: customStudents,
+        });
+
+    } catch (error) {
+        console.error("Error fetching course students:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
 const updateCourse = async (req, res) => {
     try {
         const { id } = req.params;
@@ -134,30 +319,44 @@ const deleteCourse = async (req, res) => {
 
 const addStudentsToCourse = async (req, res) => {
     try {
-        const { courseId, students } = req.body; // array of emails
+        const { students } = req.body; // array of emails
+        const courseId = req.query.courseId;
         const course = await Course.findById(courseId);
 
         if (!course) return res.status(404).json({ success: false, message: "Course not found" });
 
         for (const email of students) {
+            if (course.students.includes(email)) { continue; }
             let user = await User.findOne({ email });
 
             if (!user) {
-                await mailSender({
+                const mailDetails = {
                     email,
-                    subject: "Invitation to join EduConnect",
-                    body: inviteToJoinPlatformTemplate({ courseName: course.name }),
-                });
+                    subject: "Course Enrollment & Invitation to join EduConnect",
+                    body: inviteToJoinPlatformTemplate({
+                        name: email,
+                        courseTitle: course.title,
+                        signupUrl: `${process.env.CLIENT_URL}/signup`,
+                    }),
+                };
+
+                await mailSender(mailDetails)
             } else {
-                await mailSender({
+                const mailDetails = {
                     email,
-                    subject: "Course Enrollment Confirmation",
-                    body: enrollmentEmailTemplate({ name: user.fullName, courseName: course.name }),
-                });
+                    subject: "Course Enrollment | EduConnect",
+                    body: enrollmentEmailTemplate({
+                        name: user.fullName,
+                        courseTitle: course.title,
+                        url: `${process.env.CLIENT_URL}/course/${course._id}/dashboard`,
+                    }),
+                };
+
+                await mailSender(mailDetails)
             }
 
-            if (!course.students.includes(user._id)) {
-                course.students.push(user._id);
+            if (!course.students.includes(email)) {
+                course.students.push(email);
                 course.enrollmentCount += 1;
             }
         }
@@ -203,6 +402,7 @@ const courseController = {
     createCourse,
     getAllCourses,
     getCourseDetails,
+    getCourseStudents,
     updateCourse,
     deleteCourse,
     addStudentsToCourse,

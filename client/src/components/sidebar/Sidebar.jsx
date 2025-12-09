@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../contexts/AppContext";
 import { generalMenu, courseMenu } from "./menuItems";
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const { isSidebarOpen, menuType, toggleMenuType, logout } = useAppContext();
+  const { isSidebarOpen, menuType, toggleMenuType, logout, courseId, isCourseAdmin } = useAppContext();
   const [openMenus, setOpenMenus] = useState(null); // Track open submenus
 
 
@@ -17,13 +15,17 @@ const Sidebar = () => {
     // setOpenMenus((prev) => ({ ...prev, [text]: !prev[text] }));
     setOpenMenus(openMenus === index ? null : index);
   };
-  const course_id = 14;
+  const course_id = courseId;
 
   const menuItems = menuType == "general" ? generalMenu : courseMenu;
 
   const handleLogout = async () => {
     logout();
   }
+  useEffect(() => {
+    console.log("isCourseAdmin updated:", isCourseAdmin);
+  }, [isCourseAdmin]);
+
 
   return (
     <aside
@@ -110,23 +112,50 @@ const Sidebar = () => {
               {/* Sub Menu */}
               {isSidebarOpen && item.sub && openMenus === index && (
                 <div className="ml-8 mt-1 flex flex-col gap-1">
-                  {item.sub.map((subItem) => (
-                    <NavLink
-                      key={subItem.text}
-                      to={menuType === "course"
-                        ? `/course/${course_id}${subItem.link}`
-                        : subItem.link}
+                  {/* {item.sub.map((subItem) => (
+                    isCourseAdmin == subItem.admin ? (
+                      <NavLink
+                        key={subItem.text}
+                        to={menuType === "course"
+                          ? `/course/${course_id}${subItem.link}`
+                          : subItem.link}
 
-                      className={({ isActive }) =>
-                        `text-sm px-2 py-1 rounded-md transition-colors ${isActive
-                          ? "text-[var(--Hover-Color)]"
-                          : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
-                        }`
-                      }
-                    >
-                      {subItem.text}
-                    </NavLink>
-                  ))}
+                        className={({ isActive }) =>
+                          `text-sm px-2 py-1 rounded-md transition-colors ${isActive
+                            ? "text-[var(--Hover-Color)]"
+                            : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
+                          }`
+                        }
+                      >
+                        {subItem.text}
+                      </NavLink>) : null
+
+                  ))} */}
+                  {item.sub.map((subItem) => {
+
+                    // show admin items only if isCourseAdmin is true
+                    const shouldShow = !subItem.admin || (subItem.admin && isCourseAdmin);
+
+                    return shouldShow ? (
+                      <NavLink
+                        key={subItem.text}
+                        to={
+                          menuType === "course"
+                            ? `/course/${course_id}${subItem.link}`
+                            : subItem.link
+                        }
+                        className={({ isActive }) =>
+                          `text-sm px-2 py-1 rounded-md transition-colors ${isActive
+                            ? "text-[var(--Hover-Color)]"
+                            : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
+                          }`
+                        }
+                      >
+                        {subItem.text}
+                      </NavLink>
+                    ) : null;
+                  })}
+
                 </div>
               )}
 
@@ -160,7 +189,7 @@ const Sidebar = () => {
         </nav>
       </div >
       <button
-        onClick={()=>handleLogout()}
+        onClick={() => handleLogout()}
         className={
           `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-start gap-3" : "justify-center"} group text-[var(--text-primary)] hover:bg-red-100 hover:text-red-600  font-medium`
         }

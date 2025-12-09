@@ -12,9 +12,9 @@ import { useParams } from "react-router";
 // import { useParams } from "react-router"; // enable later
 
 const CourseDashboardPage = () => {
-  const { setMenuType, userId } = useAppContext();
+  const { setMenuType, setCourseId, userData } = useAppContext();
   const { id } = useParams();
-  // const id = 14;
+  setCourseId(id)
 
   const [course, setCourse] = useState(null);
 
@@ -36,7 +36,7 @@ const CourseDashboardPage = () => {
     return <div className="flex justify-center items-center h-screen">Loading course...</div>;
   }
 
-  const isTeacher = course.teacher_id === userId;
+  const isTeacher = course.teacher_id === userData._id;
 
   return (
     <div className="p-2 min-h-screen">

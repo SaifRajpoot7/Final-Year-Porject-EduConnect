@@ -6,6 +6,7 @@ import {
   HelpCircle,
   ClipboardList,
   Settings,
+  Users,
 } from "lucide-react";
 
 export const generalMenu = [
@@ -19,7 +20,7 @@ export const generalMenu = [
     text: "Courses",
     link: "#",
     sub: [
-      { text: "All Courses", link: "/courses" },
+      { text: "All Courses", link: "/courses/all" },
       { text: "Created Courses", link: "/courses/created" },
       { text: "Enrolled Courses", link: "/courses/enrolled" },
       { text: "Create Course", link: "/courses/create" },
@@ -63,7 +64,7 @@ export const courseMenu = [
     link: "#",
     sub: [
       { text: "All Lectures", link: "/lectures" },
-      { text: "Add Lecture", link: "/lecture/add" },
+      { text: "Add Lecture", link: "/lecture/add", admin: true },
     ],
   },
   {
@@ -74,7 +75,20 @@ export const courseMenu = [
   {
     icon: ClipboardList,
     text: "Assignments",
-    link: "/assignments",
+    link: "#",
+    sub: [
+      { text: "Assignments", link: "/assignments" },
+      { text: "Create Assignments", link: "/assignment/create", admin: true },
+    ],
+  },
+  {
+    icon: Users,
+    text: "Students",
+    link: "#",
+    sub: [
+      { text: "All Students", link: "/course-students" },
+      { text: "Add Students", link: "/students/add", admin: true },
+    ],
   },
   {
     icon: Settings,

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../../components/other/PageTitle";
 import { useAppContext } from "../../contexts/AppContext";
+import { useParams } from "react-router";
 
 const CourseAssignmentsPage = () => {
+      const { setMenuType, setCourseId, userData } = useAppContext();
+    
+    const { id } = useParams();
+      setCourseId(id)
     // Tabs
     const tabs = ["All", "Pending", "Graded"];
     const [activeTab, setActiveTab] = useState("All");
-
-    const { setMenuType } = useAppContext();
 
     // Pagination
     const [page, setPage] = useState(1);
@@ -79,11 +82,12 @@ const CourseAssignmentsPage = () => {
                     <thead className="bg-gray-100 text-gray-700 text-xs uppercase">
                         <tr>
                             <th className="px-4 py-3">Sr</th>
-                            <th className="px-4 py-3">Course</th>
+                            <th className="px-4 py-3">Title</th>
                             <th className="px-4 py-3">Assignment</th>
                             <th className="px-4 py-3">Due Date</th>
-                            {/* <th className="px-4 py-3">Status</th> */}
-                            <th className="px-4 py-3">Actions</th>
+                            <th className="px-4 py-3">Total Marks</th>
+                            <th className="px-4 py-3">Result</th>
+                            <th className="px-4 py-3">Submit</th>
                         </tr>
                     </thead>
                     <tbody>

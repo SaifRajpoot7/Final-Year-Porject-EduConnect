@@ -39,8 +39,9 @@ const CourseFilters = ({ onSearch, onSortChange }) => {
           className="px-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
           <option value="newest">Newest</option>
-          <option value="az">Title A–Z</option>
-          <option value="za">Title Z–A</option>
+          <option value="oldest">Oldest</option>
+          <option value="title-asc">Title A–Z</option>
+          <option value="title-desc">Title Z–A</option>
         </select>
       </div>
     </div>
