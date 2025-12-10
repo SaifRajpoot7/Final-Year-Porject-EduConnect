@@ -7,6 +7,7 @@ import {
   ClipboardList,
   Settings,
   Users,
+  Megaphone,
 } from "lucide-react";
 
 export const generalMenu = [
@@ -90,6 +91,12 @@ export const courseMenu = [
       { text: "Add Students", link: "/students/add", admin: true },
     ],
   },
+  {
+    icon: Megaphone,
+    text: "Announcements",
+    link: "/announcements",
+  },
+  
   {
     icon: Settings,
     text: "Settings",

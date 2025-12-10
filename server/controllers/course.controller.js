@@ -173,7 +173,6 @@ const getAllCourses = async (req, res) => {
 const getCourseDetails = async (req, res) => {
     try {
         const { id } = req.params;
-        console.log("fff")
 
         const course = await Course.findById(id)
             .populate("teacher", "fullName")

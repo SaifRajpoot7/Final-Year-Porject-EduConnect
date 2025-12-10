@@ -12,11 +12,9 @@ const assignmentSubmissionSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    submittedFiles: [
-      {
-        type: String, // URLs of submitted files
-      },
-    ],
+    submittedFile: {
+      type: String, // URLs of submitted files
+    },
     submittedAt: {
       type: Date,
       default: Date.now,
@@ -41,5 +39,5 @@ const assignmentSubmissionSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const assignmentSubmission = mongoose.model("assignmentSubmission", assignmentSubmissionSchema);
-export default assignmentSubmission;
+const AssignmentSubmission = mongoose.model("assignmentSubmission", assignmentSubmissionSchema);
+export default AssignmentSubmission;

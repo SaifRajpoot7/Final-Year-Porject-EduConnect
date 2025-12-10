@@ -29,6 +29,8 @@ import CreateAssignmentPage from "../pages/assignment/CreateAssignmentPage";
 import StudentsPage from "../pages/students/StudentsPage";
 import AddStudentsPage from "../pages/students/AddStudentsPage";
 import CourseLayout from "../layout/CourseLayout";
+import AssignmentSubmissionRecordPage from "../pages/assignment/AssignmentSubmissionRecordPage";
+import AnnouncementPage from "../pages/announcement/AnnouncementPage";
 
 function AppRouter() {
   return (
@@ -79,11 +81,13 @@ function AppRouter() {
             <Route path="lecture/add" element={<CreateLecturePage />} />
             <Route path="assignments" element={<CourseAssignmentPage />} />
             <Route path="assignment/create" element={<CreateAssignmentPage />} />
+            <Route path="assignments/:assignmentId" element={<AssignmentSubmissionRecordPage />} />
             <Route path="quizzes" element={<CourseAllQuizzesPage />} />
 
             {/* Student */}
             <Route path="course-students" element={<StudentsPage />} />
             <Route path="students/add" element={<AddStudentsPage />} />
+            <Route path="announcements" element={<AnnouncementPage />} />
 
           </Route>
 

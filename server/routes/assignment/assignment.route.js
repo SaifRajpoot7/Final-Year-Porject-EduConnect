@@ -3,6 +3,7 @@ import assignmentController from "../../controllers/assignment/assignment.contro
 import requireAuth from "../../middlewares/requireAuth.middleware.js";
 import { upload } from "../../middlewares/multer.middleware.js";
 import requireCourseAdmin from "../../middlewares/requireCourseAdmin.middleware.js";
+import courseRole from "../../middlewares/courseRole.middleware.js";
 
 const assignmentRouter = express.Router();
 
@@ -10,18 +11,13 @@ const assignmentRouter = express.Router();
 assignmentRouter.post("/create", requireAuth, upload.single('assignmentFile'), requireCourseAdmin, assignmentController.createAssignment);
 
 // Get all
-// assignmentRouter.get("/", getAssignments);
+assignmentRouter.get("/all/course", requireAuth, courseRole, assignmentController.getAllCourseAssignment);
 
-// // Get by ID
-// assignmentRouter.get("/:id", getAssignmentById);
+// Submit assignment
+assignmentRouter.post("/submit", requireAuth, courseRole, upload.single('assignmentSubmissionFile'), assignmentController.submitAssignment);
 
-// // Update
-// assignmentRouter.put("/:id", updateAssignment);
+assignmentRouter.get("/all/:assignmentId", requireAuth, requireCourseAdmin, assignmentController.allSubmissionOfAssignment);
 
-// // Delete
-// assignmentRouter.delete("/:id", deleteAssignment);
-
-// // Get by course
-// assignmentRouter.get("/course/:courseId", getAssignmentsByCourse);
+assignmentRouter.patch("/grade/:submissionId", requireAuth, requireCourseAdmin, assignmentController.gradeSubmission);
 
 export default assignmentRouter;

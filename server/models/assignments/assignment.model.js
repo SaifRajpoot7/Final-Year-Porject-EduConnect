@@ -34,6 +34,12 @@ const assignmentSchema = new mongoose.Schema(
       type: Number,
       default: 10,
     },
+    totalSubmissions: {
+      type: Number,
+    },
+    totalGraded: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
