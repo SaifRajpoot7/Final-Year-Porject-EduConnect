@@ -15,7 +15,7 @@ const DashboardLayout = () => {
                     {/* Header content goes here */}
                     <DashboardHeader />
                     {/* Main content area */}
-                    <div className="flex-grow overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
+                    <div className="flex  flex-col flex-grow justify-between overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
                         <Outlet />
                         <Footer />
                     </div>

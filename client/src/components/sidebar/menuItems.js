@@ -71,14 +71,18 @@ export const courseMenu = [
   {
     icon: HelpCircle,
     text: "Quizzes",
-    link: "/quizzes",
+    link: "#",
+    sub: [
+      { text: "All Quizzes", link: "/quizzes" },
+      { text: "Create Assignments", link: "/quiz/create", admin: true },
+    ],
   },
   {
     icon: ClipboardList,
     text: "Assignments",
     link: "#",
     sub: [
-      { text: "Assignments", link: "/assignments" },
+      { text: "All Assignments", link: "/assignments" },
       { text: "Create Assignments", link: "/assignment/create", admin: true },
     ],
   },
@@ -96,7 +100,7 @@ export const courseMenu = [
     text: "Announcements",
     link: "/announcements",
   },
-  
+
   {
     icon: Settings,
     text: "Settings",

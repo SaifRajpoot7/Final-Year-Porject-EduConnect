@@ -30,7 +30,8 @@ import StudentsPage from "../pages/students/StudentsPage";
 import AddStudentsPage from "../pages/students/AddStudentsPage";
 import CourseLayout from "../layout/CourseLayout";
 import AssignmentSubmissionRecordPage from "../pages/assignment/AssignmentSubmissionRecordPage";
-import AnnouncementPage from "../pages/announcement/AnnouncementPage";
+import CreateQuizPage from "../pages/quiz/CreateQuizPage";
+import QuizSubmissionRecordPage from "../pages/quiz/QuizSubmissionRecordPage";
 
 function AppRouter() {
   return (
@@ -79,15 +80,21 @@ function AppRouter() {
             <Route path="dashboard" element={<CourseDashboardPage />} />
             <Route path="lectures" element={<CourseAllLecturesPage />} />
             <Route path="lecture/add" element={<CreateLecturePage />} />
+
+            {/* Assignment */}
             <Route path="assignments" element={<CourseAssignmentPage />} />
             <Route path="assignment/create" element={<CreateAssignmentPage />} />
             <Route path="assignments/:assignmentId" element={<AssignmentSubmissionRecordPage />} />
+            
+            {/* Quiz */}
             <Route path="quizzes" element={<CourseAllQuizzesPage />} />
+            <Route path="quiz/create" element={<CreateQuizPage />} />
+            <Route path="quizzes/:quizId" element={<QuizSubmissionRecordPage />} />
 
             {/* Student */}
             <Route path="course-students" element={<StudentsPage />} />
             <Route path="students/add" element={<AddStudentsPage />} />
-            <Route path="announcements" element={<AnnouncementPage />} />
+            {/* <Route path="announcements" element={<AnnouncementPage />} /> */}
 
           </Route>
 

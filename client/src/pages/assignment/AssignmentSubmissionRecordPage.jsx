@@ -3,7 +3,6 @@ import axios from "axios";
 import PageTitle from "../../components/other/PageTitle";
 import { useAppContext } from "../../contexts/AppContext";
 import { useParams } from "react-router";
-import AssignmentSubmitModal from "./AssignmentSubmitModal";
 import AssignmentSubmissionUpdateModal from "./AssignmentSubmissionUpdateModal";
 
 const AssignmentSubmissionRecordPage = () => {

@@ -6,6 +6,7 @@ import userRouter from './routes/user.routes.js';
 import courseRouter from './routes/course.routes.js';
 import mailSender from './utils/mailSender.js';
 import assignmentRouter from './routes/assignment/assignment.route.js';
+import quizRouter from './routes/quiz.routes.js';
 
 
 const app = express();
@@ -39,6 +40,7 @@ app.get("/test-email", async (req, res) => {
 app.use('/api/user', userRouter);
 app.use('/api/course', courseRouter);
 app.use('/api/assignment',assignmentRouter);
+app.use('/api/quiz',quizRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
