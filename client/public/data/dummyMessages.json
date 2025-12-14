@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "senderId": "user1",
+    "senderName": "Alex",
+    "text": "Hey, how are you?",
+    "time": "10:15 AM",
+    "profilePic": null
+  },
+  {
+    "id": 2,
+    "senderId": "me",
+    "senderName": "You",
+    "text": "I’m good! Working on the new chat UI.",
+    "time": "10:16 AM",
+    "profilePic": null
+  },
+  {
+    "id": 3,
+    "senderId": "user1",
+    "senderName": "Alex",
+    "text": "Nice! Make sure it’s responsive.",
+    "time": "10:17 AM",
+    "profilePic": null
+  },
+  {
+    "id": 4,
+    "senderId": "me",
+    "senderName": "You",
+    "text": "Yeah, adding file upload and message bubbles too.",
+    "time": "10:18 AM",
+    "profilePic": null
+  },
+  {
+    "id": 5,
+    "senderId": "user1",
+    "senderName": "Alex",
+    "text": "Perfect! Send me the preview when done.",
+    "time": "10:19 AM",
+    "profilePic": null
+  }
+]

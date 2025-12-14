@@ -53,62 +53,6 @@ const createCourse = async (req, res) => {
     }
 };
 
-// const getAllCourses = async (req, res) => {
-//     try {
-//         const userId = req.user._id;
-
-//         const { page = 1, limit = 10, search = "", sort = "newest", type = "all" } = req.query;
-
-//         let filter = {
-//             title: { $regex: search, $options: "i" } // search by title
-//         };
-
-//         if (type === "all") {
-//             filter.$or = [
-//                 { teacher: userId },
-//                 { students: userId }
-//             ];
-//         } else if (type === "mine") {
-//             filter.teacher = userId;
-//         } else if (type === "joined") {
-//             filter.students = userId;
-//         }
-
-//         // const query = {
-//         //     $or: [
-//         //         { teacher: userId },
-//         //         { students: userId }
-//         //     ],
-//         //     title: { $regex: search, $options: "i" }, // search by title
-//         // };
-
-//         let sortOption = {};
-//         if (sort === "newest") sortOption = { createdAt: -1 };
-//         if (sort === "oldest") sortOption = { createdAt: 1 };
-//         if (sort === "title-asc") sortOption = { title: 1 };
-//         if (sort === "title-desc") sortOption = { title: -1 };
-
-//         const total = await Course.countDocuments(filter);
-
-//         const courses = await Course.find(filter)
-//             .sort(sortOption)
-//             .skip((page - 1) * limit)
-//             .limit(Number(limit));
-
-//         res.status(200).json({
-//             success: true,
-//             total,
-//             totalPages: Math.ceil(total / limit),
-//             page: Number(page),
-//             limit: Number(limit),
-//             courses,
-//         });
-
-//     } catch (error) {
-//         res.status(500).json({ success: false, message: error.message });
-//     }
-// };
-
 const getAllCourses = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -187,42 +131,6 @@ const getCourseDetails = async (req, res) => {
     }
 };
 
-// const getCourseStudents = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const courseId = id
-//         console.log(courseId)
-//         if (!courseId) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Course ID is required",
-//             });
-//         }
-
-//         // Find course and populate students
-//         const course = await Course.findById(courseId)
-//             .populate("students", "_id name email");
-
-//         if (!course) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Course not found",
-//             });
-//         }
-
-//         return res.status(200).json({
-//             success: true,
-//             students: course.students,
-//         });
-
-//     } catch (error) {
-//         console.error("Error fetching course students:", error);
-//         return res.status(500).json({
-//             success: false,
-//             message: "Internal server error",
-//         });
-//     }
-// }
 const getCourseStudents = async (req, res) => {
     try {
         const { id } = req.params;

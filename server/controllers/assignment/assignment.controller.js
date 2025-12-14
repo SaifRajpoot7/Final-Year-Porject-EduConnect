@@ -17,11 +17,7 @@ const createAssignment = async (req, res) => {
         if (!course) {
             return res.status(404).json({ success: false, message: 'Course not found' });
         }
-
-        // // Ensure the logged-in user is the teacher of the course
-        // if (course.teacher.toString() !== req.user._id.toString()) {
-        //     return res.status(403).json({ success: false, message: 'You are not the teacher of this course' });
-        // }
+        
         let assignmentData = {
             title: title.trim(),
             course: courseId,

@@ -32,6 +32,8 @@ import CourseLayout from "../layout/CourseLayout";
 import AssignmentSubmissionRecordPage from "../pages/assignment/AssignmentSubmissionRecordPage";
 import CreateQuizPage from "../pages/quiz/CreateQuizPage";
 import QuizSubmissionRecordPage from "../pages/quiz/QuizSubmissionRecordPage";
+import AnnouncementPage from "../pages/announcement/AnnouncementPage";
+import ChatScreen from "../components/chat/ChatScreen";
 
 function AppRouter() {
   return (
@@ -95,6 +97,7 @@ function AppRouter() {
             <Route path="course-students" element={<StudentsPage />} />
             <Route path="students/add" element={<AddStudentsPage />} />
             {/* <Route path="announcements" element={<AnnouncementPage />} /> */}
+            <Route path="announcements" element={<ChatScreen />} />
 
           </Route>
 
