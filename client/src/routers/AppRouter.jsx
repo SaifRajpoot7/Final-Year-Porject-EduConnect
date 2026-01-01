@@ -1,113 +1,321 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router";
-import DashboardLayout from "../layout/DashboardLayout";
-import DashboardPage from "../pages/dashboard/DashboardPage";
-import CourseDashboardPage from "../pages/dashboard/CourseDashboardPage";
-import AllCoursesPage from "../pages/courses/AllCoursesPage";
-import CreatedCoursesPage from "../pages/courses/CreatedCoursesPage"
-import EnrolledCoursesPage from "../pages/courses/EnrolledCoursesPage"
-import CreateCoursePage from "../pages/courses/CreateCoursePage";
-import CompletedLecturesPage from "../pages/lectures/CompletedLecturesPage"
-import UpcomingLecturesPage from "../pages/lectures/UpcomingLecturesPage"
-import QuizzesPage from "../pages/quiz/QuizzesPage"
-import AssignmentsPage from "../pages/assignment/AssignmentsPage"
-import SettingPage from "../pages/settings/SettingPage"
-import CourseAllLecturesPage from "../pages/lectures/CourseAllLecturesPage"
-import CreateLecturePage from "../pages/lectures/CreateLecturePage"
-import CourseAssignmentPage from "../pages/assignment/CourseAssignmentPage"
-import CourseAllQuizzesPage from "../pages/quiz/CourseAllQuizzesPage"
-import ProfilePage from "../pages/profile/ProfilePage"
-import ProfileEditPage from "../pages/profile/ProfileEditPage"
-import LiveLecturePage from "../pages/lectures/LiveLecturePage";
-import PrivateRouteProtector from "../routeProtector/PrivateRouteProtector";
-import SignInPage from "../pages/auth/SignInPage";
-import PublicRouteProtector from "../routeProtector/PublicRouteProtector";
-import FullPageLayout from "../layout/FullPageLayout";
-import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
-import IndexPage from "../pages/public/IndexPage";
-import SignUpPage from "../pages/auth/SignUpPage";
-import CreateAssignmentPage from "../pages/assignment/CreateAssignmentPage";
-import StudentsPage from "../pages/students/StudentsPage";
-import AddStudentsPage from "../pages/students/AddStudentsPage";
-import CourseLayout from "../layout/CourseLayout";
-import AssignmentSubmissionRecordPage from "../pages/assignment/AssignmentSubmissionRecordPage";
-import CreateQuizPage from "../pages/quiz/CreateQuizPage";
-import QuizSubmissionRecordPage from "../pages/quiz/QuizSubmissionRecordPage";
-import AnnouncementPage from "../pages/announcement/AnnouncementPage";
-import ChatScreen from "../components/chat/ChatScreen";
+// import { BrowserRouter as Router, Routes, Route } from "react-router";
+// import DashboardLayout from "../layout/DashboardLayout";
+// import DashboardPage from "../pages/dashboard/DashboardPage";
+// import CourseDashboardPage from "../pages/dashboard/CourseDashboardPage";
+// import AllCoursesPage from "../pages/courses/AllCoursesPage";
+// import CreatedCoursesPage from "../pages/courses/CreatedCoursesPage"
+// import EnrolledCoursesPage from "../pages/courses/EnrolledCoursesPage"
+// import CreateCoursePage from "../pages/courses/CreateCoursePage";
+// import CompletedLecturesPage from "../pages/lectures/CompletedLecturesPage"
+// import UpcomingLecturesPage from "../pages/lectures/UpcomingLecturesPage"
+// import QuizzesPage from "../pages/quiz/QuizzesPage"
+// import AssignmentsPage from "../pages/assignment/AssignmentsPage"
+// import SettingPage from "../pages/settings/SettingPage"
+// import CreateLecturePage from "../pages/lectures/CreateLecturePage"
+// import CourseAssignmentPage from "../pages/assignment/CourseAssignmentPage"
+// import CourseAllQuizzesPage from "../pages/quiz/CourseAllQuizzesPage"
+// import ProfilePage from "../pages/profile/ProfilePage"
+// import ProfileEditPage from "../pages/profile/ProfileEditPage"
+// import LiveLecturePage from "../pages/lectures/LiveLecturePage";
+// import PrivateRouteProtector from "../routeProtector/PrivateRouteProtector";
+// import SignInPage from "../pages/auth/SignInPage";
+// import PublicRouteProtector from "../routeProtector/PublicRouteProtector";
+// import FullPageLayout from "../layout/FullPageLayout";
+// import EmailVerificationPage from "../pages/auth/EmailVerificationPage";
+// import IndexPage from "../pages/public/IndexPage";
+// import SignUpPage from "../pages/auth/SignUpPage";
+// import CreateAssignmentPage from "../pages/assignment/CreateAssignmentPage";
+// import StudentsPage from "../pages/students/StudentsPage";
+// import AddStudentsPage from "../pages/students/AddStudentsPage";
+// import CourseLayout from "../layout/CourseLayout";
+// import AssignmentSubmissionRecordPage from "../pages/assignment/AssignmentSubmissionRecordPage";
+// import CreateQuizPage from "../pages/quiz/CreateQuizPage";
+// import QuizSubmissionRecordPage from "../pages/quiz/QuizSubmissionRecordPage";
+// import AnnouncementPage from "../pages/announcement/AnnouncementPage";
+// import ChatScreen from "../components/chat/ChatScreen";
+// import CourseLecturesPage from "../pages/lectures/CourseLecturesPage";
+// import LiveLectureLayout from "../layout/LiveLectureLayout";
+// import CourseMatesPage from "../pages/students/CourseMatesPage";
 
+// function AppRouter() {
+//   return (
+
+//     <Routes>
+//       {/* Dashboard layout with nested routes */}
+//       < Route path="/" element={<FullPageLayout />} >
+//         <Route index element={<IndexPage />} />
+
+//         <Route path="account-verification" element={<EmailVerificationPage />} />
+
+//         < Route element={<PublicRouteProtector />}>
+//           <Route path="signin" element={<SignInPage />} />
+//           <Route path="signup" element={<SignUpPage />} />
+//         </Route>
+//         < Route element={<PrivateRouteProtector />}>
+//         </Route>
+//       </Route>
+
+//       < Route element={<PrivateRouteProtector />}>
+//         <Route path="/" element={<DashboardLayout />}>
+
+//           <Route path="dashboard" element={<DashboardPage />} />
+
+//           {/* Courses */}
+//           <Route path="courses/all" element={<AllCoursesPage />} />
+//           <Route path="courses/created" element={<CreatedCoursesPage />} />
+//           <Route path="courses/enrolled" element={<EnrolledCoursesPage />} />
+//           <Route path="courses/create" element={<CreateCoursePage />} />
+
+//           {/* Lectures */}
+//           <Route path="lectures/completed" element={<CompletedLecturesPage />} />
+//           <Route path="lectures/upcoming" element={<UpcomingLecturesPage />} />
+
+//           {/* Quizzes & Assignments */}
+//           <Route path="quizzes" element={<QuizzesPage />} />
+//           <Route path="assignments" element={<AssignmentsPage />} />
+
+//           {/* Settings */}
+//           <Route path="settings" element={<SettingPage />} />
+
+//           {/* Course Details */}
+//           <Route path="course/:id" element={<CourseLayout />}>
+
+//             <Route index element={<CourseDashboardPage />} />
+//             <Route path="dashboard" element={<CourseDashboardPage />} />
+//             <Route path="lectures" element={<CourseLecturesPage />} />
+//             <Route path="lecture/add" element={<CreateLecturePage />} />
+
+//             {/* Assignment */}
+//             <Route path="assignments" element={<CourseAssignmentPage />} />
+//             <Route path="assignment/create" element={<CreateAssignmentPage />} />
+//             <Route path="assignments/:assignmentId" element={<AssignmentSubmissionRecordPage />} />
+
+//             {/* Quiz */}
+//             <Route path="quizzes" element={<CourseAllQuizzesPage />} />
+//             <Route path="quiz/create" element={<CreateQuizPage />} />
+//             <Route path="quizzes/:quizId" element={<QuizSubmissionRecordPage />} />
+
+//             {/* Student */}
+//             <Route path="course-students" element={<StudentsPage />} />
+//             <Route path="course-mates" element={<CourseMatesPage />} />
+//             <Route path="students/add" element={<AddStudentsPage />} />
+//             <Route path="announcements" element={<AnnouncementPage />} />
+//             {/* <Route path="announcements" element={<ChatScreen />} /> */}
+
+//           </Route>
+
+//           {/* Profile */}
+//           <Route path="profile" element={<ProfilePage />} />
+//           <Route path="profile/edit" element={<ProfileEditPage />} />
+//         </Route>
+
+//         <Route path="lecture/live/:lectureId" element={<LiveLecturePage />} />
+//       </Route>
+
+//     </Routes>
+//   );
+// }
+
+// export default AppRouter;
+
+
+import React, { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router";
+import FullPageLoaderComponent from "../components/FullPageLoaderComponent";
+
+/* =========================
+   Lazy Loaded Layouts
+========================= */
+const DashboardLayout = lazy(() => import("../layout/DashboardLayout"));
+const FullPageLayout = lazy(() => import("../layout/FullPageLayout"));
+const CourseLayout = lazy(() => import("../layout/CourseLayout"));
+const LiveLectureLayout = lazy(() => import("../layout/LiveLectureLayout"));
+
+/* =========================
+   Lazy Loaded Route Protectors
+========================= */
+const PrivateRouteProtector = lazy(() =>
+  import("../routeProtector/PrivateRouteProtector")
+);
+const PublicRouteProtector = lazy(() =>
+  import("../routeProtector/PublicRouteProtector")
+);
+
+/* =========================
+   Lazy Loaded Pages
+========================= */
+const IndexPage = lazy(() => import("../pages/public/IndexPage"));
+const SignInPage = lazy(() => import("../pages/auth/SignInPage"));
+const SignUpPage = lazy(() => import("../pages/auth/SignUpPage"));
+const EmailVerificationPage = lazy(() =>
+  import("../pages/auth/EmailVerificationPage")
+);
+
+const DashboardPage = lazy(() =>
+  import("../pages/dashboard/DashboardPage")
+);
+const CourseDashboardPage = lazy(() =>
+  import("../pages/dashboard/CourseDashboardPage")
+);
+
+const AllCoursesPage = lazy(() =>
+  import("../pages/courses/AllCoursesPage")
+);
+const CreatedCoursesPage = lazy(() =>
+  import("../pages/courses/CreatedCoursesPage")
+);
+const EnrolledCoursesPage = lazy(() =>
+  import("../pages/courses/EnrolledCoursesPage")
+);
+const CreateCoursePage = lazy(() =>
+  import("../pages/courses/CreateCoursePage")
+);
+
+const CompletedLecturesPage = lazy(() =>
+  import("../pages/lectures/CompletedLecturesPage")
+);
+const UpcomingLecturesPage = lazy(() =>
+  import("../pages/lectures/UpcomingLecturesPage")
+);
+const CourseLecturesPage = lazy(() =>
+  import("../pages/lectures/CourseLecturesPage")
+);
+const CreateLecturePage = lazy(() =>
+  import("../pages/lectures/CreateLecturePage")
+);
+const LiveLecturePage = lazy(() =>
+  import("../pages/lectures/LiveLecturePage")
+);
+
+const QuizzesPage = lazy(() => import("../pages/quiz/QuizzesPage"));
+const CourseAllQuizzesPage = lazy(() =>
+  import("../pages/quiz/CourseAllQuizzesPage")
+);
+const CreateQuizPage = lazy(() =>
+  import("../pages/quiz/CreateQuizPage")
+);
+const QuizSubmissionRecordPage = lazy(() =>
+  import("../pages/quiz/QuizSubmissionRecordPage")
+);
+
+const AssignmentsPage = lazy(() =>
+  import("../pages/assignment/AssignmentsPage")
+);
+const CourseAssignmentPage = lazy(() =>
+  import("../pages/assignment/CourseAssignmentPage")
+);
+const CreateAssignmentPage = lazy(() =>
+  import("../pages/assignment/CreateAssignmentPage")
+);
+const AssignmentSubmissionRecordPage = lazy(() =>
+  import("../pages/assignment/AssignmentSubmissionRecordPage")
+);
+
+const StudentsPage = lazy(() =>
+  import("../pages/students/StudentsPage")
+);
+const AddStudentsPage = lazy(() =>
+  import("../pages/students/AddStudentsPage")
+);
+const CourseMatesPage = lazy(() =>
+  import("../pages/students/CourseMatesPage")
+);
+
+const AnnouncementPage = lazy(() =>
+  import("../pages/announcement/AnnouncementPage")
+);
+
+const ProfilePage = lazy(() =>
+  import("../pages/profile/ProfilePage")
+);
+const ProfileEditPage = lazy(() =>
+  import("../pages/profile/ProfileEditPage")
+);
+
+const SettingPage = lazy(() =>
+  import("../pages/settings/SettingPage")
+);
+
+/* =========================
+   App Router
+========================= */
 function AppRouter() {
   return (
+    <Suspense fallback={<FullPageLoaderComponent />}>
+      <Routes>
 
-    <Routes>
-      {/* Dashboard layout with nested routes */}
-      < Route path="/" element={<FullPageLayout />} >
-        <Route index element={<IndexPage />} />
+        {/* Public Routes */}
+        <Route path="/" element={<FullPageLayout />}>
+          <Route index element={<IndexPage />} />
+          <Route path="account-verification" element={<EmailVerificationPage />} />
 
-        <Route path="account-verification" element={<EmailVerificationPage />} />
-
-        < Route element={<PublicRouteProtector />}>
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="signup" element={<SignUpPage />} />
+          <Route element={<PublicRouteProtector />}>
+            <Route path="signin" element={<SignInPage />} />
+            <Route path="signup" element={<SignUpPage />} />
+          </Route>
         </Route>
-        < Route element={<PrivateRouteProtector />}>
-        </Route>
-      </Route>
 
-      < Route element={<PrivateRouteProtector />}>
-        <Route path="/" element={<DashboardLayout />}>
+        {/* Private Routes */}
+        <Route element={<PrivateRouteProtector />}>
+          <Route path="/" element={<DashboardLayout />}>
 
-          <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="dashboard" element={<DashboardPage />} />
 
-          {/* Courses */}
-          <Route path="courses/all" element={<AllCoursesPage />} />
-          <Route path="courses/created" element={<CreatedCoursesPage />} />
-          <Route path="courses/enrolled" element={<EnrolledCoursesPage />} />
-          <Route path="courses/create" element={<CreateCoursePage />} />
+            {/* Courses */}
+            <Route path="courses/all" element={<AllCoursesPage />} />
+            <Route path="courses/created" element={<CreatedCoursesPage />} />
+            <Route path="courses/enrolled" element={<EnrolledCoursesPage />} />
+            <Route path="courses/create" element={<CreateCoursePage />} />
 
-          {/* Lectures */}
-          <Route path="lectures/completed" element={<CompletedLecturesPage />} />
-          <Route path="lectures/upcoming" element={<UpcomingLecturesPage />} />
+            {/* Lectures */}
+            <Route path="lectures" element={<UpcomingLecturesPage />} />
 
-          {/* Quizzes & Assignments */}
-          <Route path="quizzes" element={<QuizzesPage />} />
-          <Route path="assignments" element={<AssignmentsPage />} />
+            {/* Quizzes & Assignments */}
+            <Route path="quizzes" element={<QuizzesPage />} />
+            <Route path="assignments" element={<AssignmentsPage />} />
 
-          {/* Settings */}
-          <Route path="settings" element={<SettingPage />} />
+            {/* Settings */}
+            <Route path="settings" element={<SettingPage />} />
 
-          {/* Course Details */}
-          < Route path="course/:id" element={<CourseLayout />}>
+            {/* Course Details */}
+            <Route path="course/:id" element={<CourseLayout />}>
+              <Route index element={<CourseDashboardPage />} />
+              <Route path="dashboard" element={<CourseDashboardPage />} />
+              <Route path="lectures" element={<CourseLecturesPage />} />
+              <Route path="lecture/add" element={<CreateLecturePage />} />
 
-            <Route index element={<CourseDashboardPage />} />
-            <Route path="dashboard" element={<CourseDashboardPage />} />
-            <Route path="lectures" element={<CourseAllLecturesPage />} />
-            <Route path="lecture/add" element={<CreateLecturePage />} />
+              <Route path="assignments" element={<CourseAssignmentPage />} />
+              <Route path="assignment/create" element={<CreateAssignmentPage />} />
+              <Route
+                path="assignments/:assignmentId"
+                element={<AssignmentSubmissionRecordPage />}
+              />
 
-            {/* Assignment */}
-            <Route path="assignments" element={<CourseAssignmentPage />} />
-            <Route path="assignment/create" element={<CreateAssignmentPage />} />
-            <Route path="assignments/:assignmentId" element={<AssignmentSubmissionRecordPage />} />
-            
-            {/* Quiz */}
-            <Route path="quizzes" element={<CourseAllQuizzesPage />} />
-            <Route path="quiz/create" element={<CreateQuizPage />} />
-            <Route path="quizzes/:quizId" element={<QuizSubmissionRecordPage />} />
+              <Route path="quizzes" element={<CourseAllQuizzesPage />} />
+              <Route path="quiz/create" element={<CreateQuizPage />} />
+              <Route
+                path="quizzes/:quizId"
+                element={<QuizSubmissionRecordPage />}
+              />
 
-            {/* Student */}
-            <Route path="course-students" element={<StudentsPage />} />
-            <Route path="students/add" element={<AddStudentsPage />} />
-            {/* <Route path="announcements" element={<AnnouncementPage />} /> */}
-            <Route path="announcements" element={<ChatScreen />} />
+              <Route path="course-students" element={<StudentsPage />} />
+              <Route path="course-mates" element={<CourseMatesPage />} />
+              <Route path="students/add" element={<AddStudentsPage />} />
+              <Route path="announcements" element={<AnnouncementPage />} />
+            </Route>
+
+            {/* Profile */}
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="profile/edit" element={<ProfileEditPage />} />
 
           </Route>
 
-          {/* Profile */}
-          <Route path="profile" element={<ProfilePage />} />
-          <Route path="profile/edit" element={<ProfileEditPage />} />
+          {/* Live Lecture */}
+          <Route path="lecture/live/:lectureId" element={<LiveLecturePage />} />
         </Route>
-        <Route path="lecture/live" element={<LiveLecturePage />} />
-      </Route>
-    </Routes>
+
+      </Routes>
+    </Suspense>
   );
 }
 

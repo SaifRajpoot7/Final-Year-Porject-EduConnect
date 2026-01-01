@@ -1,217 +1,9 @@
-// import { createContext, useContext, useState, useEffect, useMemo } from "react";
-// import axios from "axios";
-// import { toast } from "react-toastify";
-// import { useNavigate, useParams } from "react-router";
-// import { io } from "socket.io-client";
-
-// axios.defaults.withCredentials = true;
-
-
-// // 1. Create Context
-// const AppContext = createContext();
-
-// // 2. Create Provider
-// export const AppProvider = ({ children }) => {
-
-//   const navigate = useNavigate();
-
-//   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-//   const [courseId, setCourseId] = useState(null);
-//   const [userData, setUserData] = useState(null);
-//   const [courseData, setCourseData] = useState(null);
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [isVerified, setIsVerified] = useState(false);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [role, setRole] = useState("user")
-//   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-//   const [menuType, setMenuType] = useState("general");
-//   const [isCourseAdmin, setIsCourseAdmin] = useState(false)
-//   const [socket, setSocket] = useState(null)
-//   const [onlineUsers, setOnlineUsers] = useState([])
-//   const [socketId, setSocketId] = useState(null)
-
-//   setSocket(useMemo(
-//     () =>
-//       io(backendUrl),
-//     []
-//   )
-//   )
-
-//   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
-//   const toggleMenuType = () =>
-//     setMenuType((prev) => (prev === "general" ? "course" : "general"));
-
-//   const checkIsLoggedIn = async () => {
-//     // setIsLoading(true);
-//     try {
-//       const response = await axios.get(`${backendUrl}/api/user/is-auth`);
-//       // const data = response.data;
-//       if (response.data.success) {
-//         setIsLoggedIn(true);
-//         await getUserData();
-//       } else {
-//         setIsLoggedIn(false);
-//         setUserData(null);
-//         navigate('/signin')
-//       }
-//     } catch (error) {
-//       // toast.error(error.response?.data?.message || error.message || "Auth check failed");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   const getUserData = async () => {
-//     try {
-//       const response = await axios.get(`${backendUrl}/api/user/profile`);
-//       const data = response.data;
-//       if (data.success) {
-//         setUserData(data.userData);
-//         setIsVerified(data.userData.isVerified);
-//         connectSocket(data.userData);
-//         // setRole(data.userData.role);
-//       } else {
-//         setUserData(null);
-//         setIsVerified(false);
-//         toast.error(data.message || "Failed to fetch user data");
-//       }
-//     } catch (error) {
-//       toast.error(error.response?.data?.message || "Failed to fetch user data");
-//     }
-//   };
-
-//   const logout = async () => {
-//     try {
-//       const res = await axios.get(`${backendUrl}/api/user/logout`);
-//       if (res.data.success) {
-//         setIsLoggedIn(false);
-//         setUserData(null);
-//         setOnlineUsers([]);
-//         socket.disconnect();
-//         toast.success(res.data.message || "Logged out");
-//         if (window.location.pathname !== "/signin") {
-//           navigate("/signin");
-//         }
-//       } else {
-//         toast.error(res.data.message || "Logout failed");
-//       }
-//     } catch (err) {
-//       toast.error(err.response?.data?.message || "Logout error");
-//     }
-//   };
-
-
-// const connectSocket = (user) => {
-//     if (socket || !user?._id) return;
-
-//     const newSocket = io(backendUrl, {
-//         query: { userId: user._id }
-//     });
-
-//     setSocket(newSocket);
-
-//     newSocket.on("getOnlineUsers", setOnlineUsers);
-// };
-
-// useEffect(() => {
-//     return () => {
-//         socket?.disconnect();
-//     };
-// }, [socket]);
-
-
-
-
-//   const getCourseData = async () => {
-//     try {
-//       const response = await axios.get(`${backendUrl}/api/course/${courseId}`);
-//       const data = response.data;
-
-//       if (data.success) {
-//         setCourseData(data.courseData);
-//       } else {
-//         toast.error(data.message || "Failed to fetch course data");
-//       }
-//     } catch (error) {
-//       toast.error(error.response?.data?.message || "Failed to fetch course data");
-//     }
-//   };
-
-
-
-//   useEffect(() => {
-//     checkIsLoggedIn();
-//   }, []);
-//   useEffect(() => {
-//     if (userData && courseData) {
-//       const isAdmin = userData._id === courseData.teacher._id;
-//       setIsCourseAdmin(isAdmin);
-//     }
-//   }, [userData, courseData]);
-
-//   useEffect(() => {
-//     socket.on("connect", () => {
-//       setSocketId(socket.id);
-//       console.log("connected", socket.id);
-//     });
-
-//     socket.on("receive-message", (data) => {
-//       console.log(data);
-//       setMessages((messages) => [...messages, data]);
-//     });
-
-//     socket.on("welcome", (s) => {
-//       console.log(s);
-//     });
-
-//     return () => {
-//       socket.disconnect();
-//     };
-//   }, []);
-
-
-
-//     const value = {
-//       isSidebarOpen,
-//       setIsSidebarOpen,
-//       toggleSidebar,
-//       menuType,
-//       setMenuType,
-//       toggleMenuType,
-//       backendUrl,
-//       checkIsLoggedIn,
-//       isLoggedIn,
-//       userData,
-//       isVerified,
-//       isLoading,
-//       getUserData,
-//       logout,
-//       courseId,
-//       setCourseId,
-//       courseData,
-//       setCourseData,
-//       getCourseData,
-//       isCourseAdmin,
-//       setIsCourseAdmin
-//     };
-
-//     return (
-//       <AppContext.Provider value={value}>
-//         {children}
-//       </AppContext.Provider>
-//     );
-//   };
-
-//   // ✅ 3. Custom hook for easy usage
-//   export const useAppContext = () => useContext(AppContext);
-
-
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { io } from "socket.io-client";
+import { useLocation } from "react-router";
 
 axios.defaults.withCredentials = true;
 
@@ -221,6 +13,7 @@ const AppContext = createContext();
 // 2. Create Provider
 export const AppProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [courseId, setCourseId] = useState(null);
@@ -262,22 +55,41 @@ export const AppProvider = ({ children }) => {
   /* =========================
      AUTH
   ========================== */
+  // const checkIsLoggedIn = async () => {
+  //   try {
+  //     console.log("this is it")
+  //     const res = await axios.get(`${backendUrl}/api/user/is-auth`);
+  //     if (res.data.success) {
+  //       setIsLoggedIn(true);
+  //       await getUserData();
+  //     } else {
+  //       setIsLoggedIn(false);
+  //     }
+  //   } catch {
+  //     setIsLoggedIn(false);
+  //     console.log("this is it")
+  //     navigate("/signin");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const checkIsLoggedIn = async () => {
     try {
       const res = await axios.get(`${backendUrl}/api/user/is-auth`);
-      if (res.data.success) {
-        setIsLoggedIn(true);
-        await getUserData();
-      } else {
-        setIsLoggedIn(false);
-        navigate("/signin");
-      }
+      if (!res.data.success) return false;
+
+      await getUserData();
+      setIsLoggedIn(true);
+      return true;
     } catch {
       setIsLoggedIn(false);
+      return false;
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const getUserData = async () => {
     try {
@@ -313,9 +125,10 @@ export const AppProvider = ({ children }) => {
   /* =========================
      COURSE
   ========================== */
-  const getCourseData = async () => {
+  const getCourseData = async (course) => {
     try {
-      const res = await axios.get(`${backendUrl}/api/course/${courseId}`);
+      const res = await axios.get(`${backendUrl}/api/course/${course}`,
+      );
       if (res.data.success) {
         setCourseData(res.data.courseData);
       }
@@ -324,9 +137,15 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  const toggleMenuType = () => {
+    setMenuType((prev) => (prev === "general" ? "course" : "general"));
+  }
+
   /* =========================
      EFFECTS
   ========================== */
+
+
   useEffect(() => {
     checkIsLoggedIn();
   }, []);
@@ -364,6 +183,10 @@ export const AppProvider = ({ children }) => {
     setIsSidebarOpen,
     menuType,
     setMenuType,
+    setIsCourseAdmin,
+    toggleMenuType,
+    checkIsLoggedIn,
+
   };
 
   return (

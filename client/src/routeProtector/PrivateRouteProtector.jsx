@@ -1,13 +1,14 @@
 import React from 'react'
 import { useAppContext } from '../contexts/AppContext'
 import { Navigate, Outlet } from 'react-router';
+import FullPageLoaderComponent from '../components/FullPageLoaderComponent';
 
 
 const PrivateRouteProtector = ({ children }) => {
   const { isLoggedIn, isLoading, isVerified } = useAppContext();
 
   // While checking auth, render nothing or a loader
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <FullPageLoaderComponent />;
   if (!isLoggedIn) return <Navigate to="/signin" replace />;
   if (!isVerified) return <Navigate to="/account-verification" replace />;
 

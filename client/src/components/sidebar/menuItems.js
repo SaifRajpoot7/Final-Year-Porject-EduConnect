@@ -30,11 +30,7 @@ export const generalMenu = [
   {
     icon: Video,
     text: "Lectures",
-    link: "#",
-    sub: [
-      { text: "Completed Lectures", link: "/lectures/completed" },
-      { text: "Upcoming Lectures", link: "/lectures/upcoming" },
-    ],
+    link: "/lectures",
   },
   {
     icon: HelpCircle,
@@ -53,7 +49,7 @@ export const generalMenu = [
   },
 ];
 
-export const courseMenu = [
+export const courseMenuTeacher = [
   {
     icon: LayoutDashboard,
     text: "Dashboard",
@@ -74,7 +70,7 @@ export const courseMenu = [
     link: "#",
     sub: [
       { text: "All Quizzes", link: "/quizzes" },
-      { text: "Create Assignments", link: "/quiz/create", admin: true },
+      { text: "Create Quiz", link: "/quiz/create", admin: true },
     ],
   },
   {
@@ -83,7 +79,7 @@ export const courseMenu = [
     link: "#",
     sub: [
       { text: "All Assignments", link: "/assignments" },
-      { text: "Create Assignments", link: "/assignment/create", admin: true },
+      { text: "Create Assignment", link: "/assignment/create", admin: true },
     ],
   },
   {
@@ -105,5 +101,38 @@ export const courseMenu = [
     icon: Settings,
     text: "Settings",
     link: "/settings",
+  },
+];
+
+export const courseMenuStudent = [
+  {
+    icon: LayoutDashboard,
+    text: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    icon: Video,
+    text: "My Lectures",
+    link: "/lectures",
+  },
+  {
+    icon: HelpCircle,
+    text: "My Quizzes",
+    link: "/quizzes",
+  },
+  {
+    icon: ClipboardList,
+    text: "My Assignments",
+    link: "/assignments",
+  },
+  {
+    icon: Users,
+    text: "My Classmates",
+    link: "/course-mates",
+  },
+  {
+    icon: Megaphone,
+    text: "Announcements",
+    link: "/announcements",
   },
 ];

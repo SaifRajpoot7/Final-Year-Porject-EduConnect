@@ -4,9 +4,10 @@ import CourseCard from "../../components/CourseCard";
 import PageTitle from "../../components/other/PageTitle";
 import CourseFilters from "../../components/CourseFilters";
 import { useAppContext } from "../../contexts/AppContext";
+import ComponentLoader from "../../components/ComponentLoader";
 
 const AllCoursesPage = () => {
-    const { backendUrl } = useAppContext();
+  const { backendUrl } = useAppContext();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOption, setSortOption] = useState("newest");
@@ -49,20 +50,11 @@ const AllCoursesPage = () => {
   }, [page, searchQuery, sortOption]);
 
   return (
-    <div className="p-2 min-h-screen">
+    <div className="p-2">
       <PageTitle
         title="All Courses"
         subtitle="Browse all courses you joined or created across EduConnect"
       />
-      {/* Conditional Render */}
-      {loading ? (
-        <p className="text-center text-gray-500 mt-10">Loading courses...</p>
-      ) : courses.length === 0 ? (
-        <p className="text-center text-gray-500 mt-10">
-          You have not create or join any course.
-        </p>
-      ) : (
-        <>
 
       {/* Filters */}
       <CourseFilters
@@ -76,44 +68,54 @@ const AllCoursesPage = () => {
         }}
       />
 
-      {/* Course Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {courses.map((course) => (
-            <CourseCard key={course._id} {...course} />
-          ))}
-        </div>
+      {/* Conditional Render */}
+      {loading ? (
+        <ComponentLoader />
+      ) : courses.length === 0 ? (
+        <p className="text-center text-gray-500 mt-10">
+          No Course Found.
+        </p>
+      ) : (
+        <>
 
-      {/* Pagination Controls */}
-      <div className="flex justify-center items-center gap-4 mt-6">
-        <button
-          disabled={page === 1}
-          onClick={() => setPage((p) => p - 1)}
-          className={`px-4 py-2 rounded-lg border ${
-            page === 1
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
-          }`}
-        >
-          Previous
-        </button>
 
-        <span className="text-gray-600">
-          Page {page} of {totalPages}
-        </span>
 
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage((p) => p + 1)}
-          className={`px-4 py-2 rounded-lg border ${
-            page === totalPages
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
-          }`}
-        >
-          Next
-        </button>
-      </div>
-      </>
+          {/* Course Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {courses.map((course) => (
+              <CourseCard key={course._id} {...course} />
+            ))}
+          </div>
+
+          {/* Pagination Controls */}
+          <div className="flex justify-center items-center gap-4 mt-6">
+            <button
+              disabled={page === 1}
+              onClick={() => setPage((p) => p - 1)}
+              className={`px-4 py-2 rounded-lg border ${page === 1
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
+                }`}
+            >
+              Previous
+            </button>
+
+            <span className="text-gray-600">
+              Page {page} of {totalPages}
+            </span>
+
+            <button
+              disabled={page === totalPages}
+              onClick={() => setPage((p) => p + 1)}
+              className={`px-4 py-2 rounded-lg border ${page === totalPages
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
+                }`}
+            >
+              Next
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

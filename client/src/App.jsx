@@ -1,6 +1,7 @@
 import React from 'react'
 import AppRouter from './routers/AppRouter'
 import { ToastContainer } from 'react-toastify'
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 
 const App = () => {
   return (

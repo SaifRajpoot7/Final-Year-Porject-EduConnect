@@ -29,7 +29,7 @@ const formatDateBar = (dateStr) => {
 };
 
 const ChatScreen = () => {
-    const { backendUrl, courseId, userData, socket } = useAppContext();
+    const { backendUrl, courseId, userData, socket, isCourseAdmin } = useAppContext();
 
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -210,16 +210,14 @@ const ChatScreen = () => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.25 }}
-                        className={`flex items-end gap-2 ${
-                            isSender ? 'justify-end' : 'justify-start'
-                        }`}
+                        className={`flex items-end gap-2 ${isSender ? 'justify-end' : 'justify-start'
+                            }`}
                     >
                         <div
-                            className={`p-2 max-w-[230px] rounded-lg text-white ${
-                                isSender
-                                    ? 'bg-blue-600 rounded-br-none'
-                                    : 'bg-gray-500 rounded-bl-none'
-                            }`}
+                            className={`p-2 max-w-[230px] rounded-lg text-white ${isSender
+                                ? 'bg-blue-600 rounded-br-none'
+                                : 'bg-gray-500 rounded-bl-none'
+                                }`}
                         >
                             {msg.attachment && (
                                 <img
@@ -279,56 +277,61 @@ const ChatScreen = () => {
                 {renderMessagesWithDate()}
             </div>
 
-            {file && (
-                <div className="px-4 py-2 border-t bg-gray-50">
-                    {file.type.startsWith("image/") ? (
-                        <div className="relative w-fit">
-                            <img
-                                src={URL.createObjectURL(file)}
-                                className="max-h-32 rounded-lg"
-                            />
-                            <X
-                                className="absolute -top-2 -right-2 bg-white rounded-full p-1 h-6 w-6 cursor-pointer"
-                                onClick={() => setFile(null)}
-                            />
-                        </div>
-                    ) : (
-                        <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg shadow w-fit">
-                            <FileText className="h-5 w-5" />
-                            <span className="truncate max-w-xs">{file.name}</span>
-                            <X
-                                className="h-4 w-4 cursor-pointer"
-                                onClick={() => setFile(null)}
-                            />
-                        </div>
-                    )}
-                </div>
+            {isCourseAdmin && (
+                file && (
+                    <div className="px-4 py-2 border-t bg-gray-50">
+                        {file.type.startsWith("image/") ? (
+                            <div className="relative w-fit">
+                                <img
+                                    src={URL.createObjectURL(file)}
+                                    className="max-h-32 rounded-lg"
+                                />
+                                <X
+                                    className="absolute -top-2 -right-2 bg-white rounded-full p-1 h-6 w-6 cursor-pointer"
+                                    onClick={() => setFile(null)}
+                                />
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg shadow w-fit">
+                                <FileText className="h-5 w-5" />
+                                <span className="truncate max-w-xs">{file.name}</span>
+                                <X
+                                    className="h-4 w-4 cursor-pointer"
+                                    onClick={() => setFile(null)}
+                                />
+                            </div>
+                        )}
+                    </div>
+                )
             )}
 
-            <form
-                onSubmit={handleSubmit(onSendMessage)}
-                className="h-16 border-t px-4 flex items-center gap-3"
-            >
-                <label className="cursor-pointer">
-                    <Paperclip className="h-6 w-6 text-gray-600" />
+            {isCourseAdmin &&
+
+                <form
+                    onSubmit={handleSubmit(onSendMessage)}
+                    className="h-16 border-t px-4 flex items-center gap-3"
+                >
+                    <label className="cursor-pointer">
+                        <Paperclip className="h-6 w-6 text-gray-600" />
+                        <input
+                            type="file"
+                            className="hidden"
+                            onChange={e => setFile(e.target.files?.[0])}
+                        />
+                    </label>
+
                     <input
-                        type="file"
-                        className="hidden"
-                        onChange={e => setFile(e.target.files?.[0])}
+                        type="text"
+                        placeholder="Type a message..."
+                        {...register("message")}
+                        className="flex-1 border rounded-full px-4 py-2"
                     />
-                </label>
 
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    {...register("message")}
-                    className="flex-1 border rounded-full px-4 py-2"
-                />
-
-                <button className="bg-blue-600 text-white p-3 rounded-full">
-                    <Send size={18} />
-                </button>
-            </form>
+                    <button className="bg-blue-600 text-white p-3 rounded-full">
+                        <Send size={18} />
+                    </button>
+                </form>
+            }
         </div>
     );
 };

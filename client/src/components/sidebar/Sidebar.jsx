@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../contexts/AppContext";
-import { generalMenu, courseMenu } from "./menuItems";
+import { generalMenu, courseMenuTeacher, courseMenuStudent } from "./menuItems";
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 
@@ -17,18 +17,33 @@ const Sidebar = () => {
   };
   const course_id = courseId;
 
-  const menuItems = menuType == "general" ? generalMenu : courseMenu;
+  let menuItems;
+  const isStudentMenu =
+    menuType === "course" && !isCourseAdmin;
+    
+
+  if (menuType === "general") {
+    menuItems = generalMenu;
+  } else if (isCourseAdmin) {
+    menuItems = courseMenuTeacher;
+  } else {
+    menuItems = courseMenuStudent;
+  }
+
 
   const handleLogout = async () => {
     logout();
   }
-  useEffect(() => {
-    console.log("isCourseAdmin updated:", isCourseAdmin);
-  }, [isCourseAdmin]);
 
-
+const isAdminMenu = menuType === "course" && isCourseAdmin;
   return (
     <aside
+    style={{
+    "--Hover-Color": isStudentMenu
+      && "var(--Student-Hover-Color)",
+    "--Hover-BG-Tint": isStudentMenu
+      && "var(--Student-Hover-BG-Tint)"
+  }}
       className={`hidden sm:flex flex-col h-full ${isSidebarOpen ? "min-w-64" : "min-w-20"
         } bg-[var(--Background-primary)] p-4 rounded-2xl shadow-xl border-2 border-gray-200 transition-all duration-300 ease-in-out justify-between overflow-hidden hover:overflow-x-auto hover:overflow-y-scroll scrollbar-hide hover:scrollbar-hover`}
     >

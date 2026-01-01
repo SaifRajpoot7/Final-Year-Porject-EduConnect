@@ -7,12 +7,7 @@ import AssignmentSubmitModal from "./AssignmentSubmitModal";
 
 const CourseAssignmentsPage = () => {
   const navigate = useNavigate()
-  const { setMenuType, setCourseId, backendUrl, courseId } = useAppContext();
-  // const { id } = useParams();
-
-  // useEffect(() => {
-  //   setCourseId(id);
-  // }, [id, setCourseId]);
+  const { setMenuType, backendUrl, courseId } = useAppContext();
 
   const tabs = ["All", "Pending Submission", "Pending Result", "Graded"];
   const [activeTab, setActiveTab] = useState("All");
@@ -81,7 +76,7 @@ const CourseAssignmentsPage = () => {
     setShowModal(true);
   };
   return (
-    <div className="p-4 min-h-screen">
+    <div className="p-4">
       <PageTitle title="Assignments" subtitle="Manage and track assignments" />
 
       {!isAdmin && (
@@ -178,7 +173,7 @@ const CourseAssignmentsPage = () => {
                         <td className="px-4 py-3">
                           <button
                             disabled={isDuePassed}
-                            onClick={() => !isDuePassed && openSubmitModal(assignment._id)}
+                            onClick={() => !isDuePassed && openSubmitModal(assignment._id, courseId)}
                             className={`font-bold py-2 px-3 rounded ${isDuePassed
                               ? "bg-gray-300 text-gray-500 text-xs cursor-not-allowed"
                               : "bg-blue-500 hover:bg-blue-600 text-white"

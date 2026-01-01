@@ -179,6 +179,14 @@ const getAnnouncements = async (req, res) => {
         const userId = req.user?._id;
         const userEmail = req.user?.email;
         const isCourseAdmin = req.isCourseAdmin;
+        const iscourseMember = req.isCourseMember
+
+        if (!iscourseMember) {
+            return res.status(403).json({
+                success: false,
+                message: 'You are not enrolled in this course'
+            });
+        }
 
         /* ===============================
            1. Validate inputs

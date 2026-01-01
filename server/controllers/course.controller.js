@@ -6,6 +6,7 @@ import {
     enrollmentEmailTemplate,
     inviteToJoinPlatformTemplate,
 } from "../utils/emailTemplates.js";
+import mongoose from "mongoose";
 
 const createCourse = async (req, res) => {
     try {
@@ -77,10 +78,10 @@ const getAllCourses = async (req, res) => {
                 { teacher: userId },        // teacher is still saved as ObjectId
                 { students: userEmail }     // students saved as emails
             ];
-        } 
+        }
         else if (type === "mine") {
             filter.teacher = userId;
-        } 
+        }
         else if (type === "joined") {
             filter.students = userEmail;
         }
@@ -118,16 +119,40 @@ const getCourseDetails = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const course = await Course.findById(id)
-            .populate("teacher", "fullName")
-
-        if (!course) {
-            return res.status(404).json({ success: false, message: "Course not found" });
+        // 1. Validate ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid course ID",
+            });
         }
 
-        res.status(200).json({ success: true, courseData: course });
+        // 2. Fetch course with populated teacher
+        const course = await Course.findById(id).populate(
+            "teacher",
+            "fullName"
+        );
+
+        // 3. Not found check
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+        // 4. Success response
+        res.status(200).json({
+            success: true,
+            courseData: course,
+        });
+
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error("getCourseDetails error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
     }
 };
 

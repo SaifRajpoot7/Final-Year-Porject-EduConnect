@@ -8,6 +8,11 @@ import mailSender from './utils/mailSender.js';
 import assignmentRouter from './routes/assignment/assignment.route.js';
 import quizRouter from './routes/quiz.routes.js';
 import announcementRouter from './routes/announcement.routes.js';
+import lectureRouter from "./routes/lecture.routes.js"
+import { generateToken } from './controllers/generateStreamToken.controller.js';
+import requireAuth from './middlewares/requireAuth.middleware.js';
+import nodeCron from 'node-cron';
+import lectureController from './controllers/lecture.controller.js';
 
 
 const app = express();
@@ -21,20 +26,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
-// Temporary test route
-app.get("/test-email", async (req, res) => {
-    try {
-        await mailSender({
-            email: "saiflaptop1@gmail.com",
-            subject: "Welcome to Abdul Luxury Travel SL",
-            body: welcomeEmailTemplate,
-            name: "Saif",
-            url: "book-ride",
-        });
-        res.send("✅ Test email sent!");
-    } catch (error) {
-        res.status(500).send("❌ Email failed: " + error.message);
-    }
+// Schedule: Run every 10 minutes
+nodeCron.schedule('*/10 * * * *', () => {
+  lectureController.markMissedLectures();
 });
 
 
@@ -43,6 +37,9 @@ app.use('/api/course', courseRouter);
 app.use('/api/assignment',assignmentRouter);
 app.use('/api/quiz',quizRouter);
 app.use('/api/announcement',announcementRouter);
+app.use("/api/lectures", lectureRouter);
+app.use("/api/generate-stream-token", requireAuth, generateToken);
+
 
 app.get('/', (req, res) => {
     res.send('Hello World');

@@ -4,6 +4,7 @@ import CourseCard from "../../components/CourseCard";
 import PageTitle from "../../components/other/PageTitle";
 import CourseFilters from "../../components/CourseFilters";
 import { useAppContext } from "../../contexts/AppContext";
+import ComponentLoader from "../../components/ComponentLoader";
 
 const AllCoursesPage = () => {
   const { backendUrl } = useAppContext();
@@ -49,33 +50,33 @@ const AllCoursesPage = () => {
   }, [page, searchQuery, sortOption]);
 
   return (
-    <div className="p-2 min-h-screen">
+    <div className="p-2">
       <PageTitle
         title="Enrolled Courses"
         subtitle="Browse all courses you joined across EduConnect"
       />
 
+      {/* Filters */}
+      <CourseFilters
+        onSearch={(val) => {
+          setPage(1);
+          setSearchQuery(val);
+        }}
+        onSortChange={(val) => {
+          setPage(1);
+          setSortOption(val);
+        }}
+      />
+
       {/* Conditional Render */}
       {loading ? (
-        <p className="text-center text-gray-500 mt-10">Loading courses...</p>
+        <ComponentLoader />
       ) : courses.length === 0 ? (
         <p className="text-center text-gray-500 mt-10">
-          You have not joined any course.
+          No Course Found.
         </p>
       ) : (
         <>
-          {/* Filters */}
-          <CourseFilters
-            onSearch={(val) => {
-              setPage(1);
-              setSearchQuery(val);
-            }}
-            onSortChange={(val) => {
-              setPage(1);
-              setSortOption(val);
-            }}
-          />
-
           {/* Course Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {courses.map((course) => (

@@ -4,13 +4,18 @@ import './index.css'
 import App from './App.jsx'
 import { AppProvider } from './contexts/AppContext.jsx'
 import { BrowserRouter } from 'react-router'
+import StreamVideoProvider from './providers/StreamVideoProvider';
+import FullPageLoaderComponent from './components/FullPageLoaderComponent.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <StrictMode>
+    {/* <StrictMode> */}
       <AppProvider>
-        <App />
+        <StreamVideoProvider>
+          <App />
+          {/* <FullPageLoaderComponent /> */}
+        </StreamVideoProvider>
       </AppProvider>
-    </StrictMode>
+    {/* </StrictMode> */}
   </BrowserRouter>
 )

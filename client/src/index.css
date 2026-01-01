@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 :root {
   --text-primary: #111827;
   --text-secondary: #373f49;
@@ -7,8 +8,9 @@
   --Border: #E5E7EB;
   --Hover-Color: #339BFD;
   --Hover-BG-Tint: #EFF6FF;
+  --Student-Hover-Color: #04c489;
+  --Student-Hover-BG-Tint: #ECFDF5;
 }
-
 
 /* Hide scrollbar by default */
 .scrollbar-hide::-webkit-scrollbar {
@@ -18,24 +20,44 @@
 
 /* Show on hover */
 .scrollbar-hover::-webkit-scrollbar {
-  width: 8px; /* adjust size */
+  width: 8px;
+  /* adjust size */
   height: 8px;
 }
 
 .scrollbar-hover::-webkit-scrollbar-track {
-  background: transparent; /* no background */
+  background: transparent;
+  /* no background */
 }
 
 .scrollbar-hover::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3); /* transparent thumb */
-  border-radius: 9999px; /* rounded */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* transparent thumb */
+  border-radius: 9999px;
+  /* rounded */
 }
 
 /* Firefox */
 .scrollbar-hover {
-  scrollbar-width: none; /* hide by default */
+  scrollbar-width: none;
+  /* hide by default */
 }
+
 .scrollbar-hover:hover {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+/* Target all elements */
+* {
+  /* Hides scrollbar for Firefox */
+  scrollbar-width: none;
+
+  /* Hides scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+}
+
+/* Hides scrollbar for Chrome, Safari, and newer Edge */
+*::-webkit-scrollbar {
+  display: none;
 }

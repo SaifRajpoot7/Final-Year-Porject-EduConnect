@@ -8,7 +8,7 @@ import QuizSubmissionModal from "./QuizSubmissionModal";
 
 const CourseAllQuizzesPage = () => {
     const navigate = useNavigate()
-    const { setMenuType, setCourseId, backendUrl, courseId } = useAppContext();
+    const { setMenuType, backendUrl, courseId } = useAppContext();
 
     const tabs = ["All", "Pending Submission", "Graded"];
     const [activeTab, setActiveTab] = useState("All");
@@ -23,8 +23,9 @@ const CourseAllQuizzesPage = () => {
     // Modal state
     const [showModal, setShowModal] = useState(false);
     const [selectedQuizId, setSelectedQuizId] = useState(null);
+    const [selectedCourseId, setSelectedCourseId] = useState(null);
     const [selectedQuestions, setSelectedQuestions] = useState([]);
-    
+
     useEffect(() => {
         const fetchQuizzes = async () => {
             if (!courseId) return;
@@ -73,6 +74,7 @@ const CourseAllQuizzesPage = () => {
     };
 
     const openSubmitModal = (assignmentId) => {
+        setSelectedCourseId(courseId)
         setSelectedQuizId(assignmentId);
         setShowModal(true);
     };
@@ -152,7 +154,8 @@ const CourseAllQuizzesPage = () => {
                                                         disabled={isDuePassed || quiz?.result}
                                                         onClick={() => {
                                                             setSelectedQuestions(quiz.questions)
-                                                            !isDuePassed && !quiz?.result && openSubmitModal(quiz._id)}
+                                                            !isDuePassed && !quiz?.result && openSubmitModal(quiz._id)
+                                                        }
                                                         }
                                                         className={`font-bold py-2 px-3 rounded ${isDuePassed
                                                             ? "bg-gray-300 text-gray-500 text-xs cursor-not-allowed"
@@ -202,7 +205,7 @@ const CourseAllQuizzesPage = () => {
                 )
             }
 
-            <QuizSubmissionModal open={showModal} onClose={() => setShowModal(false)} quizId={selectedQuizId} questions={selectedQuestions} />
+            <QuizSubmissionModal open={showModal} onClose={() => setShowModal(false)} quizId={selectedQuizId} questions={selectedQuestions} courseId={selectedCourseId} />
         </div >
     );
 };

@@ -5,6 +5,7 @@ import { Trash2 } from "lucide-react";
 import axios from "axios";
 import { useAppContext } from "../contexts/AppContext";
 import { toast } from "react-toastify";
+import FormSubmitOverlay from "./FormSubmitOverlay";
 
 const CreateCourseForm = () => {
   const { backendUrl } = useAppContext();
@@ -83,10 +84,11 @@ const CreateCourseForm = () => {
     <div className="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 relative"
       >
+        <FormSubmitOverlay isSubmitting={isSubmitting} text="Creating Course" />
         {/* Course Title */}
-        <div className="flex flex-col">
+        <div className="flex flex-col md:col-span-2">
           <label className="font-medium text-gray-700 mb-1">Course Title</label>
           <input
             {...register("title", { required: "Course title is required" })}
@@ -98,20 +100,6 @@ const CreateCourseForm = () => {
             <p className="text-red-500 text-sm">{errors.title.message}</p>
           )}
         </div>
-
-        {/* Course Code */}
-        {/* <div className="flex flex-col">
-          <label className="font-medium text-gray-700 mb-1">Course Code</label>
-          <input
-            {...register("code", { required: "Course code is required" })}
-            type="text"
-            placeholder="e.g. CS101"
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-          />
-          {errors.code && (
-            <p className="text-red-500 text-sm">{errors.code.message}</p>
-          )}
-        </div> */}
 
         {/* Short Description */}
         <div className="flex flex-col md:col-span-2">
@@ -211,7 +199,7 @@ const CreateCourseForm = () => {
             className={`bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg shadow-md transition`}
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Creating Course" :"Create Course" }
+            {isSubmitting ? "Creating Course" : "Create Course"}
           </button>
         </div>
       </form>

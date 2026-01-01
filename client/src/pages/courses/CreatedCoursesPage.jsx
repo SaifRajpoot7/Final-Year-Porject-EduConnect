@@ -4,6 +4,8 @@ import CourseCard from "../../components/CourseCard";
 import PageTitle from "../../components/other/PageTitle";
 import CourseFilters from "../../components/CourseFilters";
 import { useAppContext } from "../../contexts/AppContext";
+import ComponentLoader from "../../components/ComponentLoader";
+
 
 const AllCoursesPage = () => {
   const { backendUrl } = useAppContext();
@@ -49,33 +51,33 @@ const AllCoursesPage = () => {
   }, [page, searchQuery, sortOption]);
 
   return (
-    <div className="p-2 min-h-screen">
+    <div className="p-2">
       <PageTitle
         title="My Created Courses"
         subtitle="Browse all courses you created across EduConnect"
       />
 
+      {/* Filters */}
+      <CourseFilters
+        onSearch={(val) => {
+          setPage(1);
+          setSearchQuery(val);
+        }}
+        onSortChange={(val) => {
+          setPage(1);
+          setSortOption(val);
+        }}
+      />
+
       {/* Conditional Render */}
       {loading ? (
-        <p className="text-center text-gray-500 mt-10">Loading courses...</p>
+        <ComponentLoader />
       ) : courses.length === 0 ? (
         <p className="text-center text-gray-500 mt-10">
-          You have not created any course.
+          No Course Found.
         </p>
       ) : (
         <>
-          {/* Filters */}
-          <CourseFilters
-            onSearch={(val) => {
-              setPage(1);
-              setSearchQuery(val);
-            }}
-            onSortChange={(val) => {
-              setPage(1);
-              setSortOption(val);
-            }}
-          />
-
           {/* Course Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {courses.map((course) => (
@@ -89,8 +91,8 @@ const AllCoursesPage = () => {
               disabled={page === 1}
               onClick={() => setPage((p) => p - 1)}
               className={`px-4 py-2 rounded-lg border ${page === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
                 }`}
             >
               Previous
@@ -104,8 +106,8 @@ const AllCoursesPage = () => {
               disabled={page === totalPages}
               onClick={() => setPage((p) => p + 1)}
               className={`px-4 py-2 rounded-lg border ${page === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-white hover:bg-gray-50 text-gray-700 cursor-pointer"
                 }`}
             >
               Next

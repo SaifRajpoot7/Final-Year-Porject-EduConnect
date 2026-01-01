@@ -11,7 +11,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { backendUrl, getUserData, checkIsLoggedIn, isVerified } = useAppContext();
+  const { backendUrl, checkIsLoggedIn } = useAppContext();
   const [loading, setLoading] = useState(false);
   const [passwordState, setPasswordState] = useState(true)
   const onSubmit = async (data) => {
@@ -24,14 +24,23 @@ const SignInPage = () => {
     try {
       axios.defaults.withCredentials = true
       const response = await axios.post(backendUrl + '/api/user/signin', signInData);
-      if (response.data.success) {
-        toast.success("Signed in successfully!");
-        await checkIsLoggedIn();
-        if (!isVerified) { navigate('/account-verification') }
-        navigate('/dashboard')
-      } else {
+      if (!response.data.success) {
         toast.error(response.data.message || "Failed to sign in.");
+        return;
       }
+      toast.success("Signed in successfully!");
+
+      const isAuth = await checkIsLoggedIn();
+
+      // if (!isAuth) {
+      //   toast.error("Session validation failed");
+      //   return;
+      // }
+
+      setTimeout(() => {
+      navigate("/dashboard");
+    }, 1000);
+
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred while sign in to account.");
     }

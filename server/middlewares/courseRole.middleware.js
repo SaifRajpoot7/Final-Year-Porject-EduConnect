@@ -17,9 +17,17 @@ const courseRole = async (req, res, next) => {
         // Check if the current user is the teacher/admin of this course
         const isAdmin = course.teacher.toString() === req.user._id.toString();
 
+        // Check student membership (email-based)
+        const isStudent =
+            course.students.includes(req.user.email);
+
+        // User is member if teacher OR student
+        const isCourseMember = isAdmin || isStudent;
+
         // Attach info to the request
         req.course = course;
         req.isCourseAdmin = isAdmin;
+        req.isCourseMember = isCourseMember;
 
         next();
     } catch (error) {

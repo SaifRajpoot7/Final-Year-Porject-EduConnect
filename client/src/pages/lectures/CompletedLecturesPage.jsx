@@ -55,7 +55,7 @@ const CompletedLecturesPage = () => {
   }, [page, searchQuery]);
 
   return (
-    <div className="p-2 min-h-screen">
+    <div className="p-2">
       <PageTitle
         title="Completed Lectures"
         subtitle="Have track of your completed lectures"

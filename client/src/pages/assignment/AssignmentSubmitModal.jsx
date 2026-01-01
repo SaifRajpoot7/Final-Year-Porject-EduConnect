@@ -6,8 +6,8 @@ import { Trash2, X } from "lucide-react";
 import { toast } from "react-toastify";
 import { useAppContext } from "../../contexts/AppContext";
 
-const AssignmentSubmitModal = ({ open, onClose, assignmentId }) => {
-  const { backendUrl, courseId } = useAppContext();
+const AssignmentSubmitModal = ({ open, onClose, assignmentId, courseId }) => {
+  const { backendUrl } = useAppContext();
   const [file, setFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [uploading, setUploading] = useState(false);

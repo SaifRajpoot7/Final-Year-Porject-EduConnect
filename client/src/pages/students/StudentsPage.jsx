@@ -7,27 +7,8 @@ import StudentsList from './StudentsList';
 import axios from 'axios';
 
 const StudentsPage = () => {
-    const { setMenuType, setCourseId, userData, setIsCourseAdmin, courseId, getCourseData, courseData } = useAppContext();
-    const { id } = useParams();
-    setCourseId(id)
+    const { setMenuType } = useAppContext();
 
-    //course admin
-    useEffect(() => {
-    if (courseId) {
-       // set in context
-
-      axios.get(`/api/course/${courseId}`)
-        .then(res => {
-          const courseData = res.data;
-          const isAdmin = userData._id === courseData.teacher._id;
-          setIsCourseAdmin(isAdmin);
-        })
-        .catch(err => {
-          console.error("Error fetching course:", err);
-          setIsCourseAdmin(false); // fallback
-        });
-    }
-  }, [courseId, setCourseId, setIsCourseAdmin, userData]);
     //Menu
     useEffect(() => {
         setMenuType("course");

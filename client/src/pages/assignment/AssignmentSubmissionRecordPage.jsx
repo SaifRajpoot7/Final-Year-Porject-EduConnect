@@ -76,7 +76,7 @@ const AssignmentSubmissionRecordPage = () => {
     setShowModal(true);
   };
   return (
-    <div className="p-4 min-h-screen">
+    <div className="p-4">
       <PageTitle title="Assignment Submissions" subtitle="Manage and track assignments submissions" />
 
       <div className="flex gap-4 mb-6 border-b">

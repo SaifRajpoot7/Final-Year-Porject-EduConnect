@@ -273,6 +273,109 @@ const gradeSubmission = async (req, res) => {
     }
 };
 
+const getAllAssignmentByUser = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const userEmail = req.user?.email;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authenticated",
+      });
+    }
+
+    /**
+     * 1. Quiz created by the user (Teacher)
+     */
+    const assignmentFromMyCreation = await Assignment.find({
+      teacher: userId,
+    })
+      .populate({
+        path: "course",
+        select: "title",
+      })
+      .sort({ dueDate: 1 });
+
+    /**
+     * 2. Assignment where user is enrolled as student
+     */
+    const enrolledCourses = await Course.find(
+      { students: userEmail },
+      { _id: 1 }
+    );
+
+    const enrolledCourseIds = enrolledCourses.map(course => course._id);
+
+    const assignmentFromEnrollment = await Assignment.find({
+      course: { $in: enrolledCourseIds },
+    })
+      .populate({
+        path: "course",
+        select: "title",
+      })
+      .sort({ dueDate: 1 })
+      .lean(); // IMPORTANT for mutation
+
+    /**
+     * 3. Fetch submissions for current student
+     */
+    const submissions = await AssignmentSubmission.find({
+      student: userId,
+      assignment: { $in: assignmentFromEnrollment.map(q => q._id) },
+    })
+      .populate({
+        path: "student",
+        select: "fullName email",
+      })
+      .lean();
+
+    /**
+     * 4. Map submissions by quizId for O(1) access
+     */
+    const submissionMap = new Map();
+    submissions.forEach(sub => {
+      submissionMap.set(sub.assignment.toString(), sub);
+    });
+
+    /**
+     * 5. Attach submission info to each quiz
+     */
+    const enrichedAssignmentFromEnrollment = assignmentFromEnrollment.map(assignment => {
+      const submission = submissionMap.get(assignment._id.toString());
+
+      return {
+        ...assignment,
+        submission: submission
+          ? {
+              _id: submission._id,
+              submissionDate: submission ? submission.submittedAt : null,
+              submissionFile: submission ? submission.submittedFile : null,
+              result: submission ? submission.marksObtained : null,
+              feedback: submission ? submission.feedback : null,
+              student: {
+                fullName: submission.student?.fullName,
+                email: submission.student?.email,
+              },
+            }
+          : null,
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      assignmentFromMyCreation,
+      assignmentFromEnrollment: enrichedAssignmentFromEnrollment,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 
 const assignmentController = {
     createAssignment,
@@ -280,6 +383,7 @@ const assignmentController = {
     submitAssignment,
     allSubmissionOfAssignment,
     gradeSubmission,
+    getAllAssignmentByUser,
 };
 
 export default assignmentController;

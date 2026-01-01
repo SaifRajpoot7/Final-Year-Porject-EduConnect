@@ -8,6 +8,8 @@ const quizRouter = express.Router();
 
 quizRouter.post('/create', requireAuth, requireCourseAdmin, quizController.createQuiz);
 
+quizRouter.get("/all", requireAuth, quizController.getAllQuizByUser);
+
 quizRouter.get("/all/course", requireAuth, courseRole, quizController.getAllCourseQuiz);
 
 quizRouter.post("/submit/:quizId", requireAuth, courseRole, quizController.submitQuiz);

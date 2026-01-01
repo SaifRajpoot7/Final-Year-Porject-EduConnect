@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { useAppContext } from "../../contexts/AppContext";
 import { motion } from "framer-motion";
 
-const QuizSubmissionModal = ({ open, onClose, quizId, questions }) => {
-    const { backendUrl, courseId } = useAppContext();
+const QuizSubmissionModal = ({ open, onClose, quizId, questions, courseId }) => {
+    const { backendUrl } = useAppContext();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [timer, setTimer] = useState(60);

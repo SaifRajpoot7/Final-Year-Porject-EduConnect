@@ -64,7 +64,7 @@ const QuizSubmissionRecordPage = () => {
   };
 
   return (
-    <div className="p-4 min-h-screen">
+    <div className="p-4">
       <PageTitle title="Quiz Submissions" subtitle="Manage and track Quiz submissions" />
 
       {/* <div className="flex gap-4 mb-6 border-b">

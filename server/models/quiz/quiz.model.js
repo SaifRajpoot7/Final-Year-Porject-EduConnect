@@ -12,6 +12,11 @@ const quizSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
         },
+        teacher: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
         questions: [
             {
                 questionText: {

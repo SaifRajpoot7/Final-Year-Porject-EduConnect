@@ -1,75 +1,347 @@
-import React from "react";
-import { Mic, Video, Monitor, PhoneOff } from "lucide-react";
+// import { useEffect, useState } from "react";
+// import { useParams } from "react-router";
+// import axios from "axios";
+// import { useAppContext } from "../../contexts/AppContext";
+// import LectureSetup from "./LectureSetup";
+// import LiveLectureRoom from "./LiveLectureRoom";
+// import LectureErrorPage from "../../components/lecture/LectureErrorPage";
+// import { StreamCall, StreamTheme } from "@stream-io/video-react-sdk";
+// // import useGetCallById from "../../hooks/useGetCallById";
+// import useLectureCall from "../../hooks/useLectureCall";
+// import formatCustomDateTime from "../../utils/formatCustomDateTime";
+
+// const LiveLecturePage = () => {
+//   const { lectureId } = useParams();
+//   const { backendUrl } = useAppContext();
+//   // const { call, isCallLoading } = useGetCallById(lectureId);
+
+
+//   const [lecture, setLecture] = useState(null);
+//   const [lectureState, setLectureState] = useState("loading");
+//   const [message, setMessage] = useState("");
+//   const [isAdmin, setIsAdmin] = useState(false);
+//   const [courseId, setCourseId] = useState(null);
+//   const [isSetupComplete, setIsSetupComplete] = useState(false);
+
+//   /* ---------- Fetch lecture ---------- */
+//   useEffect(() => {
+//     const fetchLecture = async () => {
+//       try {
+//         const { data } = await axios.get(
+//           `${backendUrl}/api/lectures/${lectureId}`,
+//           { withCredentials: true }
+//         );
+
+//         if (!data.success) {
+//           setLectureState("error");
+//           setMessage(data.message || "Invalid lecture");
+//           return;
+//         }
+
+//         if (!data.isMember) {
+//           setLectureState("error");
+//           setMessage("You are not allowed to attend this lecture");
+//           return;
+//         }
+
+//         setLecture(data.lecture);
+//         setIsAdmin(data.isAdmin);
+//         setCourseId(data.lecture.course);
+
+//         switch (data.lectureState) {
+//           case "time_not_arrived":
+//             setLectureState("time_not_arrived");
+//             setMessage(
+//               `Lecture will start at ${formatCustomDateTime(
+//                 data.lecture.scheduledStart
+//               )}`
+//             );
+//             break;
+
+//           case "not_started_by_admin":
+//             setLectureState("not_started_by_admin");
+//             setMessage("Waiting for the teacher to start the lecture");
+//             break;
+
+//           case "ended":
+//             setLectureState("ended");
+//             setMessage("This lecture has already ended");
+//             break;
+
+//           default:
+//             setLectureState("live");
+//         }
+
+//         if (data.lectureState === "not_started_by_admin" && data.isAdmin) {
+//           try {
+//             const response = await axios.post(
+//               `${backendUrl}/api/lectures/${lectureId}/join`,
+//               { withCredentials: true }
+//             );
+//             const data2 = response.data;
+//             if (!data2.success) {
+//               setLectureState("error");
+//               setMessage(data2.message || "Lecture start Failed ");
+//               return;
+//             }
+//             setLectureState(data2.lecture.status);
+//           }
+//           catch (err) {
+//             console.error(err);
+//             setLectureState("error");
+//             setMessage("Failed to load lecture");
+//           }
+//         }
+//       }
+//       catch (err) {
+//         console.error(err);
+//         setLectureState("error");
+//         setMessage("Failed to load lecture");
+//       }
+//     };
+
+//     fetchLecture();
+//   }, [lectureId, backendUrl]);
+
+//   /* ---------- Prepare Stream call ---------- */
+//   const { call, loading: isCallLoading } = useLectureCall({
+//     lecture,
+//     lectureState,
+//     isAdmin,
+//   });
+
+//   // useEffect(() => {
+//   //   if (!call) return;
+
+//   //   if (call.state.callingState === "joined") {
+//   //     setIsSetupComplete(true);
+//   //   }
+//   // }, [call]);
+
+
+//   /* ---------- Guards ---------- */
+//   if (lectureState === "loading"
+//     || isCallLoading
+//   ) {
+//     return <LectureErrorPage loading={true} />;
+//   }
+
+//   if (lectureState === "ended") {
+//     return (
+//       <LectureErrorPage
+//         title="Lecture Ended"
+//         message={message}
+//         redirectUrl={`/course/${courseId}/lectures`}
+//       />
+//     );
+//   }
+
+//   if (lectureState !== "live") {
+//     return (
+//       <LectureErrorPage
+//         title="Lecture Unavailable"
+//         message={message}
+//         redirectUrl={`/course/${courseId}/lectures`}
+//       />
+//     );
+//   }
+
+//   if (!call) {
+//     return (
+//       <LectureErrorPage
+//         title="Call Error"
+//         message="Unable to initialize lecture call"
+//       />
+//     );
+//   }
+
+//   /* ---------- Live ---------- */
+//   return (
+//     <main className="h-screen w-full">
+//       {/* <StreamCall call={call}>
+//         <StreamTheme>
+//           {!isSetupComplete ? (
+//             <LectureSetup setIsSetupComplete={setIsSetupComplete} />
+//           ) : (
+//           <LiveLectureRoom isAdmin={isAdmin} />
+//           )}
+//         </StreamTheme>
+//       </StreamCall> */}
+
+//       <StreamCall call={call}>
+//         <StreamTheme>
+//           {!isSetupComplete ? (
+//             <LectureSetup
+//               lectureId={lecture._id}
+//               setIsSetupComplete={setIsSetupComplete}
+//             />
+//           ) : (
+//             <LiveLectureRoom isAdmin={isAdmin} />
+//           )}
+//         </StreamTheme>
+//       </StreamCall>
+
+
+//     </main>
+//   );
+// };
+
+// export default LiveLecturePage;
+
+
+import { useEffect, useState, useCallback } from "react";
+import { useParams, useNavigate } from "react-router"; // Added useNavigate
+import axios from "axios";
+import { useAppContext } from "../../contexts/AppContext";
+import LectureSetup from "./LectureSetup";
+import LiveLectureRoom from "./LiveLectureRoom";
+import LectureErrorPage from "../../components/lecture/LectureErrorPage";
+import { StreamCall, StreamTheme, useStreamVideoClient } from "@stream-io/video-react-sdk";
 
 const LiveLecturePage = () => {
-  const mentor = {
-    name: "Saif ur Rehman",
-    img: "/saif.JPG", // Professional male
-  };
+  const { lectureId } = useParams();
+  const navigate = useNavigate(); // For redirect
+  const { backendUrl } = useAppContext();
+  const client = useStreamVideoClient();
 
-  const students = [
-    { id: 1, name: "Alice", img: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=500&q=80" },
-    { id: 2, name: "Bob", img: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=500&q=80" },
-    { id: 3, name: "Charlie", img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80" },
-    { id: 4, name: "Diana", img: "https://images.unsplash.com/photo-1502767089025-6572583495b4?auto=format&fit=crop&w=500&q=80" },
-    { id: 5, name: "Eve", img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=500&q=80" },
-    { id: 6, name: "Frank", img: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=500&q=80" },
-  ];
+  const [lecture, setLecture] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [call, setCall] = useState(null);
+  const [isSetupComplete, setIsSetupComplete] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // 1. Fetch Lecture Initial State
+  useEffect(() => {
+    const fetchLecture = async () => {
+      try {
+        const { data } = await axios.get(
+          `${backendUrl}/api/lectures/${lectureId}`,
+          { withCredentials: true }
+        );
+
+        if (!data.success) {
+          setErrorMsg(data.message);
+          return;
+        }
+
+        setLecture(data.lecture);
+        setIsAdmin(data.isAdmin);
+
+        // Access Control Logic
+        if (data.lecture.status === "ended") {
+          setErrorMsg("This lecture has ended.");
+        } else if (data.lecture.status === "upcoming" && !data.isAdmin) {
+          // Students wait here. Admin proceeds.
+          setErrorMsg("Waiting for the teacher to start the lecture...");
+          // Optionally, implement polling here to check when it goes live
+        }
+
+      } catch (err) {
+        setErrorMsg("Failed to load lecture details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLecture();
+  }, [lectureId, backendUrl]);
+
+  // 2. Prepare Stream Call Object (But don't join yet)
+  useEffect(() => {
+    if (client && lecture && !call) {
+      const _call = client.call('default', lecture._id);
+      setCall(_call);
+    }
+  }, [client, lecture, call]);
+
+  // // 3. Listen for "Call Ended" Event (Redirect Logic)
+  // useEffect(() => {
+  //   if (!call) return;
+
+  //   const handleCallEnded = (event) => {
+  //       // This fires when Admin calls call.end()
+  //       // navigate(`/course/${lecture.course._id}/lectures`); 
+  //        navigate('/dashboard');
+  //   };
+
+  //   // Subscribe to event
+  //   const unsubscribe = call.on('call.ended', handleCallEnded);
+
+  //   return () => {
+  //       unsubscribe();
+  //   };
+  // }, [call, navigate, lecture]);
+
+  // 3. Listen for "Call Ended" Event (Redirect Logic)
+  useEffect(() => {
+    if (!call) return;
+
+    const handleCallEnded = (event) => {
+      console.log("Call ended event received:", event);
+      navigate('/dashboard'); // Use specific route if needed
+    };
+
+    // Listen for both event types just in case
+    call.on('call.ended', handleCallEnded);
+
+    // Also check if the call state transitions to empty/left remotely
+    const handleStateChange = (state) => {
+      // sometimes SDK emits different events based on version
+    };
+
+    return () => {
+      call.off('call.ended', handleCallEnded);
+    };
+  }, [call, navigate]);
+
+  if (loading) return <div className="text-white text-center mt-20">Loading Lecture...</div>;
+
+  if (errorMsg && lecture?.status === 'ended') {
+    return (
+      <LectureErrorPage
+        title="Lecture Status"
+        message={errorMsg}
+        redirectUrl={lecture ? `/course/${lecture.course._id}/lectures` : '/'}
+      />
+    );
+  }
+
+  // Show "Waiting Room" error if student tries to join early
+  if (errorMsg && !isAdmin && lecture?.status !== 'live') {
+    return (
+      <LectureErrorPage
+        title="Lecture Status"
+        message={errorMsg}
+        redirectUrl={lecture ? `/course/${lecture.course}/lectures` : '/'}
+      />
+    );
+  }
+
+  // If Admin, they can proceed even if errorMsg was "upcoming"
+  // If Student, they can only proceed if lecture.status === 'live'
 
   return (
-    <div className="w-screen h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
-      {/* Main area */}
-      <div className="flex flex-1 flex-col lg:flex-row overflow-hidden">
-        {/* Mentor section */}
-        <div className="flex-1 flex items-center justify-center p-2">
-          <div className="relative w-full h-full max-h-full rounded-xl overflow-hidden">
-            <img
-              src={mentor.img}
-              alt={mentor.name}
-              className="w-full h-full object-cover object-top"
-            />
-            <div className="absolute bottom-2 left-2 bg-black/60 px-3 py-1 text-sm rounded">
-              {mentor.name}
-            </div>
-          </div>
-        </div>
-
-        {/* Students grid */}
-        <div className="w-full lg:w-1/3 grid grid-cols-2 gap-2 p-2 overflow-y-auto">
-          {students.map((s) => (
-            <div
-              key={s.id}
-              className="relative bg-black aspect-video rounded-xl overflow-hidden"
-            >
-              <img
-                src={s.img}
-                alt={s.name}
-                className="w-full h-full object-cover"
+    <main className="h-screen w-full bg-gray-800">
+      {call && (
+        <StreamCall call={call}>
+          <StreamTheme>
+            {!isSetupComplete ? (
+              <LectureSetup
+                setIsSetupComplete={setIsSetupComplete}
+                lectureId={lectureId}
+                isAdmin={isAdmin}
               />
-              <div className="absolute bottom-1 left-1 bg-black/60 px-2 py-0.5 text-xs rounded">
-                {s.name}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom control bar */}
-      <div className="flex items-center justify-center gap-6 bg-black/50 py-4">
-        <button className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full">
-          <Mic size={20} />
-        </button>
-        <button className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full">
-          <Video size={20} />
-        </button>
-        <button className="p-3 bg-gray-800 hover:bg-gray-700 rounded-full">
-          <Monitor size={20} />
-        </button>
-        <button className="p-3 bg-red-600 hover:bg-red-700 rounded-full">
-          <PhoneOff size={20} />
-        </button>
-      </div>
-    </div>
+            ) : (
+              <LiveLectureRoom
+                isAdmin={isAdmin}
+                lectureId={lectureId} // Pass ID for leave logic
+              />
+            )}
+          </StreamTheme>
+        </StreamCall>
+      )}
+    </main>
   );
 };
 

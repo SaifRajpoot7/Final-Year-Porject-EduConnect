@@ -4,7 +4,7 @@ import PageTitle from '../../components/other/PageTitle';
 
 const CreateCoursePage = () => {
   return (
-    <div className="p-2 min-h-screen">
+    <div className="p-2">
         <PageTitle
         title="Create Course"
         subtitle=""

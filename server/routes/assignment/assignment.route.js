@@ -10,7 +10,10 @@ const assignmentRouter = express.Router();
 // Create
 assignmentRouter.post("/create", requireAuth, upload.single('assignmentFile'), requireCourseAdmin, assignmentController.createAssignment);
 
-// Get all
+// Get all By User
+assignmentRouter.get("/all", requireAuth, assignmentController.getAllAssignmentByUser);
+
+// Get all By Course
 assignmentRouter.get("/all/course", requireAuth, courseRole, assignmentController.getAllCourseAssignment);
 
 // Submit assignment

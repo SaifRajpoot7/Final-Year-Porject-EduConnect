@@ -4,6 +4,7 @@ import QuizSubmission from "../models/quiz/quizSubmission.model.js";
 
 const createQuiz = async (req, res) => {
     try {
+        const teacher = req.user._id
         const { course, title, questions, dueDate, totalQuestions } = req.body;
 
         // 1. Validate required fields
@@ -36,6 +37,7 @@ const createQuiz = async (req, res) => {
         // 4. Create and save quiz
         const quiz = new Quiz({
             course,
+            teacher,
             title,
             questions,
             dueDate,
@@ -238,12 +240,175 @@ const submitQuiz = async (req, res) => {
     }
 };
 
+// const getAllQuizByUser = async (req, res) => {
+//   try {
+//     const userId = req.user?._id;
+//     const userEmail = req.user?.email;
+
+//     // Authentication check
+//     if (!userId) {
+//       return res.status(401).json({
+//         success: false,
+//         message: "Not authenticated"
+//       });
+//     }
+
+//     /**
+//      * 1. Quiz created by the user (Teacher)
+//      */
+//     const quizFromMyCreation = await Quiz.find({
+//       teacher: userId,
+//     })
+//       .populate({
+//         path: "course",
+//         select: "title"
+//       })
+//       .sort({ scheduledStart: 1 }); // nearest first
+
+//     /**
+//      * 2. Quiz where user is enrolled as student
+//      *    - Find courses where user is a student
+//      *    - Then find upcoming lectures for those courses
+//      */
+//     const enrolledCourses = await Course.find(
+//       { students: userEmail },
+//       { _id: 1 }
+//     );
+
+//     const enrolledCourseIds = enrolledCourses.map(course => course._id);
+
+//     const quizFromEnrollment = await Quiz.find({
+//       course: { $in: enrolledCourseIds },
+//     })
+//       .populate({
+//         path: "course",
+//         select: "title"
+//       })
+//       .sort({ scheduledStart: 1 }); // nearest first
+
+//     return res.status(200).json({
+//       success: true,
+//       quizFromMyCreation,
+//       quizFromEnrollment
+//     });
+
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({
+//       success: false,
+//       message: error.message
+//     });
+//   }
+// };
+
+
+const getAllQuizByUser = async (req, res) => {
+  try {
+    const userId = req.user?._id;
+    const userEmail = req.user?.email;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Not authenticated",
+      });
+    }
+
+    /**
+     * 1. Quiz created by the user (Teacher)
+     */
+    const quizFromMyCreation = await Quiz.find({
+      teacher: userId,
+    })
+      .populate({
+        path: "course",
+        select: "title",
+      })
+      .sort({ dueDate: 1 });
+
+    /**
+     * 2. Quiz where user is enrolled as student
+     */
+    const enrolledCourses = await Course.find(
+      { students: userEmail },
+      { _id: 1 }
+    );
+
+    const enrolledCourseIds = enrolledCourses.map(course => course._id);
+
+    const quizFromEnrollment = await Quiz.find({
+      course: { $in: enrolledCourseIds },
+    })
+      .populate({
+        path: "course",
+        select: "title",
+      })
+      .sort({ dueDate: 1 })
+      .lean(); // IMPORTANT for mutation
+
+    /**
+     * 3. Fetch submissions for current student
+     */
+    const submissions = await QuizSubmission.find({
+      student: userId,
+      quiz: { $in: quizFromEnrollment.map(q => q._id) },
+    })
+      .populate({
+        path: "student",
+        select: "fullName email",
+      })
+      .lean();
+
+    /**
+     * 4. Map submissions by quizId for O(1) access
+     */
+    const submissionMap = new Map();
+    submissions.forEach(sub => {
+      submissionMap.set(sub.quiz.toString(), sub);
+    });
+
+    /**
+     * 5. Attach submission info to each quiz
+     */
+    const enrichedQuizFromEnrollment = quizFromEnrollment.map(quiz => {
+      const submission = submissionMap.get(quiz._id.toString());
+
+      return {
+        ...quiz,
+        submission: submission
+          ? {
+              _id: submission._id,
+              submittedAt: submission.submittedAt,
+              result: submission.obtainedMarks,
+              student: {
+                fullName: submission.student?.fullName,
+                email: submission.student?.email,
+              },
+            }
+          : null,
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      quizFromMyCreation,
+      quizFromEnrollment: enrichedQuizFromEnrollment,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 const quizController = {
     createQuiz,
     getAllCourseQuiz,
     allSubmissionOfQuiz,
     submitQuiz,
+    getAllQuizByUser,
 }
 
 export default quizController;

@@ -12,7 +12,7 @@ const CreateAssignmentPage = () => {
         return () => setMenuType("general");
     }, [setMenuType]);
     return (
-        <div className="p-2 min-h-screen">
+        <div className="p-2">
             <PageTitle
                 title="Create New Assignment"
                 subtitle=""
