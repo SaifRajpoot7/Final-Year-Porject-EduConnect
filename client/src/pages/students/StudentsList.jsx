@@ -50,30 +50,30 @@ const StudentsList = () => {
     );
 
   return (
-          <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
-        <table className="min-w-full text-sm text-left">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700 text-xs uppercase">
-              <th className="px-4 py-3">Sr</th>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Email</th>
-            </tr>
-          </thead>
+    <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
+      <table className="min-w-full text-sm text-left">
+        <thead>
+          <tr className="bg-gray-100 text-gray-700 text-xs uppercase">
+            <th className="px-4 py-3">Sr</th>
+            <th className="px-4 py-3">Name</th>
+            <th className="px-4 py-3">Email</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {students.map((s, idx) => (
-              <tr
-                key={s._id}
-                className="border-t hover:bg-gray-50 transition"
-              >
-                <td className="px-4 py-3">{idx + 1}</td>
-                <td className="px-4 py-3">{s.name}</td>
-                <td className="px-4 py-3">{s.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+        <tbody>
+          {students.map((s, idx) => (
+            <tr
+              key={idx}
+              className="border-t hover:bg-gray-50 transition"
+            >
+              <td className="px-4 py-3">{idx + 1}</td>
+              <td className="px-4 py-3">{s.name}</td>
+              <td className="px-4 py-3">{s.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

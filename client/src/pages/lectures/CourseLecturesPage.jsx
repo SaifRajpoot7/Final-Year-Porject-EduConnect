@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import LoaderComponent from "../../components/FullPageLoaderComponent"
 import { useStreamVideoClient } from '@stream-io/video-react-sdk';
 import { toast } from "react-toastify";
+import ComponentLoader from "../../components/ComponentLoader";
 
 
 const CourseLecturesPage = () => {
@@ -176,120 +177,118 @@ const CourseLecturesPage = () => {
         subtitle="Join and manage live lectures"
       />
 
+      {loading ? <ComponentLoader />
+        :
+        <>
+          <div className="flex gap-4 mb-6 border-b">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => {
+                  setActiveTab(tab);
+                  setPage(1);
+                }}
+                className={`pb-2 px-2 font-medium transition ${activeTab === tab
+                  ? "border-b-2 border-blue-600 text-blue-600"
+                  : "text-gray-500 hover:text-gray-700"
+                  }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
 
-      <div className="flex gap-4 mb-6 border-b">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => {
-              setActiveTab(tab);
-              setPage(1);
-            }}
-            className={`pb-2 px-2 font-medium transition ${activeTab === tab
-              ? "border-b-2 border-blue-600 text-blue-600"
-              : "text-gray-500 hover:text-gray-700"
-              }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+          <div className="overflow-x-auto bg-white rounded-xl shadow-md">
+            <table className="min-w-full text-sm text-left">
+              <thead className="bg-gray-100 text-gray-700">
+                <tr>
+                  <th className="px-4 py-3">#</th>
+                  <th className="px-4 py-3">Title</th>
+                  <th className="px-4 py-3">Start Time</th>
+                  <th className="px-4 py-3">End Time</th>
+                  <th className="px-4 py-3">Status</th>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow-md">
-        <table className="min-w-full text-sm text-left">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="px-4 py-3">#</th>
-              <th className="px-4 py-3">Title</th>
-              <th className="px-4 py-3">Start Time</th>
-              <th className="px-4 py-3">End Time</th>
-              <th className="px-4 py-3">Status</th>
+                  {!isAdmin && (
+                    <th className="px-4 py-3">Attendance</th>
+                  )}
 
-              {!isAdmin && (
-                <th className="px-4 py-3">Attendance</th>
-              )}
+                  <th className="px-4 py-3">Action</th>
+                </tr>
+              </thead>
 
-              <th className="px-4 py-3">Action</th>
-            </tr>
-          </thead>
+              <tbody className="w-full">
+                {pageData.length ? (
+                  pageData.map((lecture, index) => {
+                    // 1. Find the specific attendance record for the CURRENT user
+                    const userAttendance = lecture.attendance?.find(
+                      (a) => a.student === userData?._id
+                    );
 
-          <tbody className="w-full">
-            {loading ? (
-              <tr className="h-20 w-full flex justify-center items-center">
-                <LoaderComponent />
-              </tr>
-            ) : pageData.length ? (
-              pageData.map((lecture, index) => {
-                // 1. Find the specific attendance record for the CURRENT user
-                const userAttendance = lecture.attendance?.find(
-                  (a) => a.student === userData?._id
-                );
+                    // 2. Determine if they were present
+                    const isPresent = userAttendance?.present;
 
-                // 2. Determine if they were present
-                const isPresent = userAttendance?.present;
-
-                return (
-                  <tr
-                    key={lecture._id}
-                    className="border-t hover:bg-gray-50"
-                  >
-                    <td className="px-4 py-3">
-                      {startIndex + index + 1}
-                    </td>
-                    <td className="px-4 py-3 font-medium">
-                      {lecture.title}
-                    </td>
-                    <td className="px-4 py-3">
-                      {formatDateTime(lecture.scheduledStart)}
-                    </td>
-                    <td className="px-4 py-3">
-                      {formatDateTime(lecture.scheduledEnd)}
-                    </td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(
-                          lecture.status
-                        )}`}
+                    return (
+                      <tr
+                        key={lecture._id}
+                        className="border-t hover:bg-gray-50"
                       >
-                        {lecture.status.toUpperCase()}
-                      </span>
-                    </td>
+                        <td className="px-4 py-3">
+                          {startIndex + index + 1}
+                        </td>
+                        <td className="px-4 py-3 font-medium">
+                          {lecture.title}
+                        </td>
+                        <td className="px-4 py-3">
+                          {formatDateTime(lecture.scheduledStart)}
+                        </td>
+                        <td className="px-4 py-3">
+                          {formatDateTime(lecture.scheduledEnd)}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadge(
+                              lecture.status
+                            )}`}
+                          >
+                            {lecture.status.toUpperCase()}
+                          </span>
+                        </td>
 
-                    {!isAdmin && (
-                      <td className="px-4 py-3">
-                        {lecture.status === "ended" ? (
-                          // If lecture is ended, show status
-                          isPresent ? (
-                            <span className="text-green-600 font-medium">Present</span>
-                          ) : (
-                            <span className="text-red-600 font-medium">Absent</span>
-                          )
-                        ) : (
-                          // If lecture is NOT ended (upcoming/live), show dash
-                          <span className="text-gray-400 font-medium">-</span>
+                        {!isAdmin && (
+                          <td className="px-4 py-3">
+                            {lecture.status === "ended" ? (
+                              // If lecture is ended, show status
+                              isPresent ? (
+                                <span className="text-green-600 font-medium">Present</span>
+                              ) : (
+                                <span className="text-red-600 font-medium">Absent</span>
+                              )
+                            ) : (
+                              // If lecture is NOT ended (upcoming/live), show dash
+                              <span className="text-gray-400 font-medium">-</span>
+                            )}
+                          </td>
                         )}
-                      </td>
-                    )}
 
-                    <td className="px-4 py-3">
-                      <button
-                        disabled={disableButton(lecture)}
-                        onClick={() => navigate(`/lecture/live/${lecture._id}`)}
-                        className={`px-3 py-2 rounded capitalize 
+                        <td className="px-4 py-3">
+                          <button
+                            disabled={disableButton(lecture)}
+                            onClick={() => navigate(`/lecture/live/${lecture._id}`)}
+                            className={`px-3 py-2 rounded capitalize 
   ${lecture.status === 'missed'
-                            ? "cursor-not-allowed bg-red-300 text-red-700 font-semibold" // Missed Style
-                            : disableButton(lecture)
-                              ? "cursor-not-allowed opacity-60 bg-gray-500 text-white" // Disabled (Upcoming/Ended) Style
-                              : "bg-blue-500 hover:bg-blue-600 text-white" // Active (Join/Start) Style
-                          }
+                                ? "cursor-not-allowed bg-red-300 text-red-700 font-semibold" // Missed Style
+                                : disableButton(lecture)
+                                  ? "cursor-not-allowed opacity-60 bg-gray-500 text-white" // Disabled (Upcoming/Ended) Style
+                                  : "bg-blue-500 hover:bg-blue-600 text-white" // Active (Join/Start) Style
+                              }
 `}
-                      >
-                        {lectureStartStatus(lecture.status, lecture.scheduledStart)}
-                      </button>
+                          >
+                            {lectureStartStatus(lecture.status, lecture.scheduledStart)}
+                          </button>
 
-                    </td>
+                        </td>
 
-                    {/* <td className="px-4 py-3">
+                        {/* <td className="px-4 py-3">
                       {isAdmin ? (
                         lecture.status === "upcoming" ? (
                           Date.now() > lecture.scheduledStart ? (
@@ -348,19 +347,21 @@ const CourseLecturesPage = () => {
                       )}
                     </td> */}
 
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="10" className="text-center py-6">
+                      No lectures found
+                    </td>
                   </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="10" className="text-center py-6">
-                  No lectures found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </>
+      }
 
       {totalPages > 1 && (
         <div className="flex justify-center gap-4 mt-6">

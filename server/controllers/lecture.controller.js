@@ -1380,6 +1380,7 @@ import Lecture from "../models/lecture.model.js";
 import Course from "../models/course.model.js";
 import mongoose from "mongoose";
 import { StreamChat } from "stream-chat";
+import User from "../models/user.model.js";
 
 // Initialize Stream Client
 const serverClient = new StreamChat(
@@ -1727,7 +1728,9 @@ const endLecture = async (req, res) => {
     if (lecture.teacher.toString() !== userId.toString()) {
       return res.status(403).json({ success: false, message: "Only teacher can end lecture" });
     }
+    const course = await Course.findById(lecture.course);
 
+    const students = course.students
     // 1. End Stream Call
     try {
       const call = serverClient.call("default", lecture._id.toString());
@@ -1765,6 +1768,7 @@ const endLecture = async (req, res) => {
     lecture.status = "ended";
     lecture.endedAt = now;
     await lecture.save();
+    await initializeStudentAttendance(lectureId, students);
 
     res.json({ success: true, message: "Lecture ended and attendance finalized", lecture });
 
@@ -1880,12 +1884,12 @@ const markMissedLectures = async () => {
 
     // Find all lectures that are still 'upcoming' but their end time has passed
     const result = await Lecture.updateMany(
-      { 
-        status: 'upcoming', 
+      {
+        status: 'upcoming',
         scheduledEnd: { $lt: now } // scheduledEnd is less than current time
       },
-      { 
-        $set: { status: 'missed' } 
+      {
+        $set: { status: 'missed' }
       }
     );
 
@@ -1896,6 +1900,71 @@ const markMissedLectures = async () => {
 
   } catch (error) {
     console.error("Error in markMissedLectures cron job:", error);
+  }
+};
+
+
+const initializeStudentAttendance = async (lectureId, studentEmails) => {
+  try {
+    // 1. Get user IDs for all emails provided
+    // We use $in to find all users whose email is in the array
+    console.log(lectureId)
+    console.log(studentEmails)
+    const students = await User.find({
+      email: { $in: studentEmails }
+    }).select("_id");
+
+    if (students.length === 0) {
+      console.log("No users found for the provided emails.");
+      return;
+    }
+
+    // 2. Fetch the Lecture document
+    const lecture = await Lecture.findById(lectureId);
+
+    if (!lecture) {
+      throw new Error("Lecture not found");
+    }
+
+    // 3. Check and Add missing records
+    // We create a Set of existing student IDs (as strings) for efficient checking
+    // This avoids O(N^2) complexity if the attendance list is large
+    const existingStudentIds = new Set(
+      lecture.attendance.map((record) => record.student.toString())
+    );
+
+    let isModified = false;
+
+    // Iterate through the fetched users from Step 1
+    for (const student of students) {
+      const studentIdString = student._id.toString();
+
+      // If the student is NOT in the existing set, add them
+      if (!existingStudentIds.has(studentIdString)) {
+        lecture.attendance.push({
+          student: student._id,
+          present: false,       // Explicitly setting as requested
+          totalJoinedMs: 0,     // Default
+          lastJoinedAt: null    // Default
+        });
+
+        isModified = true;
+      }
+    }
+
+    // 4. Save only if changes were made
+    if (isModified) {
+      await lecture.save();
+      console.log("Attendance records updated successfully.");
+    } else {
+      console.log("All students already exist in the attendance list.");
+    }
+
+    return lecture;
+
+  } catch (error) {
+    console.error("Error initializing attendance:", error);
+    throw error;
   }
 };
 
