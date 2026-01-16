@@ -1,4 +1,3 @@
-// src/data/menuItems.js
 import {
   LayoutDashboard,
   BookOpen,
@@ -8,6 +7,11 @@ import {
   Settings,
   Users,
   Megaphone,
+  FileText,
+  UserCog,
+  MessageSquareHeart,
+  MessageSquare,
+  ShieldMinus,
 } from "lucide-react";
 
 export const generalMenu = [
@@ -134,5 +138,33 @@ export const courseMenuStudent = [
     icon: Megaphone,
     text: "Announcements",
     link: "/announcements",
+  },
+];
+
+export const superAdminMenu = [
+  {
+    icon: LayoutDashboard,
+    text: "Dashboard",
+    link: "admin-dashboard",
+  },
+  {
+    icon: UserCog,
+    text: "User Management",
+    link: "admin/user-management",
+  },
+  {
+    icon: ShieldMinus,
+    text: "Account Activation Appeals",
+    link: "admin/account-activation-appeals",
+  },
+  {
+    icon: FileText,
+    text: "System Logs",
+    link: "/system-logs",
+  },
+  {
+    icon: MessageSquare,
+    text: "Feedbacks",
+    link: "/feedbacks",
   },
 ];

@@ -1,27 +1,263 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
+// import { useAppContext } from "../../contexts/AppContext";
+// import { generalMenu, courseMenuTeacher, courseMenuStudent, superAdminMenu } from "./menuItems";
+// import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
+// import { NavLink, useNavigate } from "react-router";
+
+// const Sidebar = () => {
+//   const navigate = useNavigate();
+
+//   const { isSidebarOpen, menuType, toggleMenuType, logout, courseId, isCourseAdmin, isSuperAdmin } = useAppContext();
+//   const [openMenus, setOpenMenus] = useState(null); // Track open submenus
+//   const [hideSidebar, setHideSidebar] = useState(false); // Track open submenus
+
+
+//   const toggleSubMenu = (index) => {
+//     // setOpenMenus((prev) => ({ ...prev, [text]: !prev[text] }));
+//     setOpenMenus(openMenus === index ? null : index);
+//   };
+//   const course_id = courseId;
+
+//   let menuItems;
+//   const isStudentMenu =
+//     menuType === "course" && !isCourseAdmin;
+
+
+//   if (menuType === "general") {
+//     menuItems = generalMenu;
+//   } else if (isCourseAdmin) {
+//     menuItems = courseMenuTeacher;
+//   } else {
+//     menuItems = courseMenuStudent;
+//   }
+
+//   if (isSuperAdmin) {
+//     menuItems = superAdminMenu;
+//   }
+
+//   if (menuType === null) {
+//     setHideSidebar(true)
+//   }
+
+
+//   const handleLogout = async () => {
+//     logout();
+//   }
+
+//   const isAdminMenu = menuType === "course" && isCourseAdmin;
+
+//   return 
+//     {!hideSidebar &&
+//       <aside
+//         style={{
+//           "--Hover-Color": isStudentMenu
+//             && "var(--Student-Hover-Color)",
+//           "--Hover-BG-Tint": isStudentMenu
+//             && "var(--Student-Hover-BG-Tint)"
+//         }}
+//         className={`hidden sm:flex flex-col h-full ${isSidebarOpen ? "min-w-64" : "min-w-20"
+//           } bg-[var(--Background-primary)] p-4 rounded-2xl shadow-xl border-2 border-gray-200 transition-all duration-300 ease-in-out justify-between overflow-hidden hover:overflow-x-auto hover:overflow-y-scroll scrollbar-hide hover:scrollbar-hover`}
+//       >
+//         {/* Logo Section */}
+//         <div>
+//           <div className="flex w-full items-center justify-center mb-6">
+//             <img
+//               src={`${isSidebarOpen ? "/logo.png" : "/icon.png"
+//                 }`}
+//               alt="Logo"
+//               className={`transition-all duration-300 ${isSidebarOpen ? "w-32" : "w-10"
+//                 }`}
+//             />
+//           </div>
+
+//           {/* Menu Items */}
+//           <nav className="flex flex-col gap-2 mt-16">
+//             {menuType == "course" &&
+//               <button
+//                 onClick={() =>
+//                   toggleMenuType()
+//                 }
+//                 className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)]  group mb-4`}
+//               >
+//                 <div className="flex items-center gap-3">
+//                   <ChevronLeft className="w-5 h-5 text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors" />
+//                   {isSidebarOpen && (
+//                     <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors">
+//                       Main menu
+//                     </span>
+//                   )}
+//                 </div>
+//               </button>
+//             }
+
+//             {menuItems.map((item, index) => (
+//               <div key={index} className="relative group">
+//                 {/* Main Item */}
+//                 {item.sub ? (
+//                   <button
+//                     onClick={() =>
+//                       isSidebarOpen ? toggleSubMenu(index) : null
+//                     }
+//                     className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)]  group`}
+//                   >
+//                     <div className="flex items-center gap-3">
+//                       <item.icon className="w-5 h-5 text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors" />
+//                       {isSidebarOpen && (
+//                         <span className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors">
+//                           {item.text}
+//                         </span>
+//                       )}
+//                     </div>
+//                     {isSidebarOpen && (
+//                       <ChevronRight
+//                         className={`w-4 h-4 transition-transform ${openMenus === index ? "rotate-90" : ""
+//                           }`}
+//                       />
+//                     )}
+//                   </button>
+//                 ) : (
+//                   <NavLink
+//                     to={menuType === "course"
+//                       ? `/course/${course_id}${item.link}`
+//                       : item.link}
+//                     className={({ isActive }) =>
+//                       `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 ${isSidebarOpen ? "justify-start gap-3" : "justify-center"
+//                       } group ${isActive
+//                         ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)]  font-medium"
+//                         : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)] hover:text-[var(--Hover-Color)]  font-medium"
+//                       }`
+//                     }
+//                   >
+//                     <item.icon className="w-5 h-5 transition-colors" />
+//                     {isSidebarOpen && (
+//                       <span className="text-sm">{item.text}</span>
+//                     )}
+//                   </NavLink>
+//                 )}
+
+//                 {/* Sub Menu */}
+//                 {isSidebarOpen && item.sub && openMenus === index && (
+//                   <div className="ml-8 mt-1 flex flex-col gap-1">
+//                     {/* {item.sub.map((subItem) => (
+//                     isCourseAdmin == subItem.admin ? (
+//                       <NavLink
+//                         key={subItem.text}
+//                         to={menuType === "course"
+//                           ? `/course/${course_id}${subItem.link}`
+//                           : subItem.link}
+
+//                         className={({ isActive }) =>
+//                           `text-sm px-2 py-1 rounded-md transition-colors ${isActive
+//                             ? "text-[var(--Hover-Color)]"
+//                             : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
+//                           }`
+//                         }
+//                       >
+//                         {subItem.text}
+//                       </NavLink>) : null
+
+//                   ))} */}
+//                     {item.sub.map((subItem) => {
+
+//                       // show admin items only if isCourseAdmin is true
+//                       const shouldShow = !subItem.admin || (subItem.admin && isCourseAdmin);
+
+//                       return shouldShow ? (
+//                         <NavLink
+//                           key={subItem.text}
+//                           to={
+//                             menuType === "course"
+//                               ? `/course/${course_id}${subItem.link}`
+//                               : subItem.link
+//                           }
+//                           className={({ isActive }) =>
+//                             `text-sm px-2 py-1 rounded-md transition-colors ${isActive
+//                               ? "text-[var(--Hover-Color)]"
+//                               : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
+//                             }`
+//                           }
+//                         >
+//                           {subItem.text}
+//                         </NavLink>
+//                       ) : null;
+//                     })}
+
+//                   </div>
+//                 )}
+
+//                 {/* Sub Menu on Hover */}
+
+//                 {!isSidebarOpen && item.sub && (
+//                   <div className="absolute left-full top-0 hidden group-hover:block bg-white border shadow-lg rounded-md w-48 p-2 z-50">
+//                     <ul className="space-y-1">
+//                       {item.sub.map((subItem, subIndex) => (
+//                         <li key={subIndex}>
+//                           <NavLink
+//                             to={menuType === "course"
+//                               ? `/course/${course_id}${subItem.link}`
+//                               : subItem.link}
+//                             className={({ isActive }) =>
+//                               `block px-2 py-1 text-sm rounded-md ${isActive
+//                                 ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)] "
+//                                 : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)]"
+//                               }`
+//                             }
+//                           >
+//                             {subItem.text}
+//                           </NavLink>
+//                         </li>
+//                       ))}
+//                     </ul>
+//                   </div>
+//                 )}
+//               </div>
+//             ))}
+//           </nav>
+//         </div >
+//         <button
+//           onClick={() => handleLogout()}
+//           className={
+//             `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-start gap-3" : "justify-center"} group text-[var(--text-primary)] hover:bg-red-100 hover:text-red-600  font-medium`
+//           }
+//         >
+//           <LogOut className="w-5 h-5 transition-colors" />
+//           {isSidebarOpen && (
+//             <span className="text-sm">Logout</span>
+//           )}
+//         </button>
+
+//       </aside >
+// };
+// };
+
+// export default Sidebar;
+
+
+import React, { useState } from "react";
 import { useAppContext } from "../../contexts/AppContext";
-import { generalMenu, courseMenuTeacher, courseMenuStudent } from "./menuItems";
+import { generalMenu, courseMenuTeacher, courseMenuStudent, superAdminMenu } from "./menuItems";
 import { ChevronLeft, ChevronRight, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const { isSidebarOpen, menuType, toggleMenuType, logout, courseId, isCourseAdmin } = useAppContext();
+  const { isSidebarOpen, menuType, toggleMenuType, logout, courseId, isCourseAdmin, isSuperAdmin } = useAppContext();
   const [openMenus, setOpenMenus] = useState(null); // Track open submenus
 
+  // REMOVED: const [hideSidebar, setHideSidebar] = useState(false); 
+  // REASON: Causes infinite loop. We will calculate this directly below.
 
   const toggleSubMenu = (index) => {
-    // setOpenMenus((prev) => ({ ...prev, [text]: !prev[text] }));
     setOpenMenus(openMenus === index ? null : index);
   };
+  
   const course_id = courseId;
 
-  let menuItems;
-  const isStudentMenu =
-    menuType === "course" && !isCourseAdmin;
-    
+  let menuItems = []; // Initialize as empty array to be safe
+  const isStudentMenu = menuType === "course" && !isCourseAdmin;
 
+  // Determine Menu Items
   if (menuType === "general") {
     menuItems = generalMenu;
   } else if (isCourseAdmin) {
@@ -30,20 +266,22 @@ const Sidebar = () => {
     menuItems = courseMenuStudent;
   }
 
+  if (isSuperAdmin) {
+    menuItems = superAdminMenu;
+  }
+
 
   const handleLogout = async () => {
     logout();
-  }
+  };
 
-const isAdminMenu = menuType === "course" && isCourseAdmin;
+
   return (
     <aside
-    style={{
-    "--Hover-Color": isStudentMenu
-      && "var(--Student-Hover-Color)",
-    "--Hover-BG-Tint": isStudentMenu
-      && "var(--Student-Hover-BG-Tint)"
-  }}
+      style={{
+        "--Hover-Color": isStudentMenu && "var(--Student-Hover-Color)",
+        "--Hover-BG-Tint": isStudentMenu && "var(--Student-Hover-BG-Tint)"
+      }}
       className={`hidden sm:flex flex-col h-full ${isSidebarOpen ? "min-w-64" : "min-w-20"
         } bg-[var(--Background-primary)] p-4 rounded-2xl shadow-xl border-2 border-gray-200 transition-all duration-300 ease-in-out justify-between overflow-hidden hover:overflow-x-auto hover:overflow-y-scroll scrollbar-hide hover:scrollbar-hover`}
     >
@@ -51,22 +289,18 @@ const isAdminMenu = menuType === "course" && isCourseAdmin;
       <div>
         <div className="flex w-full items-center justify-center mb-6">
           <img
-            src={`${isSidebarOpen ? "/logo.png" : "/icon.png"
-              }`}
+            src={`${isSidebarOpen ? "/logo.png" : "/icon.png"}`}
             alt="Logo"
-            className={`transition-all duration-300 ${isSidebarOpen ? "w-32" : "w-10"
-              }`}
+            className={`transition-all duration-300 ${isSidebarOpen ? "w-32" : "w-10"}`}
           />
         </div>
 
         {/* Menu Items */}
         <nav className="flex flex-col gap-2 mt-16">
-          {menuType == "course" &&
+          {menuType === "course" && (
             <button
-              onClick={() =>
-                toggleMenuType()
-              }
-              className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)]  group mb-4`}
+              onClick={() => toggleMenuType()}
+              className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)] group mb-4`}
             >
               <div className="flex items-center gap-3">
                 <ChevronLeft className="w-5 h-5 text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors" />
@@ -77,17 +311,15 @@ const isAdminMenu = menuType === "course" && isCourseAdmin;
                 )}
               </div>
             </button>
-          }
+          )}
 
           {menuItems.map((item, index) => (
             <div key={index} className="relative group">
               {/* Main Item */}
               {item.sub ? (
                 <button
-                  onClick={() =>
-                    isSidebarOpen ? toggleSubMenu(index) : null
-                  }
-                  className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)]  group`}
+                  onClick={() => (isSidebarOpen ? toggleSubMenu(index) : null)}
+                  className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-between" : "justify-center"} hover:bg-[var(--Hover-BG-Tint)] group`}
                 >
                   <div className="flex items-center gap-3">
                     <item.icon className="w-5 h-5 text-[var(--text-primary)] group-hover:text-[var(--Hover-Color)] transition-colors" />
@@ -99,66 +331,35 @@ const isAdminMenu = menuType === "course" && isCourseAdmin;
                   </div>
                   {isSidebarOpen && (
                     <ChevronRight
-                      className={`w-4 h-4 transition-transform ${openMenus === index ? "rotate-90" : ""
-                        }`}
+                      className={`w-4 h-4 transition-transform ${openMenus === index ? "rotate-90" : ""}`}
                     />
                   )}
                 </button>
               ) : (
                 <NavLink
-                  to={menuType === "course"
-                    ? `/course/${course_id}${item.link}`
-                    : item.link}
+                  to={menuType === "course" ? `/course/${course_id}${item.link}` : item.link}
                   className={({ isActive }) =>
                     `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 ${isSidebarOpen ? "justify-start gap-3" : "justify-center"
                     } group ${isActive
-                      ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)]  font-medium"
-                      : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)] hover:text-[var(--Hover-Color)]  font-medium"
+                      ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)] font-medium"
+                      : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)] hover:text-[var(--Hover-Color)] font-medium"
                     }`
                   }
                 >
                   <item.icon className="w-5 h-5 transition-colors" />
-                  {isSidebarOpen && (
-                    <span className="text-sm">{item.text}</span>
-                  )}
+                  {isSidebarOpen && <span className="text-sm">{item.text}</span>}
                 </NavLink>
               )}
 
-              {/* Sub Menu */}
+              {/* Sub Menu (Expanded Sidebar) */}
               {isSidebarOpen && item.sub && openMenus === index && (
                 <div className="ml-8 mt-1 flex flex-col gap-1">
-                  {/* {item.sub.map((subItem) => (
-                    isCourseAdmin == subItem.admin ? (
-                      <NavLink
-                        key={subItem.text}
-                        to={menuType === "course"
-                          ? `/course/${course_id}${subItem.link}`
-                          : subItem.link}
-
-                        className={({ isActive }) =>
-                          `text-sm px-2 py-1 rounded-md transition-colors ${isActive
-                            ? "text-[var(--Hover-Color)]"
-                            : "text-[var(--text-primary)] hover:text-[var(--Hover-Color)]"
-                          }`
-                        }
-                      >
-                        {subItem.text}
-                      </NavLink>) : null
-
-                  ))} */}
                   {item.sub.map((subItem) => {
-
-                    // show admin items only if isCourseAdmin is true
                     const shouldShow = !subItem.admin || (subItem.admin && isCourseAdmin);
-
                     return shouldShow ? (
                       <NavLink
                         key={subItem.text}
-                        to={
-                          menuType === "course"
-                            ? `/course/${course_id}${subItem.link}`
-                            : subItem.link
-                        }
+                        to={menuType === "course" ? `/course/${course_id}${subItem.link}` : subItem.link}
                         className={({ isActive }) =>
                           `text-sm px-2 py-1 rounded-md transition-colors ${isActive
                             ? "text-[var(--Hover-Color)]"
@@ -170,52 +371,49 @@ const isAdminMenu = menuType === "course" && isCourseAdmin;
                       </NavLink>
                     ) : null;
                   })}
-
                 </div>
               )}
 
-              {/* Sub Menu on Hover */}
-
+              {/* Sub Menu (Collapsed Sidebar / Hover) */}
               {!isSidebarOpen && item.sub && (
                 <div className="absolute left-full top-0 hidden group-hover:block bg-white border shadow-lg rounded-md w-48 p-2 z-50">
                   <ul className="space-y-1">
-                    {item.sub.map((subItem, subIndex) => (
-                      <li key={subIndex}>
-                        <NavLink
-                          to={menuType === "course"
-                            ? `/course/${course_id}${subItem.link}`
-                            : subItem.link}
-                          className={({ isActive }) =>
-                            `block px-2 py-1 text-sm rounded-md ${isActive
-                              ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)] "
-                              : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)]"
-                            }`
-                          }
-                        >
-                          {subItem.text}
-                        </NavLink>
-                      </li>
-                    ))}
+                    {item.sub.map((subItem, subIndex) => {
+                      // FIX: Apply the same admin check here
+                      const shouldShow = !subItem.admin || (subItem.admin && isCourseAdmin);
+                      
+                      return shouldShow ? (
+                        <li key={subIndex}>
+                          <NavLink
+                            to={menuType === "course" ? `/course/${course_id}${subItem.link}` : subItem.link}
+                            className={({ isActive }) =>
+                              `block px-2 py-1 text-sm rounded-md ${isActive
+                                ? "bg-[var(--Hover-BG-Tint)] text-[var(--Hover-Color)]"
+                                : "text-[var(--text-primary)] hover:bg-[var(--Hover-BG-Tint)]"
+                              }`
+                            }
+                          >
+                            {subItem.text}
+                          </NavLink>
+                        </li>
+                      ) : null;
+                    })}
                   </ul>
                 </div>
               )}
             </div>
           ))}
         </nav>
-      </div >
+      </div>
+      
       <button
         onClick={() => handleLogout()}
-        className={
-          `flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-start gap-3" : "justify-center"} group text-[var(--text-primary)] hover:bg-red-100 hover:text-red-600  font-medium`
-        }
+        className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${isSidebarOpen ? "justify-start gap-3" : "justify-center"} group text-[var(--text-primary)] hover:bg-red-100 hover:text-red-600 font-medium`}
       >
         <LogOut className="w-5 h-5 transition-colors" />
-        {isSidebarOpen && (
-          <span className="text-sm">Logout</span>
-        )}
+        {isSidebarOpen && <span className="text-sm">Logout</span>}
       </button>
-
-    </aside >
+    </aside>
   );
 };
 

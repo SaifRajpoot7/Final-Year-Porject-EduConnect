@@ -330,6 +330,19 @@ const getCoursesByStudent = async (req, res) => {
     }
 };
 
+const courseMember = async (req, res) => {
+    if (req.isCourseMember) {
+        res.status(200).json({
+            success: true,
+            message: 'User is member',
+        });
+    }
+    res.status(400).json({
+        success: false,
+        message: 'User is not member',
+    });
+}
+
 const courseController = {
     createCourse,
     getAllCourses,
@@ -340,6 +353,7 @@ const courseController = {
     addStudentsToCourse,
     getCoursesByTeacher,
     getCoursesByStudent,
+    courseMember,
 };
 
 export default courseController;

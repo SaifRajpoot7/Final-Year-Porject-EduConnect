@@ -15,7 +15,24 @@ const userSchema = new mongoose.Schema({
         required: true,
         select: false, // Exclude password from queries by default
     },
-
+    status: {
+        type: String,
+        enum: ['active', 'suspended', 'blocked'], // Only these values are allowed
+        default: 'active'                          // Default to 'active' on registration
+    },
+    statusMessage: {
+        type: String,
+        default: ''
+    },
+    suspensionCount: {
+        type: Number,
+        default: 0
+    },
+    // Add this new field
+    blockedAt: {
+        type: Date,
+        default: null
+    },
     role: {
         type: String,
         enum: ["user", "admin"],

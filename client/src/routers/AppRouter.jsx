@@ -122,6 +122,11 @@
 import React, { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router";
 import FullPageLoaderComponent from "../components/FullPageLoaderComponent";
+import SuperAdminSignInPage from "../pages/auth/Super Admin/SuperAdminSignInPage";
+import PrivateRouteProtectorForSuperAdmins from "../routeProtector/PrivateRouteProtectorForSuperAdmins";
+import SuperAdminDashboardPage from "../pages/dashboard/super admin/SuperAdminDashboardPage";
+import UserManagementPage from "../pages/SuperAdmin/userManagement/UserManagementPage";
+import AccountActivationAppealsPage from "../pages/SuperAdmin/accountActivationAppeals/AccountActivationAppealsPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -236,6 +241,10 @@ const SettingPage = lazy(() =>
   import("../pages/settings/SettingPage")
 );
 
+const AccountBlockOrSuspendPage = lazy(() =>
+  import("../pages/other/AccountBlockOrSuspendPage")
+);
+
 /* =========================
    App Router
 ========================= */
@@ -251,11 +260,26 @@ function AppRouter() {
 
           <Route element={<PublicRouteProtector />}>
             <Route path="signin" element={<SignInPage />} />
+            <Route path="super-admin/signin" element={<SuperAdminSignInPage />} />
             <Route path="signup" element={<SignUpPage />} />
           </Route>
         </Route>
 
-        {/* Private Routes */}
+        {/* Private Routes For Super Admin */}
+        <Route element={<PrivateRouteProtectorForSuperAdmins />}>
+          <Route path="/" element={<DashboardLayout />}>
+
+            <Route path="admin-dashboard" element={<SuperAdminDashboardPage />} />
+            {/* Profile */}
+            <Route path="admin-profile" element={<ProfilePage />} />
+            <Route path="admin-profile/edit" element={<ProfileEditPage />} />
+            <Route path="admin/user-management" element={<UserManagementPage />} />
+            <Route path="admin/account-activation-appeals" element={<AccountActivationAppealsPage />} />
+          </Route>
+        </Route>
+
+        {/* Private Routes For Users */}
+            <Route path="account-status" element={<AccountBlockOrSuspendPage />} />
         <Route element={<PrivateRouteProtector />}>
           <Route path="/" element={<DashboardLayout />}>
 

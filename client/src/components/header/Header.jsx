@@ -92,15 +92,17 @@ const Header = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className={`w-full  z-50 transition-all ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent"
-      }`}
+      className={`w-full  z-50 transition-all ${scrolled ? "bg-white shadow-md" : "bg-transparent"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <div className="text-2xl font-bold text-gray-900 cursor-pointer">
-          YourLogo
+        <div className="text-2xl font-bold text-gray-900 cursor-pointer w-40">
+          <img
+            src="/logo.png"
+            alt="Logo"
+          />
         </div>
 
         {/* Desktop Navigation */}

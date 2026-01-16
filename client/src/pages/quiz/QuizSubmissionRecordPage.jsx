@@ -3,6 +3,7 @@ import axios from "axios";
 import PageTitle from "../../components/other/PageTitle";
 import { useAppContext } from "../../contexts/AppContext";
 import { useParams } from "react-router";
+import ComponentLoader from "../../components/ComponentLoader";
 
 const QuizSubmissionRecordPage = () => {
   const { setMenuType, setCourseId, backendUrl, courseId } = useAppContext();
@@ -66,8 +67,10 @@ const QuizSubmissionRecordPage = () => {
   return (
     <div className="p-4">
       <PageTitle title="Quiz Submissions" subtitle="Manage and track Quiz submissions" />
-
-      {/* <div className="flex gap-4 mb-6 border-b">
+      {loading ? <ComponentLoader />
+        :
+        <>
+          {/* <div className="flex gap-4 mb-6 border-b">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -82,54 +85,50 @@ const QuizSubmissionRecordPage = () => {
         ))}
       </div> */}
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
-        <table className="min-w-full text-sm text-left">
-          <thead className="bg-gray-100 text-gray-700 text-sm capitalize">
-            <tr>
-              <th className="px-4 py-3">Sr</th>
-              <th className="px-4 py-3">Student</th>
-              <th className="px-4 py-3">Title</th>
-              <th className="px-4 py-3">Due Date</th>
-              <th className="px-4 py-3">Total Marks</th>
-              <th className="px-4 py-3">Submitted At</th>
-              <th className="px-4 py-3">Result</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
-              <tr>
-                <td colSpan="10" className="text-center py-6 text-gray-500">Loading...</td>
-              </tr>
-            ) : pageData.length > 0 ?
-              (
-                pageData.map((quiz, index) => {
-                  const isDuePassed = quiz.dueDate ? new Date() > new Date(quiz.dueDate) : false;
-                  const dueDate = quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "-"
-                  const submitDate = quiz.submissionDate ? new Date(quiz.submissionDate).toLocaleDateString() : "-"
-
-                  return (
-                    <tr key={index} className="border-t hover:bg-gray-50 transition">
-                      <td className="px-4 py-3">{index + 1}</td>
-                      <td className="px-4 py-3">{quiz.studentName}</td>
-                      <td className="px-4 py-3">{quiz.title ?? "-"}</td>
-                      <td className="px-4 py-3 text-red-500">{dueDate ?? "-"}</td>
-                      <td className="px-4 py-3">{quiz.maxMarks ?? "-"}</td>
-                      <td className="px-4 py-3">{submitDate ?? "-"}</td>
-                      <td className="px-4 py-3">{quiz.result ?? "-"}</td>
-                      
-                    </tr>
-                  );
-                })
-              ) : (
+          <div className="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
+            <table className="min-w-full text-sm text-left">
+              <thead className="bg-gray-100 text-gray-700 text-sm capitalize">
                 <tr>
-                  <td colSpan="10" className="text-center py-6 text-gray-500">No Submission found</td>
+                  <th className="px-4 py-3">Sr</th>
+                  <th className="px-4 py-3">Student</th>
+                  <th className="px-4 py-3">Title</th>
+                  <th className="px-4 py-3">Due Date</th>
+                  <th className="px-4 py-3">Total Marks</th>
+                  <th className="px-4 py-3">Submitted At</th>
+                  <th className="px-4 py-3">Result</th>
                 </tr>
-              )}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {pageData.length > 0 ?
+                  (
+                    pageData.map((quiz, index) => {
+                      const isDuePassed = quiz.dueDate ? new Date() > new Date(quiz.dueDate) : false;
+                      const dueDate = quiz.dueDate ? new Date(quiz.dueDate).toLocaleDateString() : "-"
+                      const submitDate = quiz.submissionDate ? new Date(quiz.submissionDate).toLocaleDateString() : "-"
 
-      </div>
+                      return (
+                        <tr key={index} className="border-t hover:bg-gray-50 transition">
+                          <td className="px-4 py-3">{index + 1}</td>
+                          <td className="px-4 py-3">{quiz.studentName}</td>
+                          <td className="px-4 py-3">{quiz.title ?? "-"}</td>
+                          <td className="px-4 py-3 text-red-500">{dueDate ?? "-"}</td>
+                          <td className="px-4 py-3">{quiz.maxMarks ?? "-"}</td>
+                          <td className="px-4 py-3">{submitDate ?? "-"}</td>
+                          <td className="px-4 py-3">{quiz.result ?? "-"}</td>
 
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="10" className="text-center py-6 text-gray-500">No Submission found</td>
+                    </tr>
+                  )}
+              </tbody>
+            </table>
+
+          </div>
+        </>}
       {
         totalPages > 1 && (
           <div className="flex justify-center items-center gap-4 mt-6">

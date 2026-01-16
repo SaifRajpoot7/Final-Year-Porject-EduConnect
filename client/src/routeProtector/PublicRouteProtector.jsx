@@ -5,12 +5,13 @@ import FullPageLoaderComponent from '../components/FullPageLoaderComponent';
 
 
 const PublicRouteProtector = ({ children }) => {
-  const { isLoggedIn, isLoading, isVerified } = useAppContext();
+  const { isLoggedIn, isLoading, userData, isSuperAdmin, isVerified } = useAppContext();
 
   // While checking auth, render nothing or a loader
   if (isLoading) return <FullPageLoaderComponent />;
-
-  if (isLoggedIn) return <Navigate to="/dashboard" replace />;
+  
+  if (isLoggedIn && !isSuperAdmin) return <Navigate to="/dashboard" replace />;
+  if (isLoggedIn && isSuperAdmin) return <Navigate to="/admin-dashboard" replace />;
 
   return <Outlet />;;
 }

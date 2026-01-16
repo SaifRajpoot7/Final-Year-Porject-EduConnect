@@ -3,21 +3,19 @@ import { useAppContext } from '../contexts/AppContext'
 import { Navigate, Outlet } from 'react-router';
 import FullPageLoaderComponent from '../components/FullPageLoaderComponent';
 import ErrorPage from '../pages/error pages/ErrorPage';
-import AccountBlockOrSuspendPage from '../pages/other/AccountBlockOrSuspendPage';
 
 
-const PrivateRouteProtector = ({ children }) => {
-  const { isLoggedIn, isLoading, isVerified, isSuperAdmin, isBlockedOrSuspended } = useAppContext();
+const PrivateRouteProtectorForSuperAdmins = ({ children }) => {
+  const { isLoggedIn, isLoading, isVerified, isSuperAdmin } = useAppContext();
 
   // While checking auth, render nothing or a loader
 
   if (isLoading) return <FullPageLoaderComponent />;
   if (!isLoggedIn) return <Navigate to="/signin" replace />;
-  if (isSuperAdmin) return <ErrorPage title="403 Access Forbiden " desc="Your are not allowed to access the user content" />;
+  if (!isSuperAdmin) return <ErrorPage title="403 Access Forbiden " desc="Your are not allowed to access this content" />;
   if (!isVerified) return <Navigate to="/account-verification" replace />;
-  if (isBlockedOrSuspended) return <Navigate to="/account-status" replace />;
 
   return <Outlet />;
 }
 
-export default PrivateRouteProtector
+export default PrivateRouteProtectorForSuperAdmins

@@ -25,6 +25,8 @@ export const AppProvider = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [menuType, setMenuType] = useState("general");
   const [isCourseAdmin, setIsCourseAdmin] = useState(false);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+  const [isBlockedOrSuspended, setIsBlockedOrSuspended] = useState(false);
 
   // 🔥 SOCKET STATE
   const [socket, setSocket] = useState(null);
@@ -97,6 +99,8 @@ export const AppProvider = ({ children }) => {
       if (res.data.success) {
         setUserData(res.data.userData);
         setIsVerified(res.data.userData.isVerified);
+        setIsSuperAdmin(res.data.userData.role === 'super_admin');
+        setIsBlockedOrSuspended(res.data.userData.status !== 'active');
         connectSocket(res.data.userData);
       } else {
         toast.error("Failed to fetch user data");
@@ -186,7 +190,10 @@ export const AppProvider = ({ children }) => {
     setIsCourseAdmin,
     toggleMenuType,
     checkIsLoggedIn,
-
+    isSuperAdmin,
+    setIsSuperAdmin,
+    isBlockedOrSuspended,
+  
   };
 
   return (
