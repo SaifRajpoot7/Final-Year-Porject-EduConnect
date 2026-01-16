@@ -32,6 +32,9 @@ export const AppProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
 
+  // Feedback Modal state
+  const [showModal, setShowModal] = useState(false);
+
   /* =========================
      SOCKET CONNECTION
   ========================== */
@@ -145,6 +148,10 @@ export const AppProvider = ({ children }) => {
     setMenuType((prev) => (prev === "general" ? "course" : "general"));
   }
 
+  const openFeedbackModal = () => {
+    setShowModal(true);
+  };
+
   /* =========================
      EFFECTS
   ========================== */
@@ -193,7 +200,9 @@ export const AppProvider = ({ children }) => {
     isSuperAdmin,
     setIsSuperAdmin,
     isBlockedOrSuspended,
-  
+    openFeedbackModal,
+    showModal,
+    setShowModal,
   };
 
   return (

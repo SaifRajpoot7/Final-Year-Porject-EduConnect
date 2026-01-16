@@ -1,10 +1,13 @@
 import React from 'react';
 import { MessageSquare } from 'lucide-react';
+import { useAppContext } from '../../contexts/AppContext';
 
 const FeedbackButton = ({ onClick }) => {
+  const { isSuperAdmin, openFeedbackModal, showModal, setShowModal } = useAppContext();
+
   return (
     <button
-      onClick={onClick}
+      onClick={openFeedbackModal}
       className="
         fixed bottom-6 right-6 z-50 
         flex items-center gap-2 

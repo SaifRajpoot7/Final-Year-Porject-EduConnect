@@ -127,6 +127,7 @@ import PrivateRouteProtectorForSuperAdmins from "../routeProtector/PrivateRouteP
 import SuperAdminDashboardPage from "../pages/dashboard/super admin/SuperAdminDashboardPage";
 import UserManagementPage from "../pages/SuperAdmin/userManagement/UserManagementPage";
 import AccountActivationAppealsPage from "../pages/SuperAdmin/accountActivationAppeals/AccountActivationAppealsPage";
+import ShowAllFeedbackPage from "../pages/SuperAdmin/feedback/ShowAllFeedbackPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -275,6 +276,7 @@ function AppRouter() {
             <Route path="admin-profile/edit" element={<ProfileEditPage />} />
             <Route path="admin/user-management" element={<UserManagementPage />} />
             <Route path="admin/account-activation-appeals" element={<AccountActivationAppealsPage />} />
+            <Route path="admin/feedbacks" element={<ShowAllFeedbackPage />} />
           </Route>
         </Route>
 

@@ -14,6 +14,7 @@ import requireAuth from './middlewares/requireAuth.middleware.js';
 import nodeCron from 'node-cron';
 import lectureController from './controllers/lecture.controller.js';
 import superAdminRouter from './routes/superAdmin.routes.js';
+import feedbackRouter from './routes/feedback.routes.js';
 
 
 const app = express();
@@ -40,6 +41,7 @@ app.use('/api/assignment',assignmentRouter);
 app.use('/api/quiz',quizRouter);
 app.use('/api/announcement',announcementRouter);
 app.use("/api/lectures", lectureRouter);
+app.use("/api/feedback", feedbackRouter);
 app.use("/api/generate-stream-token", requireAuth, generateToken);
 
 

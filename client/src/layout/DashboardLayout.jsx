@@ -5,38 +5,42 @@ import Sidebar from '../components/sidebar/Sidebar'
 import Footer from '../components/footer/Footer'
 import FeedbackButton from '../components/feedback/FeedbackButton'
 import { useAppContext } from '../contexts/AppContext'
+import FeedbackModal from '../components/feedback/FeedbackModal'
 
 const DashboardLayout = () => {
-    const { isSuperAdmin } = useAppContext();
+    const { isSuperAdmin, openFeedbackModal, showModal, setShowModal } = useAppContext();
 
     return (
-        <div className="flex h-screen w-screen bg-white p-2 sm:p-4 gap-4 overflow-hidden">
+        <>
+            <div className="flex h-screen w-screen bg-white p-2 sm:p-4 gap-4 overflow-hidden">
 
-            {/* Sidebar — NO SCROLL */}
-            <Sidebar />
+                {/* Sidebar — NO SCROLL */}
+                <Sidebar />
 
-            {/* Main Content Column */}
-            <div className="flex flex-col flex-grow bg-white min-h-0 overflow-hidden">
+                {/* Main Content Column */}
+                <div className="flex flex-col flex-grow bg-white min-h-0 overflow-hidden">
 
-                {/* Header — FIXED */}
-                <DashboardHeader />
+                    {/* Header — FIXED */}
+                    <DashboardHeader />
 
-                {/* Scrollable Content Area */}
-                <div className="flex flex-col flex-grow min-h-0 overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
+                    {/* Scrollable Content Area */}
+                    <div className="flex flex-col flex-grow min-h-0 overflow-y-auto p-4 scrollbar-hide hover:scrollbar-hover">
 
-                    {/* Page Content */}
-                    <Outlet />
+                        {/* Page Content */}
+                        <Outlet />
 
-                    { !isSuperAdmin &&
-                    <FeedbackButton />
-                    }
+                        {!isSuperAdmin &&
+                            <FeedbackButton />
+                        }
 
-                    {/* Footer inside scroll */}
-                    <Footer />
+                        {/* Footer inside scroll */}
+                        <Footer />
+                    </div>
+
                 </div>
-
             </div>
-        </div>
+            <FeedbackModal open={showModal} onClose={() => setShowModal(false)} />
+        </>
     )
 }
 

@@ -158,13 +158,8 @@ export const superAdminMenu = [
     link: "admin/account-activation-appeals",
   },
   {
-    icon: FileText,
-    text: "System Logs",
-    link: "/system-logs",
-  },
-  {
     icon: MessageSquare,
     text: "Feedbacks",
-    link: "/feedbacks",
+    link: "admin/feedbacks",
   },
 ];
