@@ -277,11 +277,13 @@ function AppRouter() {
             <Route path="admin/user-management" element={<UserManagementPage />} />
             <Route path="admin/account-activation-appeals" element={<AccountActivationAppealsPage />} />
             <Route path="admin/feedbacks" element={<ShowAllFeedbackPage />} />
+            {/* Profile */}
+            <Route path="admin/profile" element={<ProfilePage />} />
           </Route>
         </Route>
 
         {/* Private Routes For Users */}
-            <Route path="account-status" element={<AccountBlockOrSuspendPage />} />
+        <Route path="account-status" element={<AccountBlockOrSuspendPage />} />
         <Route element={<PrivateRouteProtector />}>
           <Route path="/" element={<DashboardLayout />}>
 
@@ -301,7 +303,7 @@ function AppRouter() {
             <Route path="assignments" element={<AssignmentsPage />} />
 
             {/* Settings */}
-            <Route path="settings" element={<SettingPage />} />
+            {/* <Route path="settings" element={<SettingPage />} /> */}
 
             {/* Course Details */}
             <Route path="course/:id" element={<CourseLayout />}>
@@ -332,7 +334,7 @@ function AppRouter() {
 
             {/* Profile */}
             <Route path="profile" element={<ProfilePage />} />
-            <Route path="profile/edit" element={<ProfileEditPage />} />
+            {/* <Route path="profile/edit" element={<ProfileEditPage />} /> */}
 
           </Route>
 

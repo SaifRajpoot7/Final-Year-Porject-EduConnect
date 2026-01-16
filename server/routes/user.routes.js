@@ -2,6 +2,7 @@ import express from 'express';
 const userRouter = express.Router();
 import userController from '../controllers/user.controller.js';
 import requireAuth from '../middlewares/requireAuth.middleware.js';
+import { upload } from "../middlewares/multer.middleware.js";
 
 // Public routes
 userRouter.post('/signup', userController.registerUser);
@@ -10,6 +11,8 @@ userRouter.post('/super-admin/signin', userController.superAdminLogin);
 
 // Protected routes
 userRouter.post('/verifyaccount', requireAuth, userController.verifyAccount);
+userRouter.put('/update-profile', requireAuth, upload.single('image'), userController.updateProfile);
+userRouter.put('/change-password', requireAuth, userController.changePassword);
 userRouter.get('/logout', requireAuth, userController.userLogout);
 userRouter.get('/profile', requireAuth, userController.userProfile);
 userRouter.get('/is-auth', requireAuth, userController.checkAuth);

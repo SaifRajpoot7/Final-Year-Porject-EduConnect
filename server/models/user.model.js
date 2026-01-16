@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         select: false, // Exclude password from queries by default
     },
+    profilePicture: {
+        type: String,
+        default: ''
+    },
     status: {
         type: String,
         enum: ['active', 'suspended', 'blocked'], // Only these values are allowed

@@ -46,11 +46,11 @@ export const generalMenu = [
     text: "Assignments",
     link: "/Assignments",
   },
-  {
-    icon: Settings,
-    text: "Settings",
-    link: "/settings",
-  },
+  // {
+  //   icon: Settings,
+  //   text: "Settings",
+  //   link: "/settings",
+  // },
 ];
 
 export const courseMenuTeacher = [

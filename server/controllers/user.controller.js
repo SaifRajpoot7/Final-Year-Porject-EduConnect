@@ -5,6 +5,7 @@ import mailSender from '../utils/mailSender.js';
 import { accountConfirmationWelcomeEmailTemplate, accountVerificationEmailTemplate, } from '../utils/emailTemplates.js';
 import DailyStat from '../models/dailyActiveUserStat.model.js';
 import Appeal from '../models/appeal.model.js';
+import {uploadOnCloudinary} from '../utils/cloudinary.js'
 
 
 const trackDailyActiveUser = async (userId) => {
@@ -379,6 +380,57 @@ export const getMyAccountActivationAppeal = async (req, res) => {
 };
 
 
+const updateProfile = async (req, res) => {
+  try {
+    const { fullName } = req.body;
+    const userId = req.user._id;
+
+    let updateData = { fullName };
+
+    // Handle Image Upload if provided
+    if (req.file) {
+      const result = await uploadOnCloudinary(req.file.path);
+      if (result) {
+        updateData.profilePicture = result.secure_url; // Assuming your model has this field
+      }
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, { new: true }).select("-password");
+
+    res.status(200).json({ success: true, message: "Profile updated successfully", user: updatedUser });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.user._id;
+
+    const user = await User.findById(userId).select('+password');
+
+    // Verify Old Password
+    const isMatch = await hashPasswordUtils.verifyPassword(oldPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: "Incorrect old password." });
+    }
+
+    // Hash New Password
+    const hashedPassword = await hashPasswordUtils.generateHashPassword(newPassword);
+    user.password = hashedPassword;
+
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Password changed successfully." });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 const userController = {
   registerUser,
   userLogin,
@@ -389,7 +441,9 @@ const userController = {
   verifyAccount,
   checkAuth,
   createAccountActivationAppeal,
-  getMyAccountActivationAppeal
+  getMyAccountActivationAppeal,
+  updateProfile,
+  changePassword,
 };
 
 export default userController;

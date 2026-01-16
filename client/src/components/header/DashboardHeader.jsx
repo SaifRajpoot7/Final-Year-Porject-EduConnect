@@ -1,17 +1,20 @@
 import { Menu, User, LogOut } from "lucide-react";
 import { useAppContext } from "../../contexts/AppContext";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, use } from "react";
 import SidebarMobileDrawer from "../sidebar/SidebarMobileDrawer";
+import { useNavigate } from "react-router";
+
 
 const DashboardHeader = () => {
-  const { setIsSidebarOpen, isSidebarOpen, userData } = useAppContext();
+  const { setIsSidebarOpen, isSidebarOpen, userData, logout, isSuperAdmin } = useAppContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const user = {
     name: userData.fullName, // dynamic from context
-    avatar: "https://i.pravatar.cc/150?img=12", // stock avatar
+    profilePic: userData.profilePicture || "/user.png", // stock profile picture
   };
 
   // Close dropdown when clicking outside
@@ -60,8 +63,8 @@ const DashboardHeader = () => {
             className="flex items-center gap-2 rounded-full px-2 py-1 hover:bg-gray-100 transition"
           >
             <img
-              src={user.avatar}
-              alt="User Avatar"
+              src={user.profilePic}
+              alt="User Profile Pic"
               className="h-9 w-9 rounded-full border border-gray-300 object-cover"
             />
             <span className="hidden md:block font-medium text-gray-700">
@@ -72,10 +75,14 @@ const DashboardHeader = () => {
           {/* Dropdown */}
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-50 animate-fade-in">
-              <button className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition">
+              <button
+               onClick={() => isSuperAdmin ? navigate("/admin/profile") : navigate("/profile")}
+               className="w-full flex items-center cursor-pointer gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition">
                 <User size={18} /> Profile
               </button>
-              <button className="w-full flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition">
+              <button
+               onClick={logout}
+               className="w-full flex items-center cursor-pointer gap-2 px-4 py-2 text-gray-700 hover:bg-gray-50 transition">
                 <LogOut size={18} /> Logout
               </button>
             </div>

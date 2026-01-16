@@ -181,6 +181,7 @@ export const AppProvider = ({ children }) => {
     isLoggedIn,
     isLoading,
     userData,
+    setUserData,
     isVerified,
     courseId,
     setCourseId,
