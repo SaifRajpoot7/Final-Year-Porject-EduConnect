@@ -11,7 +11,7 @@ const Footer = () => {
         <p className="mt-2 sm:mt-0">
           Design & Developed by{" "}
           <span className="font-medium text-blue-600 hover:text-blue-800 cursor-pointer">
-            Saif ur Rehman
+            Saif ur Rehman & Habib Rubani
           </span>
         </p>
       </div>

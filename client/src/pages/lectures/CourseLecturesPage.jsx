@@ -212,7 +212,12 @@ const CourseLecturesPage = () => {
                     <th className="px-4 py-3">Attendance</th>
                   )}
 
+                  {isAdmin && (
+                    <th className="px-4 py-3">Attendance</th>
+                  )}
+
                   <th className="px-4 py-3">Action</th>
+
                 </tr>
               </thead>
 
@@ -267,6 +272,19 @@ const CourseLecturesPage = () => {
                               // If lecture is NOT ended (upcoming/live), show dash
                               <span className="text-gray-400 font-medium">-</span>
                             )}
+                          </td>
+                        )}
+
+                        {isAdmin && (
+                          <td className="px-4 py-3">
+                            <button
+                              // disabled={disableButton(lecture)}
+                              onClick={() => navigate(`${lecture._id}`)}
+                              className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white`}
+                            >
+                              View
+                            </button>
+
                           </td>
                         )}
 
