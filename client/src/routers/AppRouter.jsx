@@ -128,6 +128,7 @@ import SuperAdminDashboardPage from "../pages/dashboard/super admin/SuperAdminDa
 import UserManagementPage from "../pages/SuperAdmin/userManagement/UserManagementPage";
 import AccountActivationAppealsPage from "../pages/SuperAdmin/accountActivationAppeals/AccountActivationAppealsPage";
 import ShowAllFeedbackPage from "../pages/SuperAdmin/feedback/ShowAllFeedbackPage";
+import DiscussionBoardPage from "../pages/disscusionBoard/DiscussionBoardPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -329,6 +330,7 @@ function AppRouter() {
               <Route path="course-students" element={<StudentsPage />} />
               <Route path="course-mates" element={<CourseMatesPage />} />
               <Route path="students/add" element={<AddStudentsPage />} />
+              <Route path="discussion-board" element={<DiscussionBoardPage />} />
               <Route path="announcements" element={<AnnouncementPage />} />
             </Route>
 
