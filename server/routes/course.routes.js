@@ -22,6 +22,7 @@ courseRouter.get("/teacher/:teacherId", requireAuth, courseController.getCourses
 courseRouter.get("/student/:studentId", requireAuth, courseController.getCoursesByStudent);
 
 courseRouter.get("/:id", requireAuth, courseController.getCourseDetails);
+courseRouter.get("/:id/teacher", requireAuth, courseController.courseTeacher);
 courseRouter.get("/:id/students", requireAuth, courseController.getCourseStudents);
 
 

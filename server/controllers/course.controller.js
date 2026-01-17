@@ -205,6 +205,46 @@ const getCourseStudents = async (req, res) => {
         });
     }
 };
+
+const courseTeacher = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const courseId = id;
+
+        if (!courseId) {
+            return res.status(400).json({
+                success: false,
+                message: "Course ID is required",
+            });
+        }
+
+        // Find course and populate students (assuming it's an array of emails or user IDs)
+        const course = await Course.findById(courseId)
+            .populate("teacher", "fullName email");
+
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found",
+            });
+        }
+
+        const teacher = course.teacher
+
+        return res.status(200).json({
+            success: true,
+            teacher: teacher,
+        });
+
+    } catch (error) {
+        console.error("Error fetching course students:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+
 const updateCourse = async (req, res) => {
     try {
         const { id } = req.params;
@@ -337,11 +377,14 @@ const courseMember = async (req, res) => {
             message: 'User is member',
         });
     }
-    res.status(400).json({
-        success: false,
-        message: 'User is not member',
-    });
+    else {
+        res.status(400).json({
+            success: false,
+            message: 'User is not member',
+        });
+    }
 }
+
 
 const courseController = {
     createCourse,
@@ -354,6 +397,7 @@ const courseController = {
     getCoursesByTeacher,
     getCoursesByStudent,
     courseMember,
+    courseTeacher,
 };
 
 export default courseController;

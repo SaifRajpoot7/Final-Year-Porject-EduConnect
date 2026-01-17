@@ -4,6 +4,7 @@ import PageTitle from "../../components/other/PageTitle";
 import { useAppContext } from "../../contexts/AppContext";
 import { useParams } from "react-router";
 import AssignmentSubmissionUpdateModal from "./AssignmentSubmissionUpdateModal";
+import ComponentLoader from "../../components/ComponentLoader";
 
 const AssignmentSubmissionRecordPage = () => {
   const { setMenuType, setCourseId, backendUrl, courseId } = useAppContext();
@@ -164,7 +165,7 @@ const AssignmentSubmissionRecordPage = () => {
                           <td className="px-4 py-3">
                             <button
                               disabled={!isDuePassed || assignment.result}
-                              onClick={() => (isDuePassed & assignment.result) && openSubmissionUpdateModal(assignment.submissionId, assignment.maxMarks)}
+                              onClick={() => (isDuePassed & !assignment.result) && openSubmissionUpdateModal(assignment.submissionId, assignment.maxMarks)}
                               className={`font-bold py-2 px-3 rounded ${!isDuePassed || assignment.result
                                 ? "bg-gray-300 text-gray-500 text-xs cursor-not-allowed"
                                 : "bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"

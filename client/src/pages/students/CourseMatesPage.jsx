@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { useAppContext } from '../../contexts/AppContext';
 import StudentsList from './StudentsList';
 import axios from 'axios';
+import TeacherTable from './TeacherTable';
 
 const CourseMatesPage = () => {
     const { setMenuType } = useAppContext();
@@ -20,6 +21,9 @@ const CourseMatesPage = () => {
                 title="My Classmates"
                 subtitle="Your Classmates"
             />
+            <h2 className="text-lg font-semibold mt-6 mb-2">Your Teacher</h2>
+            <TeacherTable />
+            <h2 className="text-lg font-semibold mt-6 mb-2">Your Classmates</h2>
             <StudentsList />
         </div>
     )

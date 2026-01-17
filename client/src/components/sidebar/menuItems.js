@@ -12,6 +12,7 @@ import {
   MessageSquareHeart,
   MessageSquare,
   ShieldMinus,
+  MessageCircle,
 } from "lucide-react";
 
 export const generalMenu = [
@@ -96,16 +97,21 @@ export const courseMenuTeacher = [
     ],
   },
   {
+    icon: MessageCircle,
+    text: "Discussion Board",
+    link: "/discussion-board",
+  },
+  {
     icon: Megaphone,
     text: "Announcements",
     link: "/announcements",
   },
 
-  {
-    icon: Settings,
-    text: "Settings",
-    link: "/settings",
-  },
+  // {
+  //   icon: Settings,
+  //   text: "Settings",
+  //   link: "/settings",
+  // },
 ];
 
 export const courseMenuStudent = [
@@ -133,6 +139,11 @@ export const courseMenuStudent = [
     icon: Users,
     text: "My Classmates",
     link: "/course-mates",
+  },
+  {
+    icon: MessageCircle,
+    text: "Discussion Board",
+    link: "/discussion-board",
   },
   {
     icon: Megaphone,

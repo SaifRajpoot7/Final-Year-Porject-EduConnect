@@ -353,7 +353,6 @@ import { Send, Paperclip, X, FileText, ArrowDown, Download, File, Megaphone } fr
 import { formatMessageTime } from '../../utils/formatMessageTime';
 import { useAppContext } from '../../contexts/AppContext';
 import { toast } from 'react-toastify';
-import assets from '../../chat-app-assets/assets';
 
 // Helper: format date for date bar
 const formatDateBar = (dateStr) => {
@@ -584,7 +583,7 @@ const AnnouncementScreen = () => {
                             {/* Avatar */}
                             <div className="flex-shrink-0 flex flex-col justify-end">
                                 <img
-                                    src={msg.avatar || assets.avatar_icon}
+                                    src={userData.profilePicture || "/user.png"}
                                     alt="User"
                                     className="w-8 h-8 rounded-full border border-gray-200 object-cover"
                                 />
