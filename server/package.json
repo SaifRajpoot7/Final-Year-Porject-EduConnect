@@ -11,7 +11,7 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
-    "@stream-io/node-sdk": "^0.7.26",
+    "@stream-io/node-sdk": "^0.7.33",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.8.0",

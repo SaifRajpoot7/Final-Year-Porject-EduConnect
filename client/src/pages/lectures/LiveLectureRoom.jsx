@@ -594,7 +594,7 @@ const LiveLectureRoom = ({ isAdmin, lectureId }) => {
     const { screenShare, isMute: isScreenSharing } = useScreenShareState();
 
     // Local State
-    const [layout, setLayout] = useState('speaker-left');
+    const [layout, setLayout] = useState('grid');
     const [showParticipants, setShowParticipants] = useState(false);
     const [showMoreOptions, setShowMoreOptions] = useState(false);
 

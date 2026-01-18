@@ -215,6 +215,7 @@ const CourseLecturesPage = () => {
                   {isAdmin && (
                     <th className="px-4 py-3">Attendance</th>
                   )}
+                  <th className="px-4 py-3">Recordings</th>
 
                   <th className="px-4 py-3">Action</th>
 
@@ -279,7 +280,7 @@ const CourseLecturesPage = () => {
                           <td className="px-4 py-3">
                             <button
                               // disabled={disableButton(lecture)}
-                              onClick={() => navigate(`${lecture._id}`)}
+                              onClick={() => navigate(`${lecture._id}/attendance`)}
                               className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white`}
                             >
                               View
@@ -287,6 +288,16 @@ const CourseLecturesPage = () => {
 
                           </td>
                         )}
+                        <td className="px-4 py-3">
+                            <button
+                              // disabled={disableButton(lecture)}
+                              onClick={() => navigate(`${lecture._id}/recordings`)}
+                              className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white`}
+                            >
+                              View
+                            </button>
+
+                          </td>
 
                         <td className="px-4 py-3">
                           <button
@@ -305,66 +316,6 @@ const CourseLecturesPage = () => {
                           </button>
 
                         </td>
-
-                        {/* <td className="px-4 py-3">
-                      {isAdmin ? (
-                        lecture.status === "upcoming" ? (
-                          Date.now() > lecture.scheduledStart ? (
-                            <button
-                              onClick={() => createLecture(lecture)}
-                              className="bg-blue-500 hover:bg-blue-600 text-white px-3 cursor-pointer py-2 rounded"
-                            >
-                              Start
-                            </button>
-                          ) : (
-                            <button
-                              disabled={!canJoinLecture(lecture)}
-                              onClick={() => createLecture(lecture)}
-                              className={`px-3 py-2 rounded font-semibold ${canJoinLecture(lecture)
-                                ? "bg-blue-500 hover:bg-blue-600 text-white  cursor-pointer"
-                                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                                }`}
-                            >
-                              {lecture.status === "live"
-                                ? "Join"
-                                : lecture.status === "ended"
-                                  ? "Ended"
-                                  : "Upcoming"}
-                            </button>
-                          )
-                        ) : lecture.status === "ended" ? (
-                          <button
-                            onClick={() => createLecture(lecture)}
-                            className="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer px-3 py-2 rounded"
-                          >
-                            View Details
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => createLecture(lecture)}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-3 cursor-pointer py-2 rounded"
-                          >
-                            Join
-                          </button>
-                        )
-                      ) : (
-                        <button
-                          disabled={!canJoinLecture(lecture)}
-                          onClick={() => createLecture(lecture)}
-                          className={`px-3 py-2 rounded font-semibold ${canJoinLecture(lecture)
-                            ? "bg-blue-500 hover:bg-blue-600 text-white  cursor-pointer"
-                            : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                            }`}
-                        >
-                          {lecture.status === "live"
-                            ? "Join"
-                            : lecture.status === "ended"
-                              ? "Ended"
-                              : "Upcoming"}
-                        </button>
-                      )}
-                    </td> */}
-
                       </tr>
                     );
                   })

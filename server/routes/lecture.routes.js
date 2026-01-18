@@ -22,6 +22,7 @@ lectureRouter.get("/:lectureId", requireAuth, lectureController.getLecture);
 lectureRouter.post("/:lectureId/join", requireAuth, lectureController.joinLecture);
 lectureRouter.post("/:lectureId/leave", requireAuth, lectureController.leaveLecture);
 lectureRouter.get("/:lectureId/attendance", requireAuth, lectureController.getLectureAttendance);
+lectureRouter.get("/:lectureId/recordings", requireAuth, lectureController.getLectureRecordings);
 
 // End Live Lecture (Admin only)
 lectureRouter.post("/:lectureId/end", requireAuth, lectureController.endLecture);

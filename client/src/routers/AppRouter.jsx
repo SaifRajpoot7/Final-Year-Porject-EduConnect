@@ -9,6 +9,7 @@ import AccountActivationAppealsPage from "../pages/SuperAdmin/accountActivationA
 import ShowAllFeedbackPage from "../pages/SuperAdmin/feedback/ShowAllFeedbackPage";
 import DiscussionBoardPage from "../pages/disscusionBoard/DiscussionBoardPage";
 import LectureAttendancePage from "../pages/lectures/LectureAttendancePage";
+import LectureRecordingsPage from "../pages/lectures/LectureRecordingsPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -192,7 +193,8 @@ function AppRouter() {
               <Route path="dashboard" element={<CourseDashboardPage />} />
               <Route path="lectures" element={<CourseLecturesPage />} />
               <Route path="lecture/add" element={<CreateLecturePage />} />
-              <Route path="lectures/:lectureId" element={<LectureAttendancePage />} />
+              <Route path="lectures/:lectureId/attendance" element={<LectureAttendancePage />} />
+              <Route path="lectures/:lectureId/recordings" element={<LectureRecordingsPage />} />
 
               <Route path="assignments" element={<CourseAssignmentPage />} />
               <Route path="assignment/create" element={<CreateAssignmentPage />} />

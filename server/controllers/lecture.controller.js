@@ -3,12 +3,18 @@ import Course from "../models/course.model.js";
 import mongoose from "mongoose";
 import { StreamChat } from "stream-chat";
 import User from "../models/user.model.js";
+import { StreamClient } from "@stream-io/node-sdk";
 
 // Initialize Stream Client
 const serverClient = new StreamChat(
   process.env.STREAM_API_KEY,
   process.env.STREAM_API_SECRET,
   { timeout: 10000 }
+);
+
+const streamVideoClient = new StreamClient(
+    process.env.STREAM_API_KEY,
+    process.env.STREAM_API_SECRET
 );
 
 const scheduleLecture = async (req, res) => {
@@ -449,6 +455,37 @@ const initializeStudentAttendance = async (lectureId, studentEmails) => {
   }
 };
 
+const getLectureRecordings = async (req, res) => {
+  try {
+    const { lectureId } = req.params;
+
+    // 1. Basic Validation
+    if (!lectureId) {
+      return res.status(400).json({ success: false, message: "Lecture ID required" });
+    }
+
+    // 2. Query GetStream for recordings using the Video SDK
+    // The call type must match what you used to create the call (usually 'default')
+    const call = streamVideoClient.video.call("default", lectureId);
+    
+    // 3. Fetch list
+    const { recordings } = await call.listRecordings();
+
+    return res.status(200).json({
+      success: true,
+      recordings
+    });
+
+  } catch (error) {
+    console.error("Get Recordings Error:", error);
+    return res.status(500).json({ 
+      success: false, 
+      message: "Failed to fetch recordings",
+      error: error.message 
+    });
+  }
+};
+
 
 const lectureController = {
   scheduleLecture,
@@ -460,7 +497,8 @@ const lectureController = {
   getAllLecturesByUser,
   finalizeAttendance,
   markMissedLectures,
-  getLectureAttendance
+  getLectureAttendance,
+  getLectureRecordings
 };
 
 export default lectureController;
