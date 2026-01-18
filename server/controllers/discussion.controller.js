@@ -1,19 +1,20 @@
 import Discussion from "../models/discussion.model.js";
-import { io } from "../server.js";
+// import { io } from "../server.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { getIO } from '../socket.js';
 
 // Send a message (Text or File)
 const sendMessage = async (req, res) => {
     try {
         const { content, courseId } = req.body;
         const userId = req.user._id;
-        
+
         // 1. Security Check: Ensure user is a member of the course
         // (Assuming courseRole middleware sets req.isCourseMember)
         if (!req.isCourseMember) {
-            return res.status(403).json({ 
-                success: false, 
-                message: "You are not a member of this course" 
+            return res.status(403).json({
+                success: false,
+                message: "You are not a member of this course"
             });
         }
 
@@ -24,7 +25,7 @@ const sendMessage = async (req, res) => {
         if (req.file?.path) {
             const uploaded = await uploadOnCloudinary(req.file.path);
             attachmentUrl = uploaded.secure_url;
-            
+
             // Simple check to determine type based on mimetype
             attachmentType = req.file.mimetype.startsWith("image/") ? "image" : "file";
         }
@@ -46,6 +47,7 @@ const sendMessage = async (req, res) => {
         message = await message.populate("sender", "fullName profilePicture email");
 
         // 5. 🔥 SOCKET EMIT: Broadcast to everyone in the course room
+        const io = getIO();
         io.to(courseId).emit("newDiscussionMessage", message);
 
         return res.status(201).json({ success: true, message });
@@ -62,9 +64,9 @@ const getCourseMessages = async (req, res) => {
         const { courseId } = req.query;
 
         if (!req.isCourseMember) {
-            return res.status(403).json({ 
-                success: false, 
-                message: "You are not a member of this course" 
+            return res.status(403).json({
+                success: false,
+                message: "You are not a member of this course"
             });
         }
 

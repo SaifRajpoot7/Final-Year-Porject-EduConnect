@@ -1,8 +1,10 @@
 import Announcement from "../models/announcement.model.js";
 import Course from "../models/course.model.js";
 import User from "../models/user.model.js";
-import { io } from "../server.js";
+// import { io } from "../server.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { getIO } from '../socket.js';
+// const io = getIO();
 
 const createAnnouncement = async (req, res) => {
     try {
@@ -33,6 +35,7 @@ const createAnnouncement = async (req, res) => {
         });
 
         // 🔥 THIS IS THE ONLY SOCKET LINE YOU NEED
+        const io = getIO();
         io.to(courseId.toString()).emit("newAnnouncement", announcement);
 
         return res.status(201).json({
