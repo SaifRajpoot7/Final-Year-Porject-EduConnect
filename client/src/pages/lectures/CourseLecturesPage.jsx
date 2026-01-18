@@ -89,7 +89,7 @@ const CourseLecturesPage = () => {
     activeTab === "All"
       ? lectures
       : lectures.filter((l) => {
-        if (activeTab === "Upcoming") return l.status === "scheduled";
+        if (activeTab === "Upcoming") return l.status === "upcoming";
         if (activeTab === "Live") return l.status === "live";
         if (activeTab === "Ended") return l.status === "ended";
         return true;

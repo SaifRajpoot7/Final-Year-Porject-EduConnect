@@ -10,6 +10,8 @@ import ShowAllFeedbackPage from "../pages/SuperAdmin/feedback/ShowAllFeedbackPag
 import DiscussionBoardPage from "../pages/disscusionBoard/DiscussionBoardPage";
 import LectureAttendancePage from "../pages/lectures/LectureAttendancePage";
 import LectureRecordingsPage from "../pages/lectures/LectureRecordingsPage";
+import AboutPage from "../pages/public/AboutPage";
+import ContactPage from "../pages/public/ContactPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -139,6 +141,9 @@ function AppRouter() {
         {/* Public Routes */}
         <Route path="/" element={<FullPageLayout />}>
           <Route index element={<IndexPage />} />
+          <Route path="home" element={<IndexPage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="contact" element={<ContactPage />} />
           <Route path="account-verification" element={<EmailVerificationPage />} />
 
           <Route element={<PublicRouteProtector />}>

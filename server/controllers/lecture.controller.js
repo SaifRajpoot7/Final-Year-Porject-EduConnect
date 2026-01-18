@@ -315,7 +315,7 @@ const getCourseLectures = async (req, res) => {
       }
     }
 
-    const lectures = await Lecture.find({ course: courseId }).sort({ createdAt: -1 });
+    const lectures = await Lecture.find({ course: courseId }).sort({ createdAt: 1 });
 
     res.json({
       success: true,

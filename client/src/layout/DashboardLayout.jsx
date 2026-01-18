@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router'
 import DashboardHeader from '../components/header/DashboardHeader'
 import Sidebar from '../components/sidebar/Sidebar'
-import Footer from '../components/footer/Footer'
+import DashboardFooter from '../components/footer/DashboardFooter'
 import FeedbackButton from '../components/feedback/FeedbackButton'
 import { useAppContext } from '../contexts/AppContext'
 import FeedbackModal from '../components/feedback/FeedbackModal'
@@ -34,7 +34,7 @@ const DashboardLayout = () => {
                         }
 
                         {/* Footer inside scroll */}
-                        <Footer />
+                        <DashboardFooter />
                     </div>
 
                 </div>
