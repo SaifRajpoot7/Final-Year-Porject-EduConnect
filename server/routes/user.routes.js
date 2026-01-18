@@ -19,5 +19,11 @@ userRouter.get('/is-auth', requireAuth, userController.checkAuth);
 userRouter.post('/generateotp', requireAuth, userController.generateVerificationOtp);
 userRouter.post('/appeal-account-activation', requireAuth, userController.createAccountActivationAppeal);
 userRouter.get('/my-appeal', requireAuth, userController.getMyAccountActivationAppeal);
+userRouter.get('/overview-cards', requireAuth, userController.getOverviewCards);
+userRouter.get('/student-performance', requireAuth, userController.getStudentPerformance);
+userRouter.get('/assignment-quiz-status', requireAuth, userController.getAssignmentQuizStatus);
+userRouter.get('/teacher-student-performance', requireAuth, userController.teacherStudentPerformance);
+userRouter.get('/teacher-workload', requireAuth, userController.getTeacherWorkload);
+userRouter.patch('/update-dashboard-type', requireAuth, userController.updateDashboardType);
 
 export default userRouter;

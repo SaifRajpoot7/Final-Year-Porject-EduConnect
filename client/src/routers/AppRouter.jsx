@@ -185,7 +185,7 @@ function AppRouter() {
             <Route path="assignments" element={<AssignmentsPage />} />
 
             {/* Settings */}
-            {/* <Route path="settings" element={<SettingPage />} /> */}
+            <Route path="settings" element={<SettingPage />} />
 
             {/* Course Details */}
             <Route path="course/:id" element={<CourseLayout />}>

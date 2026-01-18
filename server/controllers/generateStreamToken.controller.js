@@ -4,7 +4,8 @@ import { StreamChat } from "stream-chat"; // old package
 
 const serverClient = StreamChat.getInstance(
   process.env.STREAM_API_KEY,
-  process.env.STREAM_API_SECRET
+  process.env.STREAM_API_SECRET,
+  { timeout: 10000 }
 );
 
 export const generateToken = async (req, res) => {

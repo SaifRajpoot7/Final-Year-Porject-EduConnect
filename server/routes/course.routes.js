@@ -21,9 +21,17 @@ courseRouter.get("/course-member", requireAuth, courseRole ,courseController.cou
 courseRouter.get("/teacher/:teacherId", requireAuth, courseController.getCoursesByTeacher);
 courseRouter.get("/student/:studentId", requireAuth, courseController.getCoursesByStudent);
 
+
+
 courseRouter.get("/:id", requireAuth, courseController.getCourseDetails);
 courseRouter.get("/:id/teacher", requireAuth, courseController.courseTeacher);
 courseRouter.get("/:id/students", requireAuth, courseController.getCourseStudents);
+courseRouter.get("/:id/overview-cards", requireAuth, courseController.getCourseOverviewCards);
+courseRouter.get('/:id/student-performance', requireAuth, courseController.getStudentPerformanceForCourse);
+courseRouter.get('/:id/assignment-quiz-status', requireAuth, courseController.getCourseAssignmentQuizStatus);
+courseRouter.get('/:id/teacher-student-performance', requireAuth, courseController.getCourseStudentPerformance);
+courseRouter.get('/:id/teacher-workload', requireAuth, courseController.getCourseTeacherWorkload);
+
 
 
 

@@ -42,6 +42,11 @@ const userSchema = new mongoose.Schema({
         enum: ["user", "admin"],
         default: "user",
     },
+    dashboardType: {
+        type: String,
+        enum: ["general", "student", "teacher"],
+        default: "general",
+    },
     verificationOtp: {
         type: String,
         default: ''
