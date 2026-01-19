@@ -27,7 +27,12 @@ const allowedOrigins = process.env.CLIENT_URL
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+// app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(cors({
+  origin: ["https://final-year-porject-edu-connect.vercel.app", allowedOrigins],
+  methods: ["POST", "GET", "PUT", "DELETE"],
+  credentials: true
+}));
 
 // Schedule: Run every 10 minutes
 nodeCron.schedule('*/10 * * * *', () => {
@@ -38,9 +43,9 @@ nodeCron.schedule('*/10 * * * *', () => {
 app.use('/api/user', userRouter);
 app.use('/api/super-admin', superAdminRouter);
 app.use('/api/course', courseRouter);
-app.use('/api/assignment',assignmentRouter);
-app.use('/api/quiz',quizRouter);
-app.use('/api/announcement',announcementRouter);
+app.use('/api/assignment', assignmentRouter);
+app.use('/api/quiz', quizRouter);
+app.use('/api/announcement', announcementRouter);
 app.use("/api/lectures", lectureRouter);
 app.use("/api/feedback", feedbackRouter);
 app.use("/api/discussion", discussionRouter);
@@ -49,7 +54,7 @@ app.use("/api/generate-stream-token", requireAuth, generateToken);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+  res.send('Hello World');
 });
 
 
