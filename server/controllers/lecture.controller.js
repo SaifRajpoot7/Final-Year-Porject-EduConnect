@@ -90,6 +90,7 @@ const joinLecture = async (req, res) => {
     }
 
     const now = new Date();
+    
 
     // 3. Teacher Start Logic
     if (isTeacher && lecture.status === "upcoming") {
@@ -315,7 +316,7 @@ const getCourseLectures = async (req, res) => {
       }
     }
 
-    const lectures = await Lecture.find({ course: courseId }).sort({ createdAt: 1 });
+    const lectures = await Lecture.find({ course: courseId }).sort({ scheduledStart: -1 });
 
     res.json({
       success: true,
@@ -340,7 +341,7 @@ const getAllLecturesByUser = async (req, res) => {
     const lecturesFromMyCreation = await Lecture.find({
       teacher: userId,
       status: { $in: ["upcoming", "live"] },
-    }).populate({ path: "course", select: "title" }).sort({ scheduledStart: 1 });
+    }).populate({ path: "course", select: "title" }).sort({ scheduledStart: -1 });
 
     const enrolledCourses = await Course.find(
       { students: userEmail },
@@ -351,7 +352,7 @@ const getAllLecturesByUser = async (req, res) => {
     const lecturesFromEnrollment = await Lecture.find({
       course: { $in: enrolledCourseIds },
       status: { $in: ["upcoming", "live"] },
-    }).populate({ path: "course", select: "title" }).sort({ scheduledStart: 1 });
+    }).populate({ path: "course", select: "title" }).sort({ scheduledStart: -1 });
 
     return res.status(200).json({
       success: true,

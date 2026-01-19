@@ -324,7 +324,7 @@ const getAllQuizByUser = async (req, res) => {
         path: "course",
         select: "title",
       })
-      .sort({ dueDate: 1 });
+      .sort({ createdAt: -1 });
 
     /**
      * 2. Quiz where user is enrolled as student
@@ -343,7 +343,7 @@ const getAllQuizByUser = async (req, res) => {
         path: "course",
         select: "title",
       })
-      .sort({ dueDate: 1 })
+      .sort({ createdAt: -1 })
       .lean(); // IMPORTANT for mutation
 
     /**

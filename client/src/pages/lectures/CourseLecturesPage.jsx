@@ -138,7 +138,7 @@ const CourseLecturesPage = () => {
     if (isAdmin && status === "upcoming") {
       const haveToStart = now > lectureTime;
       if (haveToStart) {
-        lectureStatus = "Start Now"
+        lectureStatus = "Start"
       }
     }
     if (status === "live") {
@@ -169,7 +169,14 @@ const CourseLecturesPage = () => {
 
     return false;
   };
+  const disableButton2 = (lecture) => {
 
+    if (lecture.status !== "ended") {
+      return true;
+    }
+
+    return false;
+  };
   return (
     <div className="p-4">
       <PageTitle
@@ -207,18 +214,9 @@ const CourseLecturesPage = () => {
                   <th className="px-4 py-3">Start Time</th>
                   <th className="px-4 py-3">End Time</th>
                   <th className="px-4 py-3">Status</th>
-
-                  {!isAdmin && (
-                    <th className="px-4 py-3">Attendance</th>
-                  )}
-
-                  {isAdmin && (
-                    <th className="px-4 py-3">Attendance</th>
-                  )}
+                  <th className="px-4 py-3">Attendance</th>
                   <th className="px-4 py-3">Recordings</th>
-
                   <th className="px-4 py-3">Action</th>
-
                 </tr>
               </thead>
 
@@ -279,9 +277,10 @@ const CourseLecturesPage = () => {
                         {isAdmin && (
                           <td className="px-4 py-3">
                             <button
-                              // disabled={disableButton(lecture)}
+                              disabled={disableButton2(lecture)}
                               onClick={() => navigate(`${lecture._id}/attendance`)}
-                              className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white`}
+                              className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white ${disableButton2(lecture)
+                                ? "cursor-not-allowed opacity-60 bg-gray-500 hover:bg-gray-600 text-white" : ""}`}
                             >
                               View
                             </button>
@@ -289,15 +288,16 @@ const CourseLecturesPage = () => {
                           </td>
                         )}
                         <td className="px-4 py-3">
-                            <button
-                              // disabled={disableButton(lecture)}
-                              onClick={() => navigate(`${lecture._id}/recordings`)}
-                              className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white`}
-                            >
-                              View
-                            </button>
+                          <button
+                            disabled={disableButton2(lecture)}
+                            onClick={() => navigate(`${lecture._id}/recordings`)}
+                            className={`px-3 py-2 rounded capitalize bg-blue-500 hover:bg-blue-600 text-white ${disableButton2(lecture)
+                              ? "cursor-not-allowed opacity-60 bg-gray-500 hover:bg-gray-600 text-white" : ""}`}
+                          >
+                            View
+                          </button>
 
-                          </td>
+                        </td>
 
                         <td className="px-4 py-3">
                           <button
