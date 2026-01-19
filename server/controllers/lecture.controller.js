@@ -14,7 +14,7 @@ const serverClient = new StreamChat(
 
 const streamVideoClient = new StreamClient(
     process.env.STREAM_API_KEY,
-    zh2b9ra6g5abtfu8nxp8rwccbnjv5w5h6y3tbyc2qzhrym66jb4w38ngqc8ubw8h
+    "zh2b9ra6g5abtfu8nxp8rwccbnjv5w5h6y3tbyc2qzhrym66jb4w38ngqc8ubw8h"
 );
 
 const scheduleLecture = async (req, res) => {
