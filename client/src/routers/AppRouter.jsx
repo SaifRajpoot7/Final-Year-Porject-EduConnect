@@ -12,6 +12,7 @@ import LectureAttendancePage from "../pages/lectures/LectureAttendancePage";
 import LectureRecordingsPage from "../pages/lectures/LectureRecordingsPage";
 import AboutPage from "../pages/public/AboutPage";
 import ContactPage from "../pages/public/ContactPage";
+import NotFoundPage from "../pages/public/NotFoundPage";
 
 /* =========================
    Lazy Loaded Layouts
@@ -230,6 +231,10 @@ function AppRouter() {
 
           {/* Live Lecture */}
           <Route path="lecture/live/:lectureId" element={<LiveLecturePage />} />
+        </Route>
+
+        <Route path="/" element={<FullPageLayout />}>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
 
       </Routes>

@@ -62,8 +62,8 @@ const LectureAttendancePage = () => {
         activeTab === "All"
             ? attendance
             : attendance.filter((a) => {
-                if (activeTab === "Present") return a.present;
-                if (activeTab === "Absent") return !a.present;
+                if (activeTab === "Present") return a.present === true;
+                if (activeTab === "Absent") return a.present === false;
                 return true;
             });
 

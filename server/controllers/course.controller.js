@@ -572,7 +572,7 @@ const getStudentPerformanceForCourse = async (req, res) => {
 const getCourseAssignmentQuizStatus = async (req, res) => {
     try {
         const userId = req.user._id;
-        const {id} = req.params; 
+        const { id } = req.params;
         const courseId = id;
 
         if (!courseId) {
@@ -592,14 +592,14 @@ const getCourseAssignmentQuizStatus = async (req, res) => {
         // 2. Fetch User's Submissions for THESE tasks only
         // Optimized: We use { $in: assignmentIds } to avoid fetching unrelated submissions
         const [myAssignmentSubmissions, myQuizSubmissions] = await Promise.all([
-            AssignmentSubmission.find({ 
+            AssignmentSubmission.find({
                 student: userId,
-                assignment: { $in: assignmentIds } 
+                assignment: { $in: assignmentIds }
             }).select('assignment'),
 
-            QuizSubmission.find({ 
+            QuizSubmission.find({
                 student: userId,
-                quiz: { $in: quizIds } 
+                quiz: { $in: quizIds }
             }).select('quiz')
         ]);
 
@@ -617,7 +617,7 @@ const getCourseAssignmentQuizStatus = async (req, res) => {
         // --- Assignments Logic ---
         // Completed: User has submitted
         const assignmentsCompleted = submittedAssignmentIds.size;
-        
+
         let assignmentsPending = 0;
         let assignmentsMissed = 0;
 
@@ -635,9 +635,9 @@ const getCourseAssignmentQuizStatus = async (req, res) => {
         // --- Quizzes Logic ---
         // Attempted: User has submitted
         const quizzesAttempted = submittedQuizIds.size;
-        
+
         let quizzesMissed = 0;
-        
+
         courseQuizzes.forEach(quiz => {
             // If NOT submitted...
             if (!submittedQuizIds.has(quiz._id.toString())) {
@@ -663,9 +663,9 @@ const getCourseAssignmentQuizStatus = async (req, res) => {
 
     } catch (error) {
         console.error("Course Assignment/Quiz Status Error:", error);
-        return res.status(500).json({ 
-            success: false, 
-            message: "Failed to fetch course status data" 
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch course status data"
         });
     }
 };
@@ -673,9 +673,9 @@ const getCourseAssignmentQuizStatus = async (req, res) => {
 const getCourseStudentPerformance = async (req, res) => {
     try {
         const teacherId = req.user._id;
-        
+
         // Retrieve Course ID from params or query string
-        const {id} = req.params;
+        const { id } = req.params;
         const courseId = id;
 
         if (!courseId) {
@@ -684,9 +684,9 @@ const getCourseStudentPerformance = async (req, res) => {
 
         // 1. Build Query Object
         // We filter by BOTH the teacher (to ensure ownership) AND the course
-        const taskQuery = { 
+        const taskQuery = {
             teacher: teacherId,
-            course: courseId 
+            course: courseId
         };
 
         // 2. Get all Task IDs for this specific course & teacher
@@ -706,12 +706,12 @@ const getCourseStudentPerformance = async (req, res) => {
         // Since 'assignmentIds' and 'quizIds' are already filtered by course,
         // we don't need to filter by course again in the submission query.
         const [assignmentSubs, quizSubs] = await Promise.all([
-            AssignmentSubmission.find({ 
+            AssignmentSubmission.find({
                 assignment: { $in: assignmentIds },
                 marksObtained: { $ne: null } // Only graded ones
             }).select('student assignment marksObtained'),
-            
-            QuizSubmission.find({ 
+
+            QuizSubmission.find({
                 quiz: { $in: quizIds },
                 obtainedMarks: { $exists: true } // Only graded ones
             }).select('student quiz obtainedMarks')
@@ -724,7 +724,7 @@ const getCourseStudentPerformance = async (req, res) => {
         // Helper to accumulate stats
         const addScore = (studentId, obtained, max) => {
             if (!max || max === 0) return; // Skip invalid max marks
-            
+
             if (!studentStats[studentId]) {
                 studentStats[studentId] = { obtained: 0, max: 0 };
             }
@@ -781,9 +781,9 @@ const getCourseStudentPerformance = async (req, res) => {
 
     } catch (error) {
         console.error("Course Student Performance Error:", error);
-        return res.status(500).json({ 
-            success: false, 
-            message: "Failed to fetch student performance data" 
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch student performance data"
         });
     }
 };
@@ -791,7 +791,7 @@ const getCourseStudentPerformance = async (req, res) => {
 const getCourseTeacherWorkload = async (req, res) => {
     try {
         const teacherId = req.user._id;
-        
+
         // Retrieve Course ID from params or query
         const courseId = req.params.id;
 
@@ -801,11 +801,11 @@ const getCourseTeacherWorkload = async (req, res) => {
 
         // 1. Fetch Assignments for THIS COURSE
         // We need IDs first to calculate pending reviews correctly for this specific course.
-        const courseAssignments = await Assignment.find({ 
+        const courseAssignments = await Assignment.find({
             teacher: teacherId,
-            course: courseId 
+            course: courseId
         }).select('_id');
-        
+
         const assignmentIds = courseAssignments.map(a => a._id);
 
         // 2. Fetch Metrics in Parallel
@@ -814,16 +814,16 @@ const getCourseTeacherWorkload = async (req, res) => {
             quizzesCreated,
             pendingReviews
         ] = await Promise.all([
-            
+
             // Lectures Delivered: Filter by Teacher AND Course AND Status='ended'
-            Lecture.countDocuments({ 
-                teacher: teacherId, 
+            Lecture.countDocuments({
+                teacher: teacherId,
                 course: courseId,
-                status: 'ended' 
+                status: 'ended'
             }),
 
             // Quizzes Created: Filter by Teacher AND Course
-            Quiz.countDocuments({ 
+            Quiz.countDocuments({
                 teacher: teacherId,
                 course: courseId
             }),
@@ -831,34 +831,34 @@ const getCourseTeacherWorkload = async (req, res) => {
             // Pending Reviews: Submissions for THIS course's assignments only
             AssignmentSubmission.countDocuments({
                 assignment: { $in: assignmentIds },
-                status: { $ne: 'graded' } 
+                status: { $ne: 'graded' }
             })
         ]);
 
         // 3. Construct Data Object
         const workloadData = [
-            { 
-                title: "Lectures Delivered", 
-                count: lecturesDelivered, 
-                icon: "Video", 
+            {
+                title: "Lectures Delivered",
+                count: lecturesDelivered,
+                icon: "Video",
                 color: "#3b82f6" // Blue
             },
-            { 
-                title: "Assignments Created", 
-                count: courseAssignments.length, 
-                icon: "FileText", 
+            {
+                title: "Assignments Created",
+                count: courseAssignments.length,
+                icon: "FileText",
                 color: "#10b981" // Green
             },
-            { 
-                title: "Quizzes Created", 
-                count: quizzesCreated, 
-                icon: "HelpCircle", 
+            {
+                title: "Quizzes Created",
+                count: quizzesCreated,
+                icon: "HelpCircle",
                 color: "#f59e0b" // Yellow
             },
-            { 
-                title: "Pending Reviews", 
-                count: pendingReviews, 
-                icon: "Clock", 
+            {
+                title: "Pending Reviews",
+                count: pendingReviews,
+                icon: "Clock",
                 color: "#ef4444" // Red
             }
         ];
@@ -870,9 +870,9 @@ const getCourseTeacherWorkload = async (req, res) => {
 
     } catch (error) {
         console.error("Course Workload Error:", error);
-        return res.status(500).json({ 
-            success: false, 
-            message: "Failed to fetch course workload stats" 
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch course workload stats"
         });
     }
 };

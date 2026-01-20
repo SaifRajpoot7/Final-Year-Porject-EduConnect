@@ -35,10 +35,10 @@ app.use(cors({
   credentials: true
 }));
 
-// Schedule: Run every 10 minutes
-// nodeCron.schedule('*/10 * * * *', () => {
-//   lectureController.markMissedLectures();
-// });
+Schedule: Run every 10 minutes
+nodeCron.schedule('*/10 * * * *', () => {
+  lectureController.markMissedLectures();
+});
 
 
 app.use('/api/user', userRouter);

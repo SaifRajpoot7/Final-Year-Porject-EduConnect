@@ -594,7 +594,7 @@ const LiveLectureRoom = ({ isAdmin, lectureId }) => {
     const { screenShare, isMute: isScreenSharing } = useScreenShareState();
 
     // Local State
-    const [layout, setLayout] = useState('grid');
+    const [layout, setLayout] = useState('speaker-left');
     const [showParticipants, setShowParticipants] = useState(false);
     const [showMoreOptions, setShowMoreOptions] = useState(false);
 
@@ -761,7 +761,7 @@ const LiveLectureRoom = ({ isAdmin, lectureId }) => {
 
             {/* Main Video Area */}
             <div className="flex-1 relative flex items-center justify-center p-4">
-                <div className="w-full max-w-6xl h-full rounded-2xl overflow-hidden shadow-2xl border border-gray-800 relative flex justify-center align-middle items-center content-center">
+                <div className={`w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-gray-800 relative flex justify-center align-middle items-center content-center ${participantCount === 1 ? "max-w-[65vw]" : "max-w-6xl"} `}>
                     <CallLayout />
                 </div>
 
