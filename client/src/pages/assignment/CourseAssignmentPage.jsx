@@ -216,7 +216,7 @@ const CourseAssignmentsPage = () => {
         )
       }
 
-      <AssignmentSubmitModal open={showModal} onClose={() => setShowModal(false)} assignmentId={selectedAssignmentId} />
+      <AssignmentSubmitModal open={showModal} onClose={() => setShowModal(false)} assignmentId={selectedAssignmentId} courseId={courseId} />
     </div >
   );
 };
