@@ -93,7 +93,7 @@ const joinLecture = async (req, res) => {
     
 
     // 3. Teacher Start Logic
-    if (isTeacher && lecture.status === "upcoming") {
+    if (isTeacher && lecture.status === "upcoming" && lecture.scheduledStart < now) {
       lecture.status = "live";
       lecture.startsAt = now;
     }
