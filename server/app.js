@@ -22,18 +22,29 @@ const app = express();
 
 connectToDb();
 
-const allowedOrigins = process.env.CLIENT_URL
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cors({ origin: allowedOrigins, credentials: true }));
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(",")
+  : [];
+
 app.use(cors({
-  origin: ["https://final-year-porject-edu-connect.vercel.app", "http://localhost:5173"],
+  origin: (origin, callback) => {
+    // allow server-to-server / Postman requests
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  
   credentials: true
 }));
+
 
 // Schedule: Run every 10 minutes
 nodeCron.schedule('*/10 * * * *', () => {
