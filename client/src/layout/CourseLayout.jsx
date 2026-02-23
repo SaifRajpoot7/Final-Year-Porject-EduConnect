@@ -1,26 +1,3 @@
-// import React, { useEffect } from "react";
-// import { Outlet, useParams } from "react-router";
-// import { useAppContext } from "../contexts/AppContext";
-
-// const CourseLayout = () => {
-//   const { id } = useParams();
-//   const { setCourseId, getCourseData, setMenuType } = useAppContext();
-
-// useEffect(() => {
-//   if (!id) return;
-
-//   setCourseId(id);
-//   getCourseData(id);
-//   setMenuType("course");
-// }, [id]);
-
-
-//   return <Outlet />;
-// };
-
-// export default CourseLayout;
-
-
 import React, { useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router";
 import axios from "axios"; // Ensure axios is imported

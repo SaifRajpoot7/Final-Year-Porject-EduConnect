@@ -1,28 +1,3 @@
-// import { useEffect } from "react";
-
-// const useBeforeUnload = ({ enabled, onLeave }) => {
-
-//   useEffect(() => {
-//     if (!enabled) return;
-
-//     const leave = () => onLeave?.();
-
-//     window.addEventListener("beforeunload", leave);
-//     document.addEventListener("visibilitychange", () => {
-//       if (document.hidden) leave();
-//     });
-
-//     return () => {
-//       window.removeEventListener("beforeunload", leave);
-//     };
-//   }, [enabled]);
-// };
-
-// export default useBeforeUnload;
-
-
-
-
 import { useEffect } from 'react';
 import { useAppContext } from '../contexts/AppContext';
 

@@ -240,67 +240,6 @@ const submitQuiz = async (req, res) => {
     }
 };
 
-// const getAllQuizByUser = async (req, res) => {
-//   try {
-//     const userId = req.user?._id;
-//     const userEmail = req.user?.email;
-
-//     // Authentication check
-//     if (!userId) {
-//       return res.status(401).json({
-//         success: false,
-//         message: "Not authenticated"
-//       });
-//     }
-
-//     /**
-//      * 1. Quiz created by the user (Teacher)
-//      */
-//     const quizFromMyCreation = await Quiz.find({
-//       teacher: userId,
-//     })
-//       .populate({
-//         path: "course",
-//         select: "title"
-//       })
-//       .sort({ scheduledStart: 1 }); // nearest first
-
-//     /**
-//      * 2. Quiz where user is enrolled as student
-//      *    - Find courses where user is a student
-//      *    - Then find upcoming lectures for those courses
-//      */
-//     const enrolledCourses = await Course.find(
-//       { students: userEmail },
-//       { _id: 1 }
-//     );
-
-//     const enrolledCourseIds = enrolledCourses.map(course => course._id);
-
-//     const quizFromEnrollment = await Quiz.find({
-//       course: { $in: enrolledCourseIds },
-//     })
-//       .populate({
-//         path: "course",
-//         select: "title"
-//       })
-//       .sort({ scheduledStart: 1 }); // nearest first
-
-//     return res.status(200).json({
-//       success: true,
-//       quizFromMyCreation,
-//       quizFromEnrollment
-//     });
-
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({
-//       success: false,
-//       message: error.message
-//     });
-//   }
-// };
-
 
 const getAllQuizByUser = async (req, res) => {
   try {

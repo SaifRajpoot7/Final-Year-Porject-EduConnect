@@ -150,7 +150,7 @@ const changeUserStatus = async (req, res) => {
   }
 }
 
-export const getAllAppeals = async (req, res) => {
+const getAllAppeals = async (req, res) => {
   try {
 
     const appeals = await Appeal.find({ status: { $in: ['pending', 'rejected'] } })
@@ -163,7 +163,7 @@ export const getAllAppeals = async (req, res) => {
   }
 };
 
-export const resolveAppeal = async (req, res) => {
+const resolveAppeal = async (req, res) => {
   const { appealId, action } = req.body; // action: 'approve' | 'reject'
   const adminId = req.user._id;
 

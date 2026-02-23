@@ -33,38 +33,6 @@ const CreateLectureForm = () => {
         return start.toISOString().slice(0, 16);
     }, [startDateTime, minStartDateTime]);
 
-
-    // const scheduleOnStream = async (lecture) => {
-    //     if (!client || !userData) return;
-    //     try {
-    //         if (!values.dateTime) {
-    //             toast({ title: 'Please select a date and time' });
-    //             return;
-    //         }
-    //         const id = lecture._id;
-    //         const call = client.call('default', id);
-    //         if (!call) throw new Error('Failed to create meeting');
-    //         const startsAt = lecture.scheduledStart;
-    //         const title = lecture.title;
-    //         await call.getOrCreate({
-    //             data: {
-    //                 starts_at: startsAt,
-    //                 custom: {
-    //                     title,
-    //                 },
-    //             },
-    //         });
-    //         setCallDetail(call);
-    //         if (!values.description) {
-    //             router.push(`/meeting/${call.id}`);
-    //         }
-    //         const meetingLink = `${import.meta.env.VITE_PUBLIC_BASE_URL}/meeting/${callDetail?.id}`;
-    //     } catch (error) {
-    //         console.error(error);
-    //         toast({ title: 'Failed to create Meeting' });
-    //     }
-    // };
-
     const onSubmit = async (data) => {
         try {
             setIsSubmitting(true);
